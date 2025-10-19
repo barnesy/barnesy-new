@@ -120,6 +120,93 @@
         .hero {
             padding: 8rem 2rem 4rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Design Token Animation */
+        .token-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .token {
+            position: absolute;
+            opacity: 0.15;
+            will-change: transform, opacity;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .token.assembling {
+            opacity: 0.8;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .token.featured {
+            opacity: 1 !important;
+        }
+
+        .token.floating {
+            animation: cloudFloat 12s ease-in-out infinite;
+        }
+
+        .token-circle {
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+        }
+
+        .token-square {
+            border: 2px solid var(--accent);
+            border-radius: 2px;
+        }
+
+        .token-line {
+            background: var(--accent);
+        }
+
+        @keyframes cloudFloat {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            25% { transform: translate3d(20px, -15px, 0); }
+            50% { transform: translate3d(-15px, 20px, 0); }
+            75% { transform: translate3d(-20px, -10px, 0); }
+        }
+
+        /* Page label */
+        .page-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            color: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .page-label.visible {
+            opacity: 0.6;
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .token-animation {
+                display: none;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
         }
 
         .hero-badge {
@@ -467,24 +554,29 @@
     </nav>
 
     <!-- Hero -->
-    <section class="hero" style="background-image: url('images/pattern-library-hero.svg'); background-size: cover; background-position: center;">
-        <div style="background: var(--hero-overlay); padding: 3rem; border-radius: 8px; backdrop-filter: blur(10px);">
-            <span class="hero-badge">Case Study</span>
-            <h1>AI Powered Design System</h1>
-            <p class="subtitle">Building a Pattern Library for Generative UX</p>
+    <section class="hero">
+        <div class="token-animation" id="tokenAnimation">
+            <div class="page-label" id="pageLabel"></div>
+        </div>
+        <div class="hero-content">
+            <div style="background: var(--hero-overlay); padding: 3rem; border-radius: 8px; backdrop-filter: blur(10px);">
+                <span class="hero-badge">Case Study</span>
+                <h1>AI Powered Design System</h1>
+                <p class="subtitle">Building a Pattern Library for Generative UX</p>
 
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <span class="hero-stat-number">Multi-Version</span>
-                    <span class="hero-stat-label">System Architecture</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-number">100%</span>
-                    <span class="hero-stat-label">Pattern Coverage</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-number">Gen UX</span>
-                    <span class="hero-stat-label">AI-Ready System</span>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">Multi-Version</span>
+                        <span class="hero-stat-label">System Architecture</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">100%</span>
+                        <span class="hero-stat-label">Pattern Coverage</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">Gen UX</span>
+                        <span class="hero-stat-label">AI-Ready System</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -793,6 +885,201 @@
                 }
             });
         });
+
+        // Deliberate Pattern Assembly Animation
+        (function() {
+            // Check for reduced motion preference
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const container = document.getElementById('tokenAnimation');
+            const pageLabel = document.getElementById('pageLabel');
+            if (!container || !pageLabel) return;
+
+            const tokens = [];
+            const isMobile = window.innerWidth < 768;
+
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const scale = isMobile ? 0.5 : 0.8;
+            const grid = 8 * scale; // 8px grid system
+
+            // Define a single focused layout for the case study
+            const caseStudyLayout = {
+                label: 'Pattern Library',
+                patterns: [
+                    {
+                        name: 'Pattern Grid',
+                        offset: { x: 0, y: 0 },
+                        elements: [
+                            // Central pattern showcase
+                            { type: 'square', w: 400, h: 300, x: -200, y: -150, delay: 0, featured: true },
+                            // Component tiles
+                            { type: 'square', w: 120, h: 100, x: -180, y: -130, delay: 200 },
+                            { type: 'square', w: 120, h: 100, x: -40, y: -130, delay: 250 },
+                            { type: 'square', w: 120, h: 100, x: 100, y: -130, delay: 300 },
+                            // Design tokens
+                            { type: 'circle', w: 40, h: 40, x: -160, y: -80, delay: 400 },
+                            { type: 'circle', w: 40, h: 40, x: -20, y: -80, delay: 450 },
+                            { type: 'circle', w: 40, h: 40, x: 120, y: -80, delay: 500 },
+                            // Pattern connections
+                            { type: 'line', w: 350, h: 2, x: -175, y: 0, delay: 600 },
+                            { type: 'line', w: 340, h: 2, x: -170, y: 20, delay: 650 },
+                            { type: 'line', w: 360, h: 2, x: -180, y: 40, delay: 700 },
+                            // Labels
+                            { type: 'line', w: 100, h: 3, x: -180, y: 80, delay: 800 },
+                            { type: 'line', w: 80, h: 3, x: -40, y: 80, delay: 850 },
+                            { type: 'line', w: 90, h: 3, x: 100, y: 80, delay: 900 }
+                        ]
+                    }
+                ]
+            };
+
+            // Count total primitives needed
+            let totalPrimitives = 0;
+            caseStudyLayout.patterns.forEach(pattern => {
+                totalPrimitives += pattern.elements.length;
+            });
+
+            // Create cloud of primitives
+            const cloudSize = Math.max(totalPrimitives * 1.5, 100);
+            const typeDistribution = { square: 0.25, line: 0.65, circle: 0.10 };
+
+            for (let i = 0; i < cloudSize; i++) {
+                const rand = Math.random();
+                let type;
+                if (rand < typeDistribution.square) type = 'square';
+                else if (rand < typeDistribution.square + typeDistribution.line) type = 'line';
+                else type = 'circle';
+
+                const token = document.createElement('div');
+                token.className = 'token token-' + type + ' floating';
+
+                // Random size for cloud diversity
+                const size = type === 'line' ?
+                    { w: (20 + Math.random() * 60) * scale, h: 2 * scale } :
+                    { w: (16 + Math.random() * 32) * scale, h: (16 + Math.random() * 32) * scale };
+
+                token.style.width = size.w + 'px';
+                token.style.height = size.h + 'px';
+
+                // Random cloud position
+                const cloudX = vw * (0.05 + Math.random() * 0.9);
+                const cloudY = vh * (0.15 + Math.random() * 0.7);
+                token.style.left = cloudX + 'px';
+                token.style.top = cloudY + 'px';
+                token.style.opacity = '0.15';
+
+                // Stagger animation
+                token.style.animationDelay = (Math.random() * 8) + 's';
+
+                container.appendChild(token);
+                tokens.push({
+                    element: token,
+                    type: type,
+                    inUse: false,
+                    cloudPos: { x: cloudX, y: cloudY },
+                    cloudSize: size
+                });
+            }
+
+            // Assemble the pattern layout
+            function assembleLayout() {
+                pageLabel.textContent = caseStudyLayout.label;
+                pageLabel.classList.add('visible');
+
+                // Center position
+                const baseX = vw / 2;
+                const baseY = vh * 0.4;
+
+                // Assemble all patterns
+                caseStudyLayout.patterns.forEach(pattern => {
+                    pattern.elements.forEach((element, index) => {
+                        setTimeout(() => {
+                            // Find available primitive from cloud
+                            const token = tokens.find(t => t.type === element.type && !t.inUse);
+                            if (!token) return;
+
+                            token.inUse = true;
+                            const el = token.element;
+
+                            // Remove from cloud
+                            el.classList.remove('floating');
+                            el.classList.add('assembling');
+
+                            // Apply grid alignment
+                            const alignedX = Math.round(((pattern.offset.x + element.x) * scale) / grid) * grid;
+                            const alignedY = Math.round(((pattern.offset.y + element.y) * scale) / grid) * grid;
+                            const alignedW = Math.round((element.w * scale) / grid) * grid;
+                            const alignedH = Math.round((element.h * scale) / grid) * grid;
+
+                            // Pull from cloud to position
+                            el.style.left = (baseX + alignedX) + 'px';
+                            el.style.top = (baseY + alignedY) + 'px';
+                            el.style.width = alignedW + 'px';
+                            el.style.height = alignedH + 'px';
+                            el.style.opacity = element.featured ? '1' : '0.8';
+
+                            if (element.featured) {
+                                el.classList.add('featured');
+                            }
+                        }, element.delay);
+                    });
+                });
+
+                // Calculate total assembly time
+                let maxDelay = 0;
+                caseStudyLayout.patterns.forEach(pattern => {
+                    pattern.elements.forEach(element => {
+                        maxDelay = Math.max(maxDelay, element.delay);
+                    });
+                });
+
+                return maxDelay + 800;
+            }
+
+            function dissolveToCloud() {
+                pageLabel.classList.remove('visible');
+
+                // Return all primitives to cloud
+                tokens.forEach(token => {
+                    if (token.inUse) {
+                        const el = token.element;
+
+                        // Return to cloud position and size
+                        el.style.left = token.cloudPos.x + 'px';
+                        el.style.top = token.cloudPos.y + 'px';
+                        el.style.width = token.cloudSize.w + 'px';
+                        el.style.height = token.cloudSize.h + 'px';
+                        el.style.opacity = '0.15';
+
+                        el.classList.remove('assembling', 'featured');
+                        el.classList.add('floating');
+
+                        token.inUse = false;
+                    }
+                });
+            }
+
+            // Animation cycle
+            function cycleAnimation() {
+                const assemblyTime = assembleLayout();
+
+                // Hold for viewing, then dissolve and repeat
+                setTimeout(() => {
+                    dissolveToCloud();
+
+                    setTimeout(() => {
+                        cycleAnimation();
+                    }, 1500);
+                }, assemblyTime + 4000);
+            }
+
+            // Start the animation
+            setTimeout(() => {
+                cycleAnimation();
+            }, 1500);
+
+        })();
 
         // Theme Toggle Logic
         const themeToggle = document.getElementById('themeToggle');

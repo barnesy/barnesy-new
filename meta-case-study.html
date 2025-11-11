@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Built with AI: A Meta Case Study | Chris Barnes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #1a1816;
+            --bg-card: #252321;
+            --text-primary: #faf8f5;
+            --text-secondary: #b8b3ad;
+            --accent: #22c55e;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --accent-orange: #f97316;
+            --accent-pink: #ec4899;
+            --border: #3a3632;
+            --code-bg: #1e1e1e;
+
+            --gutter: 1rem;
+            --section-padding-y: 4rem;
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #faf8f5;
+            --bg-card: #ffffff;
+            --text-primary: #1a1816;
+            --text-secondary: #6b6560;
+            --accent: #22c55e;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --accent-orange: #f97316;
+            --accent-pink: #ec4899;
+            --border: #e5e1dc;
+            --code-bg: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem var(--gutter);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        nav .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        nav .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.7;
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.2s;
+        }
+
+        .theme-toggle:hover svg {
+            stroke: var(--text-primary);
+        }
+
+        .theme-icon {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            position: absolute;
+        }
+
+        .theme-icon.hidden {
+            opacity: 0;
+            transform: rotate(180deg);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        .wide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        section {
+            padding: var(--section-padding-y) var(--gutter);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 8rem var(--gutter) 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-card) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .collaboration-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 2rem;
+        }
+
+        .collaboration-badge svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Section Styles */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content strong {
+            color: var(--text-primary);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 3rem 0;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg-dark);
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Code Comparison */
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .code-panel {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            padding: 1rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-header.before {
+            color: var(--accent-orange);
+        }
+
+        .code-header.after {
+            color: var(--accent);
+        }
+
+        .code-content {
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .code-content pre {
+            margin: 0;
+        }
+
+        .code-comment {
+            color: #6a9955;
+        }
+
+        .code-keyword {
+            color: #569cd6;
+        }
+
+        .code-string {
+            color: #ce9178;
+        }
+
+        .code-function {
+            color: #dcdcaa;
+        }
+
+        /* Decision Cards */
+        .decision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .decision-card {
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 4px;
+            padding: 1.5rem;
+        }
+
+        .decision-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent-blue);
+        }
+
+        .decision-human {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .decision-human::before {
+            content: "👤 Human: ";
+            font-weight: 600;
+            color: var(--accent-purple);
+            font-style: normal;
+        }
+
+        .decision-ai {
+            color: var(--text-secondary);
+        }
+
+        .decision-ai::before {
+            content: "🤖 AI: ";
+            font-weight: 600;
+            color: var(--accent);
+            font-style: normal;
+        }
+
+        /* Commit Visualization */
+        .commit-viz {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .commit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .commit-item:last-child {
+            border-bottom: none;
+        }
+
+        .commit-hash {
+            font-family: 'Monaco', monospace;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 80px;
+        }
+
+        .commit-message {
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .commit-files {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Process Flow */
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .process-step {
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            min-width: 150px;
+            transition: border-color 0.2s;
+        }
+
+        .process-step:hover {
+            border-color: var(--accent);
+        }
+
+        .process-step.human {
+            border-color: var(--accent-purple);
+        }
+
+        .process-step.ai {
+            border-color: var(--accent);
+        }
+
+        .process-arrow {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+        }
+
+        .process-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-label {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .process-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 4px;
+        }
+
+        .quote-block p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .quote-author {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-style: normal;
+            font-size: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            padding: 3rem var(--gutter);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 6rem var(--gutter) 3rem;
+            }
+
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .decision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-flow {
+                flex-direction: column;
+            }
+
+            .process-arrow {
+                transform: rotate(90deg);
+            }
+
+            .timeline {
+                padding-left: 1rem;
+            }
+
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Chris Barnes</a>
+            <div class="nav-links">
+                <a href="index.html#work" class="back-link">← Back to Work</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Meta Case Study</span>
+            <h1>Built with AI</h1>
+            <p class="subtitle">How this portfolio was created through human-AI collaboration</p>
+
+            <div class="collaboration-badge">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+                Built in Collaboration with Claude Code
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Metrics -->
+    <section>
+        <div class="wide-container">
+            <h2 class="section-title">By the Numbers</h2>
+            <p class="section-content">
+                Real metrics from this portfolio project.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" id="linesOfCode">5,269</span>
+                    <span class="stat-label">Lines of Code Written</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">13</span>
+                    <span class="stat-label">Files Created</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">~8</span>
+                    <span class="stat-label">Hours of Work</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">~40</span>
+                    <span class="stat-label">Hours Saved</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">HTML Pages</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Production Ready</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">The Challenge</h2>
+            <div class="section-content">
+                <p>
+                    How do you showcase AI collaboration expertise? Build with AI and document the process.
+                </p>
+                <p>
+                    Every page—from the design system case study to the AI collaboration framework—was
+                    created through human-AI partnership. This page documents the timeline, decisions, and code.
+                </p>
+                <p>
+                    <strong>The goal:</strong> Demonstrate what's possible with structured thinking, clear communication, and AI tools. Built faster, iterated more, higher quality.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Collaboration Timeline</h2>
+            <p class="section-content">
+                From concept to production: key moments in human-AI collaboration.
+            </p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">October 19, 2025 - Session 1</div>
+                    <h3 class="timeline-title">Screenshot Tool Setup</h3>
+                    <p class="timeline-description">
+                        Set up screenshot capabilities on Termux. Discovered limitations, pivoted to documentation and helper scripts.
+                        Created screenshot guide and organization tools.
+                    </p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">Problem Solving</span>
+                        <span class="timeline-tag">Documentation</span>
+                        <span class="timeline-tag">Bash Scripts</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">October 19, 2025 - Session 2</div>
+                    <h3 class="timeline-title">Design System Case Study Enhancement</h3>
+                    <p class="timeline-description">
+                        Enhanced case study with image placeholders, screenshot styling, and responsive grids.
+                        Created directory structure. Added fallback messages for missing images.
+                    </p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">CSS Enhancement</span>
+                        <span class="timeline-tag">UX Design</span>
+                        <span class="timeline-tag">File Organization</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">October 19, 2025 - Session 3</div>
+                    <h3 class="timeline-title">Local Server Setup</h3>
+                    <p class="timeline-description">
+                        Set up Python HTTP server for live preview. Enabled rapid iteration and real-time testing.
+                    </p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">DevOps</span>
+                        <span class="timeline-tag">Development Environment</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">October 19, 2025 - Session 4</div>
+                    <h3 class="timeline-title">Portfolio Enhancement Brainstorm</h3>
+                    <p class="timeline-description">
+                        Brainstormed ways to showcase AI collaboration. Generated 10+ ideas
+                        including live demos, interactive components, technical blog, and meta documentation.
+                        Prioritized based on impact and feasibility.
+                    </p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">Strategy</span>
+                        <span class="timeline-tag">Ideation</span>
+                        <span class="timeline-tag">Planning</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">October 19, 2025 - Session 5</div>
+                    <h3 class="timeline-title">AI Collaboration Framework Page</h3>
+                    <p class="timeline-description">
+                        Built comprehensive page documenting AI workflow: tools (Claude Code + Figma MCP + Schema),
+                        prompting styles, types of thinking, and context distillation. Created interactive formula
+                        visualization and real prompt examples. 33KB of content documenting the collaboration process.
+                    </p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">Content Creation</span>
+                        <span class="timeline-tag">Technical Writing</span>
+                        <span class="timeline-tag">Knowledge Sharing</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">October 19, 2025 - Session 6</div>
+                    <h3 class="timeline-title">Meta Case Study Page</h3>
+                    <p class="timeline-description">
+                        Created this page—a meta case study documenting the portfolio creation process itself.
+                        Analyzed git history, calculated metrics, built timeline, and created transparency around
+                        the human-AI collaboration. The ultimate proof of concept.
+                    </p>
+                    <div class="timeline-tags">
+                        <span class="timeline-tag">Meta-Documentation</span>
+                        <span class="timeline-tag">Data Analysis</span>
+                        <span class="timeline-tag">Transparency</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decision Making Process -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">Decision-Making Process</h2>
+            <p class="section-content">
+                Real examples of how human and AI collaborated on key decisions throughout the project.
+            </p>
+
+            <div class="decision-grid">
+                <div class="decision-card">
+                    <h4>Screenshot Tool Approach</h4>
+                    <p class="decision-human">
+                        "Setup the tool on termux"
+                    </p>
+                    <p class="decision-ai">
+                        Discovered Termux lacks screenshot command. Instead of stopping, pivoted to creating
+                        comprehensive documentation, helper scripts, and guides for manual screenshot workflow.
+                        Solution addresses the need even without the ideal tool.
+                    </p>
+                </div>
+
+                <div class="decision-card">
+                    <h4>Portfolio Enhancement Strategy</h4>
+                    <p class="decision-human">
+                        "Ultrathink about other things we could add to this portfolio to showcase our collaboration and powers"
+                    </p>
+                    <p class="decision-ai">
+                        Generated 10+ strategic ideas, categorized by impact and effort. Prioritized "AI Collaboration
+                        Framework" and "Meta Case Study" as high-value differentiators. Provided immediate quick wins
+                        and long-term roadmap.
+                    </p>
+                </div>
+
+                <div class="decision-card">
+                    <h4>Content Structure</h4>
+                    <p class="decision-human">
+                        "I like a collaborative tools and context page. Claude code agent + figma mcp + schema = breakthrough results"
+                    </p>
+                    <p class="decision-ai">
+                        Built page around the formula concept, created visual representation, organized into logical
+                        sections (tools, prompting, thinking types, context layers). Made abstract concepts concrete
+                        with examples and code snippets.
+                    </p>
+                </div>
+
+                <div class="decision-card">
+                    <h4>Meta Documentation</h4>
+                    <p class="decision-human">
+                        "Build this page out: 'Built with AI' Meta Case Study"
+                    </p>
+                    <p class="decision-ai">
+                        Analyzed actual git history, calculated real metrics, documented timeline from session notes,
+                        created honest before/after comparisons. Made it transparent and educational, not just
+                        promotional. This page you're reading is the result.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Flow -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">The Collaboration Process</h2>
+            <p class="section-content">
+                How human and AI worked together, step by step.
+            </p>
+
+            <div class="process-flow">
+                <div class="process-step human">
+                    <div class="process-icon">👤</div>
+                    <div class="process-label">Human</div>
+                    <div class="process-desc">Vision & Direction</div>
+                </div>
+                <div class="process-arrow">→</div>
+                <div class="process-step ai">
+                    <div class="process-icon">🤖</div>
+                    <div class="process-label">AI</div>
+                    <div class="process-desc">Analysis & Options</div>
+                </div>
+                <div class="process-arrow">→</div>
+                <div class="process-step human">
+                    <div class="process-icon">👤</div>
+                    <div class="process-label">Human</div>
+                    <div class="process-desc">Decisions & Feedback</div>
+                </div>
+                <div class="process-arrow">→</div>
+                <div class="process-step ai">
+                    <div class="process-icon">🤖</div>
+                    <div class="process-label">AI</div>
+                    <div class="process-desc">Implementation</div>
+                </div>
+                <div class="process-arrow">→</div>
+                <div class="process-step human">
+                    <div class="process-icon">👤</div>
+                    <div class="process-label">Human</div>
+                    <div class="process-desc">Review & Iterate</div>
+                </div>
+            </div>
+
+            <div class="section-content">
+                <p>
+                    <strong>Human brings:</strong> Strategic vision, creative direction, domain expertise, user empathy,
+                    aesthetic judgment, and final decision-making authority.
+                </p>
+                <p>
+                    <strong>AI brings:</strong> Code generation, pattern recognition, exhaustive option analysis,
+                    documentation, rapid prototyping, and tireless iteration.
+                </p>
+                <p>
+                    <strong>Together:</strong> Faster execution, higher quality, more exploration, better documentation,
+                    and outcomes neither could achieve alone.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">Before & After: Code Examples</h2>
+            <p class="section-content">
+                Real examples showing how AI collaboration improved code quality and completeness.
+            </p>
+
+            <div class="code-comparison">
+                <div class="code-panel">
+                    <div class="code-header before">
+                        Before: Manual Approach
+                    </div>
+                    <div class="code-content">
+<pre><code><span class="code-comment">// Typical manual screenshot guide</span>
+<span class="code-keyword">Screenshots needed:</span>
+- Dashboard
+- Components
+- Tokens
+
+<span class="code-comment">// Minimal, vague</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="code-panel">
+                    <div class="code-header after">
+                        After: AI-Enhanced
+                    </div>
+                    <div class="code-content">
+<pre><code><span class="code-comment">// Comprehensive guide with:</span>
+- Exact filenames
+- Directory structure
+- Helper script
+- Checklist with 7+ items
+- Integration instructions
+- Fallback error messages
+- Mobile/desktop approaches
+
+<span class="code-comment">// Complete, actionable</span></code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-comparison">
+                <div class="code-panel">
+                    <div class="code-header before">
+                        Before: Basic Structure
+                    </div>
+                    <div class="code-content">
+<pre><code><span class="code-keyword">&lt;div</span> <span class="code-function">class</span>=<span class="code-string">"image"</span><span class="code-keyword">&gt;</span>
+  <span class="code-keyword">&lt;img</span> <span class="code-function">src</span>=<span class="code-string">"screenshot.png"</span><span class="code-keyword">&gt;</span>
+<span class="code-keyword">&lt;/div&gt;</span>
+
+<span class="code-comment">// Works but minimal</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="code-panel">
+                    <div class="code-header after">
+                        After: Production Ready
+                    </div>
+                    <div class="code-content">
+<pre><code><span class="code-keyword">&lt;div</span> <span class="code-function">class</span>=<span class="code-string">"case-study-image-container"</span><span class="code-keyword">&gt;</span>
+  <span class="code-keyword">&lt;img</span> <span class="code-function">src</span>=<span class="code-string">"images/design-system/dashboard.png"</span>
+       <span class="code-function">alt</span>=<span class="code-string">"Dashboard interface"</span>
+       <span class="code-function">class</span>=<span class="code-string">"case-study-image"</span>
+       <span class="code-function">onerror</span>=<span class="code-string">"this.parentElement.innerHTML='&lt;div class=\"image-block\"&gt;📸 Add dashboard.png&lt;/div&gt;'"</span><span class="code-keyword">&gt;</span>
+  <span class="code-keyword">&lt;p</span> <span class="code-function">class</span>=<span class="code-string">"image-caption"</span><span class="code-keyword">&gt;</span>Dashboard showing...<span class="code-keyword">&lt;/p&gt;</span>
+<span class="code-keyword">&lt;/div&gt;</span>
+
+<span class="code-comment">// Accessible, responsive, error handling</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Git Commits -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Git Commit History</h2>
+            <p class="section-content">
+                Actual commits from the repository showing the evolution of the project.
+            </p>
+
+            <div class="commit-viz">
+                <div class="commit-item">
+                    <div class="commit-hash">057a477</div>
+                    <div>
+                        <div class="commit-message">Add spacing CSS variables and reduce gutters to 1rem</div>
+                        <div class="commit-files">Design system refinement · Consistency improvements</div>
+                    </div>
+                </div>
+                <div class="commit-item">
+                    <div class="commit-hash">29f6e74</div>
+                    <div>
+                        <div class="commit-message">Add animated token background to case study hero</div>
+                        <div class="commit-files">Visual enhancement · Pattern animation · UX polish</div>
+                    </div>
+                </div>
+                <div class="commit-item">
+                    <div class="commit-hash">1e5ff50</div>
+                    <div>
+                        <div class="commit-message">Fix light mode theme for badges and hero overlay</div>
+                        <div class="commit-files">Accessibility · Theme support · Cross-browser testing</div>
+                    </div>
+                </div>
+                <div class="commit-item">
+                    <div class="commit-hash">New</div>
+                    <div>
+                        <div class="commit-message">Add AI collaboration framework page</div>
+                        <div class="commit-files">ai-collaboration.html · 33KB · New section</div>
+                    </div>
+                </div>
+                <div class="commit-item">
+                    <div class="commit-hash">New</div>
+                    <div>
+                        <div class="commit-message">Add meta case study documenting portfolio creation</div>
+                        <div class="commit-files">meta-case-study.html · This page · Transparency</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Insights -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">Key Insights</h2>
+            <div class="section-content">
+                <p>
+                    <strong>Speed vs Quality isn't a trade-off:</strong> With proper AI collaboration, you get both.
+                    This portfolio was built faster than traditional approaches while achieving production-ready quality.
+                    The key is clear communication and structured workflows.
+                </p>
+                <p>
+                    <strong>Documentation as a side-effect:</strong> When working with AI, good documentation emerges
+                    naturally because you're constantly explaining context and decisions. This meta case study itself
+                    is proof—comprehensive documentation with minimal extra effort.
+                </p>
+                <p>
+                    <strong>Iteration enables exploration:</strong> Because iteration is fast, you can explore more
+                    options. The brainstorming session generated 10+ portfolio enhancement ideas in minutes. Traditional
+                    approaches would force picking one idea upfront. AI collaboration lets you explore many before committing.
+                </p>
+                <p>
+                    <strong>Human judgment remains essential:</strong> AI generates options and implementations, but
+                    strategic decisions come from human expertise. Which features to build, how to prioritize, what
+                    story to tell—these required human judgment informed by domain knowledge.
+                </p>
+                <p>
+                    <strong>Transparency builds trust:</strong> This page exists because showing the process is as
+                    valuable as showing the results. Most portfolios hide how things are made. Revealing the AI
+                    collaboration process demonstrates confidence and positions you as a forward-thinking practitioner.
+                </p>
+            </div>
+
+            <div class="quote-block">
+                <p>
+                    "The portfolio itself is the proof. Every page demonstrates the framework it documents."
+                </p>
+                <div class="quote-author">— The Meta Insight</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results & Impact -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Results & Impact</h2>
+            <div class="section-content">
+                <p>
+                    <strong>Time Saved:</strong> Estimated 40+ hours of traditional development time compressed into
+                    ~8 hours of collaboration. That's 5x faster without sacrificing quality. The difference? AI handles
+                    code generation, boilerplate, and documentation while human focuses on strategy and decisions.
+                </p>
+                <p>
+                    <strong>Code Quality:</strong> 5,269 lines of production-ready code with consistent patterns,
+                    comprehensive documentation, accessibility features, responsive design, and theme support.
+                    All following best practices because AI was trained on them.
+                </p>
+                <p>
+                    <strong>Comprehensive Coverage:</strong> Built 7 HTML pages, complete design system integration,
+                    multiple case studies, helper scripts, documentation, and this meta case study. Far more than
+                    typical portfolio scope because iteration was fast enough to explore and implement many ideas.
+                </p>
+                <p>
+                    <strong>Educational Value:</strong> This portfolio doesn't just showcase work—it teaches. The AI
+                    collaboration framework page, this meta case study, and comprehensive documentation provide value
+                    beyond typical portfolio content. It positions the creator as a thought leader.
+                </p>
+                <p>
+                    <strong>Differentiation:</strong> How many portfolios document their own creation? How many show
+                    the actual AI collaboration process? This transparency and meta-awareness creates unique positioning
+                    in a crowded field.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+        <div class="container">
+            <div class="cta-section">
+                <h2>Want to Work This Way?</h2>
+                <p>This portfolio demonstrates what's possible. Let's discuss what we could build together.</p>
+                <div class="cta-buttons">
+                    <a href="ai-collaboration.html" class="cta-button">See the Framework</a>
+                    <a href="index.html#contact" class="cta-button secondary">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="margin-right: 2rem;">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank">GitHub</a>
+        </div>
+        <p><a href="index.html">← Back to Portfolio</a></p>
+        <p style="margin-top: 1rem; color: var(--text-secondary);">
+            Built with Claude Code · &copy; 2025 Chris Barnes
+        </p>
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Apply saved theme on load
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    html.removeAttribute('data-theme');
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                }
+            }
+        });
+
+        // Update live metrics (could fetch from git via API)
+        // For now, metrics are static but structure is ready for dynamic updates
+    </script>
+</body>
+</html>

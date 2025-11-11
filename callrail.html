@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CallRail Design System | Chris Barnes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Chris Barnes</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html#work" class="back-link">← Back to Work</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="project-hero" style="background: #1c4e8c;">
+        <div class="container">
+            <h1>CallRail</h1>
+            <p class="lead">Leading design systems overhaul. Aligning multi-disciplinary teams around a modular component system that increased accessibility and consistency across the platform.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>Aligning multi-disciplinary teams</h2>
+            <p>Each discipline powers a system that creates cycles of iteration and incremental improvement. Collaboration and empathy was key to helping align our team around a common system that was useful and efficient.</p>
+
+            <img src="images/callrail/callrail-08.png" alt="Team Alignment" class="img-full">
+
+            <h2>Design Systems</h2>
+            <p>I identified parts of the system that could be modularized into reusable components...just like legos! The building blocks composed pages. The pages were placed into a hierarchy of information made up of directories that terminate in leaf pages. This increased accessibility, and provided consistency across the platform.</p>
+
+            <img src="images/callrail/callrail_legos.png" alt="Lego Component System" class="img-full">
+            <img src="images/callrail/callrail-11.png" alt="Component Library" class="img-full">
+            <img src="images/callrail/callrail-10.png" alt="Design System Documentation" class="img-full">
+
+            <h2>SEO + Accessibility</h2>
+            <p>We had a minor conflict with the Demand Generation team that was producing pages outside of the hierarchy. We identified core needs for the system that drove decisions that honored the SEO goals, while producing a highly accessible system.</p>
+
+            <p>By identifying areas of overlap that increased Accessibility and SEO we were able to produce a system that fulfilled both teams KPIs. Below is the <a href="https://searchengineland.com/guide/what-is-seo" target="_blank" style="color: var(--accent); text-decoration: none;">SEO Table of Elements</a> where we outlined goals for the new design system.</p>
+
+            <img src="images/callrail/callrail_seo_pte.png" alt="SEO Table of Elements" class="img-full">
+
+            <h2>Wholistic deep dive reviews</h2>
+            <p>I mapped existing content into new structures. I designed the information structure to make more sense categorically.</p>
+
+            <img src="images/callrail/callrail-20.png" alt="Content Mapping" class="img-full">
+
+            <h2>Sketch Wireframes</h2>
+            <p>Once we had a system in place I rapidly sketched out new pages and systems that would better communicate and facilitate user interactions.</p>
+
+            <div class="image-grid">
+                <img src="images/callrail/callrail-21.png" alt="Wireframe 1">
+                <img src="images/callrail/callrail-23.png" alt="Wireframe 2">
+                <img src="images/callrail/callrail-24.png" alt="Wireframe 3">
+                <img src="images/callrail/callrail-26.png" alt="Wireframe 4">
+            </div>
+
+            <h2>Before & After</h2>
+            <p>Before</p>
+            <img src="images/callrail/callrail-old.png" alt="Before redesign" class="img-full">
+
+            <p>After</p>
+            <img src="images/callrail/callrail-new.png" alt="After redesign" class="img-full">
+        </div>
+    </section>
+
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none; margin-right: 2rem;">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
+        </div>
+        <p><a href="index.html#work">← Back to Work</a></p>
+        <p style="margin-top: 1rem;">&copy; 2025 Chris Barnes</p>
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

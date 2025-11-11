@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Read - Award Winning App | Chris Barnes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Chris Barnes</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html#work" class="back-link">← Back to Work</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <div class="project-hero-image" style="background-image: url('images/letsread/LR+Hero.jpg');"></div>
+        <div class="container">
+            <h1>Let's Read</h1>
+            <p class="lead">Award winning, Apple Appstore Featured. Family network for storytime connecting generations through the joy of reading together.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>The Concept</h2>
+            <p>I designed and prototyped a kids-book reading network. This prototype turned into a full product helping families stay connected. The app's main feature was remote video narration of in-app books. It was featured on the Apple Appstore and won a Webby award.</p>
+
+            <img src="images/letsread/lets-read-accounts.png" alt="Account System" class="img-full">
+
+            <h2>Product Screens</h2>
+            <div class="image-grid">
+                <img src="images/letsread/LR+01.jpg" alt="App Screen 1">
+                <img src="images/letsread/LR+02.jpg" alt="App Screen 2">
+                <img src="images/letsread/LR+03.jpg" alt="App Screen 3">
+                <img src="images/letsread/LR+04.jpg" alt="App Screen 4">
+                <img src="images/letsread/LR+05.jpg" alt="App Screen 5">
+            </div>
+
+            <h2>Impact</h2>
+            <p>The app enabled grandparents, parents, and loved ones to read bedtime stories to children regardless of distance. By combining video recording with interactive books, Let's Read created meaningful connections across generations and helped maintain family bonds through the simple act of reading together.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none; margin-right: 2rem;">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
+        </div>
+        <p><a href="index.html#work">← Back to Work</a></p>
+        <p style="margin-top: 1rem;">&copy; 2025 Chris Barnes</p>
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

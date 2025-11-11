@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chris Barnes - AI & Design Systems Leader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #1a1816;
+            --bg-card: #252321;
+            --text-primary: #faf8f5;
+            --text-secondary: #b8b3ad;
+            --accent: #22c55e;
+            --border: #3a3632;
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #faf8f5;
+            --bg-card: #ffffff;
+            --text-primary: #1a1816;
+            --text-secondary: #6b6560;
+            --accent: #3b82f6;
+            --border: #e5e1dc;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.7;
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.2s;
+        }
+
+        .theme-toggle:hover svg {
+            stroke: var(--text-primary);
+        }
+
+        .theme-icon {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            position: absolute;
+        }
+
+        .theme-icon.hidden {
+            opacity: 0;
+            transform: rotate(180deg);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav .resume-link {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-dark);
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Design Token Animation */
+        .token-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .token {
+            position: absolute;
+            opacity: 0.15;
+            will-change: transform, opacity;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .token.assembling {
+            opacity: 0.8;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .token.featured {
+            opacity: 1 !important;
+        }
+
+        .token.floating {
+            animation: cloudFloat 12s ease-in-out infinite;
+        }
+
+        .token-circle {
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+        }
+
+        .token-square {
+            border: 2px solid var(--accent);
+            border-radius: 2px;
+        }
+
+        .token-line {
+            background: var(--accent);
+        }
+
+        @keyframes cloudFloat {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            25% { transform: translate3d(20px, -15px, 0); }
+            50% { transform: translate3d(-15px, 20px, 0); }
+            75% { transform: translate3d(-20px, -10px, 0); }
+        }
+
+        /* Page label */
+        .page-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            color: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .page-label.visible {
+            opacity: 0.6;
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .token-animation {
+                display: none;
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero .tagline {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Featured Project - CDS 2.0 */
+        .featured-project {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 4rem;
+            margin-bottom: 4rem;
+            border: 1px solid var(--border);
+        }
+
+        .featured-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .featured-project h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .featured-project .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: transparent;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 160px;
+            background: var(--border);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 100%);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-card);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .skill-tag {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav .container {
+                padding: 1.5rem 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 6rem 1rem 4rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .featured-project {
+                padding: 2rem 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-content {
+                padding: 1.5rem;
+            }
+
+            section {
+                padding: 4rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Chris Barnes</div>
+            <ul>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="resume.html" target="_blank" class="resume-link">Resume</a></li>
+                <li>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="token-animation" id="tokenAnimation">
+            <div class="page-label" id="pageLabel"></div>
+        </div>
+        <div class="hero-content">
+            <h1>AI-Powered Design Systems Architect</h1>
+            <p class="subtitle">Building intelligent design systems and tools that generate production-ready code</p>
+            <a href="#contact" class="cta-button">Let's Build Something</a>
+        </div>
+    </section>
+
+    <!-- Featured Project - CDS 2.0 -->
+    <section id="work">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Work</h2>
+                <p>Transforming complexity into elegant systems</p>
+            </div>
+
+            <div class="featured-project">
+                <span class="featured-badge">Case Study</span>
+                <h3>AI Powered Design System</h3>
+                <p class="subtitle">Pattern Library for Generative UX</p>
+
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
+                    Given ownership of the design system, I completely rebuilt it using Material UI React and design tokens,
+                    then created Patterns v37—a comprehensive pattern library achieving 100% coverage. Built Seamstress—an AI agent that
+                    generates pixel-perfect prototypes. Put it to the test designing Agent Studio, where 80% of the designs
+                    were generated using AI workflows.
+                </p>
+
+                <div class="stats-grid">
+                    <div class="stat">
+                        <span class="stat-number">Multi-Version</span>
+                        <p class="stat-label">System Architecture</p>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <p class="stat-label">Pattern Coverage</p>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">Gen UX</span>
+                        <p class="stat-label">AI-Ready System</p>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">Live</span>
+                        <p class="stat-label">Code Generation</p>
+                    </div>
+                </div>
+
+                <p style="color: var(--text-secondary); margin-top: 2rem; font-size: 1rem;">
+                    <strong>Seamstress:</strong> Built an AI agent that generates production-ready code directly from Patterns v37.
+                    Tested with Figma MCP for performance. The result? A system that doesn't just document components—it ships
+                    real products. Agent Studio is proof: an agent management system designed with 80% AI-generated workflows.
+                </p>
+
+                <p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.9rem;">
+                    <a href="design-system-case-study.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">Read Full Case Study →</a>
+                </p>
+            </div>
+
+            <!-- AI Projects Grid -->
+            <div class="section-header" style="margin-top: 4rem;">
+                <h2>AI & Product Design</h2>
+                <p>Building intelligent experiences from concept to production</p>
+            </div>
+
+            <div class="project-grid">
+                <a href="design-system-case-study.html" class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #d4a574 0%, #9c6644 100%);"></div>
+                    <div class="project-content">
+                        <span class="project-tag">Design-to-Code AI</span>
+                        <h3>Design System Automation</h3>
+                        <p>Custom-built tools that generate clean code prototypes directly from design patterns.
+                        Closes the design-to-code gap by transforming pattern libraries into production-ready
+                        components, enabling true generative UX workflows.</p>
+                    </div>
+                </a>
+
+                <a href="industrial-data-labs.html" class="project-card">
+                    <div class="project-image" style="background-image: url('images/idl/idl-pipes.png');"></div>
+                    <div class="project-content">
+                        <span class="project-tag">AI Product</span>
+                        <h3>Industrial Data Labs</h3>
+                        <p>Took an AI concept from initial strategy through full product design and launch.
+                        Built intelligent data analysis tools that help industrial companies make sense of
+                        complex manufacturing data using machine learning.</p>
+                    </div>
+                </a>
+
+                <a href="callrail.html" class="project-card">
+                    <div class="project-image" style="background-image: url('images/callrail/callrail-11.png');"></div>
+                    <div class="project-content">
+                        <span class="project-tag">Design System</span>
+                        <h3>CallRail Design System</h3>
+                        <p>Design system to the rescue. Created a comprehensive component library that unified
+                        the product experience and accelerated development cycles for this leading call tracking platform.</p>
+                    </div>
+                </a>
+
+                <a href="lets-read.html" class="project-card">
+                    <div class="project-image" style="background-image: url('images/letsread/LR+Hero.jpg');"></div>
+                    <div class="project-content">
+                        <span class="project-tag">Product Design</span>
+                        <h3>Let's Read</h3>
+                        <p>A family network for sharing stories. Designed an intuitive mobile experience that
+                        connects generations through the joy of reading together, wherever they are.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="section-header">
+                    <h2>About Me</h2>
+                </div>
+                <p>
+                    I'm a designer and creative programmer based in Atlanta, GA, with a track record of
+                    collaborating on projects for renowned brands such as Disney, Intel, Weather Channel,
+                    Southern Company Gas, Kimberly Clark, and IHG.
+                </p>
+                <p>
+                    I specialize in the intersection of AI and design systems—building scalable design
+                    infrastructure and intelligent product experiences. My work spans strategy, product design,
+                    system architecture, system engineering, and full-stack development.
+                </p>
+                <p>
+                    I've worked corporate gigs, in the agency world, inside of startups, and alongside
+                    all of the above as a consultant. I bring a unique perspective that combines creative
+                    thinking with systematic engineering.
+                </p>
+
+                <div class="skills">
+                    <span class="skill-tag">AI Product Design</span>
+                    <span class="skill-tag">Design Systems Architecture</span>
+                    <span class="skill-tag">Full-Stack Development</span>
+                    <span class="skill-tag">Design Tokens</span>
+                    <span class="skill-tag">Component Libraries</span>
+                    <span class="skill-tag">Figma Systems</span>
+                    <span class="skill-tag">React & Vue</span>
+                    <span class="skill-tag">Strategic Design</span>
+                    <span class="skill-tag">Prototyping</span>
+                    <span class="skill-tag">User Research</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Let's Work Together</h2>
+                <p>Building the future of AI-powered design experiences</p>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="https://linkedin.com/in/iambarnesy" target="_blank" class="cta-button" style="margin-right: 1rem; margin-bottom: 1rem;">LinkedIn</a>
+                <a href="https://github.com/barnesy" target="_blank" class="cta-button" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); margin-right: 1rem; margin-bottom: 1rem;">GitHub</a>
+                <a href="resume.html" target="_blank" class="cta-button" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); margin-bottom: 1rem;">Resume</a>
+            </div>
+            <div style="text-align: center; margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button id="lightModeBtn" class="cta-button" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    Light Mode
+                </button>
+                <button id="darkModeBtn" class="cta-button" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    Dark Mode
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://linkedin.com/in/iambarnesy" target="_blank">LinkedIn</a>
+                <a href="https://github.com/barnesy" target="_blank">GitHub</a>
+                <a href="resume.html" target="_blank">Resume</a>
+                <a href="https://pair.withgoogle.com/guidebook/" target="_blank">People + AI Guidebook</a>
+                <a href="https://www.thinkwithgoogle.com/marketing-strategies/micro-moments/zero-moment-truth/" target="_blank">Zero Moment of Truth</a>
+            </div>
+            <p class="copyright">&copy; 2025 Chris Barnes. Design Systems + AI Innovation.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Deliberate Pattern Assembly Animation
+        (function() {
+            // Check for reduced motion preference
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const container = document.getElementById('tokenAnimation');
+            const pageLabel = document.getElementById('pageLabel');
+            if (!container || !pageLabel) return;
+
+            const tokens = [];
+            const isMobile = window.innerWidth < 768;
+
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const scale = isMobile ? 0.5 : 0.8;
+            const grid = 8 * scale; // 8px grid system
+
+            // Standardized spacing system
+            const SPACING = {
+                PADDING: 20,        // Edge padding
+                NAV_HEIGHT: 48,     // Global nav height
+                GAP_LARGE: 24,      // Between major sections
+                GAP_MEDIUM: 16,     // Between elements
+                GAP_SMALL: 8,       // Within grouped items
+                // Calculated positions
+                CONTENT_LEFT: -280,  // -300 + 20
+                CONTENT_RIGHT: 280,  // 300 - 20
+                NAV_TOP: -240,
+                NAV_BOTTOM: -192,    // -240 + 48
+                HEADER_TOP: -168,    // -192 - 24
+                CONTENT_TOP: -136    // -168 - 32 (after header)
+            };
+
+            // Define complete page layouts with standard page chrome
+            const pageLayouts = {
+                'Dashboard': {
+                    label: 'Dashboard',
+                    position: 'top-left',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 50 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 100 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 150 },
+                                { type: 'line', w: 60, h: 2, x: -140, y: -224, delay: 200 },
+                                { type: 'circle', w: 32, h: 32, x: 252, y: -232, delay: 250 }
+                            ]
+                        },
+                        {
+                            name: 'Page Header',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'line', w: 200, h: 4, x: -280, y: -168, delay: 300 },
+                                { type: 'line', w: 160, h: 2, x: -280, y: -152, delay: 350 }
+                            ]
+                        },
+                        {
+                            name: 'Metrics Cards',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Card 1 - starts at -120 (24px below header)
+                                { type: 'square', w: 173, h: 100, x: -280, y: -120, delay: 400, featured: true },
+                                { type: 'line', w: 80, h: 3, x: -268, y: -100, delay: 450 },
+                                { type: 'line', w: 60, h: 2, x: -268, y: -84, delay: 475 },
+                                { type: 'line', w: 70, h: 2, x: -268, y: -76, delay: 480 },
+                                // Card 2 - 16px gap from card 1
+                                { type: 'square', w: 173, h: 100, x: -91, y: -120, delay: 500 },
+                                { type: 'line', w: 80, h: 3, x: -79, y: -100, delay: 550 },
+                                { type: 'line', w: 55, h: 2, x: -79, y: -84, delay: 575 },
+                                { type: 'line', w: 65, h: 2, x: -79, y: -76, delay: 580 },
+                                // Card 3 - 16px gap from card 2
+                                { type: 'square', w: 173, h: 100, x: 98, y: -120, delay: 600 },
+                                { type: 'line', w: 80, h: 3, x: 110, y: -100, delay: 650 },
+                                { type: 'line', w: 50, h: 2, x: 110, y: -84, delay: 675 },
+                                { type: 'line', w: 60, h: 2, x: 110, y: -76, delay: 680 }
+                            ]
+                        },
+                        {
+                            name: 'Main Content',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Content starts at 4 (24px gap below cards at -120+100=-20, then -20+24=4)
+                                { type: 'square', w: 560, h: 216, x: -280, y: 4, delay: 700 },
+                                { type: 'line', w: 180, h: 3, x: -260, y: 20, delay: 750 },
+                                // Table header columns - 16px below title
+                                { type: 'line', w: 100, h: 2, x: -260, y: 44, delay: 800 },
+                                { type: 'line', w: 80, h: 2, x: -140, y: 44, delay: 805 },
+                                { type: 'line', w: 90, h: 2, x: -40, y: 44, delay: 810 },
+                                { type: 'line', w: 85, h: 2, x: 70, y: 44, delay: 815 },
+                                // Table rows - 8px gaps
+                                { type: 'line', w: 480, h: 2, x: -260, y: 60, delay: 850 },
+                                { type: 'line', w: 470, h: 2, x: -260, y: 76, delay: 855 },
+                                { type: 'line', w: 465, h: 2, x: -260, y: 92, delay: 860 },
+                                { type: 'line', w: 460, h: 2, x: -260, y: 108, delay: 865 },
+                                { type: 'line', w: 475, h: 2, x: -260, y: 124, delay: 870 },
+                                { type: 'line', w: 455, h: 2, x: -260, y: 140, delay: 875 },
+                                { type: 'line', w: 470, h: 2, x: -260, y: 156, delay: 880 },
+                                { type: 'line', w: 450, h: 2, x: -260, y: 172, delay: 885 }
+                            ]
+                        }
+                    ]
+                },
+                'Landing Page': {
+                    label: 'Landing Page',
+                    position: 'top-right',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 50 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 100 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 150 },
+                                { type: 'line', w: 60, h: 2, x: -140, y: -224, delay: 200 }
+                            ]
+                        },
+                        {
+                            name: 'Hero Section',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 560, h: 180, x: -280, y: -168, delay: 300, featured: true },
+                                { type: 'line', w: 300, h: 4, x: -260, y: -140, delay: 350 },
+                                { type: 'line', w: 280, h: 3, x: -260, y: -120, delay: 375 },
+                                { type: 'line', w: 420, h: 2, x: -260, y: -100, delay: 400 },
+                                { type: 'line', w: 400, h: 2, x: -260, y: -92, delay: 405 },
+                                { type: 'line', w: 410, h: 2, x: -260, y: -84, delay: 410 },
+                                { type: 'line', w: 380, h: 2, x: -260, y: -76, delay: 415 },
+                                { type: 'square', w: 120, h: 40, x: -260, y: -40, delay: 450 }
+                            ]
+                        },
+                        {
+                            name: 'Features',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 160, h: 160, x: -280, y: 56, delay: 500 },
+                                { type: 'circle', w: 48, h: 48, x: -256, y: 72, delay: 550 },
+                                { type: 'line', w: 100, h: 2, x: -268, y: 140, delay: 575 },
+                                { type: 'line', w: 120, h: 2, x: -268, y: 152, delay: 580 },
+                                { type: 'line', w: 115, h: 2, x: -268, y: 160, delay: 585 },
+                                { type: 'line', w: 110, h: 2, x: -268, y: 168, delay: 590 },
+                                { type: 'square', w: 160, h: 160, x: -100, y: 56, delay: 650 },
+                                { type: 'circle', w: 48, h: 48, x: -76, y: 72, delay: 700 },
+                                { type: 'line', w: 90, h: 2, x: -88, y: 140, delay: 725 },
+                                { type: 'line', w: 115, h: 2, x: -88, y: 152, delay: 730 },
+                                { type: 'line', w: 110, h: 2, x: -88, y: 160, delay: 735 },
+                                { type: 'line', w: 120, h: 2, x: -88, y: 168, delay: 740 },
+                                { type: 'square', w: 160, h: 160, x: 80, y: 56, delay: 800 },
+                                { type: 'circle', w: 48, h: 48, x: 104, y: 72, delay: 850 },
+                                { type: 'line', w: 95, h: 2, x: 92, y: 140, delay: 875 },
+                                { type: 'line', w: 110, h: 2, x: 92, y: 152, delay: 880 },
+                                { type: 'line', w: 120, h: 2, x: 92, y: 160, delay: 885 },
+                                { type: 'line', w: 105, h: 2, x: 92, y: 168, delay: 890 }
+                            ]
+                        }
+                    ]
+                },
+                'Form Page': {
+                    label: 'Form Page',
+                    position: 'bottom-left',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 50 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 100 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 150 }
+                            ]
+                        },
+                        {
+                            name: 'Page Header',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'line', w: 180, h: 4, x: -280, y: -168, delay: 250 },
+                                { type: 'line', w: 200, h: 2, x: -280, y: -140, delay: 300 }
+                            ]
+                        },
+                        {
+                            name: 'Form',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 400, h: 300, x: -200, y: -100, delay: 350 },
+                                { type: 'line', w: 80, h: 2, x: -180, y: -76, delay: 400 },
+                                { type: 'square', w: 360, h: 36, x: -180, y: -56, delay: 450 },
+                                { type: 'line', w: 100, h: 2, x: -170, y: -48, delay: 475 },
+                                { type: 'line', w: 80, h: 2, x: -180, y: -4, delay: 500 },
+                                { type: 'square', w: 360, h: 36, x: -180, y: 16, delay: 550 },
+                                { type: 'line', w: 95, h: 2, x: -170, y: 24, delay: 575 },
+                                { type: 'line', w: 100, h: 2, x: -180, y: 68, delay: 600 },
+                                { type: 'line', w: 60, h: 2, x: -180, y: 60, delay: 610 },
+                                { type: 'square', w: 360, h: 60, x: -180, y: 88, delay: 650, featured: true },
+                                { type: 'line', w: 120, h: 2, x: -170, y: 98, delay: 675 },
+                                { type: 'line', w: 110, h: 2, x: -170, y: 106, delay: 680 },
+                                { type: 'line', w: 105, h: 2, x: -170, y: 114, delay: 685 },
+                                { type: 'square', w: 120, h: 36, x: -60, y: 164, delay: 700 }
+                            ]
+                        }
+                    ]
+                },
+                'Detail Page': {
+                    label: 'Detail Page',
+                    position: 'bottom-right',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 50 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 100 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 150 },
+                                { type: 'line', w: 60, h: 2, x: -140, y: -224, delay: 200 },
+                                { type: 'circle', w: 32, h: 32, x: 252, y: -232, delay: 250 }
+                            ]
+                        },
+                        {
+                            name: 'Page Header',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'line', w: 180, h: 4, x: -280, y: -168, delay: 300 },
+                                { type: 'line', w: 140, h: 2, x: -280, y: -140, delay: 350 }
+                            ]
+                        },
+                        {
+                            name: 'Main Content',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 360, h: 280, x: -280, y: -100, delay: 400, featured: true },
+                                { type: 'line', w: 200, h: 3, x: -260, y: -80, delay: 450 },
+                                { type: 'line', w: 320, h: 2, x: -260, y: -56, delay: 475 },
+                                { type: 'line', w: 310, h: 2, x: -260, y: -48, delay: 480 },
+                                { type: 'line', w: 330, h: 2, x: -260, y: -40, delay: 485 },
+                                { type: 'line', w: 300, h: 2, x: -260, y: -32, delay: 490 },
+                                { type: 'line', w: 325, h: 2, x: -260, y: -24, delay: 495 },
+                                { type: 'line', w: 180, h: 3, x: -260, y: -4, delay: 520 },
+                                { type: 'line', w: 315, h: 2, x: -260, y: 20, delay: 545 },
+                                { type: 'line', w: 305, h: 2, x: -260, y: 28, delay: 550 },
+                                { type: 'line', w: 320, h: 2, x: -260, y: 36, delay: 555 },
+                                { type: 'line', w: 310, h: 2, x: -260, y: 44, delay: 560 },
+                                { type: 'line', w: 300, h: 2, x: -260, y: 52, delay: 565 },
+                                { type: 'line', w: 330, h: 2, x: -260, y: 60, delay: 570 }
+                            ]
+                        },
+                        {
+                            name: 'Sidebar',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 200, h: 280, x: 92, y: -100, delay: 650 },
+                                { type: 'square', w: 160, h: 80, x: 112, y: -80, delay: 700 },
+                                { type: 'line', w: 80, h: 2, x: 132, y: -60, delay: 725 },
+                                { type: 'line', w: 100, h: 2, x: 132, y: -48, delay: 730 },
+                                { type: 'line', w: 90, h: 2, x: 132, y: -40, delay: 735 },
+                                { type: 'line', w: 120, h: 2, x: 132, y: 20, delay: 750 },
+                                { type: 'line', w: 110, h: 2, x: 132, y: 32, delay: 770 },
+                                { type: 'line', w: 105, h: 2, x: 132, y: 40, delay: 775 },
+                                { type: 'square', w: 100, h: 32, x: 142, y: 60, delay: 800 }
+                            ]
+                        }
+                    ]
+                },
+                'Modal': {
+                    label: 'Modal Dialog',
+                    position: 'center-left',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 50 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 100 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 150 },
+                                { type: 'line', w: 60, h: 2, x: -140, y: -224, delay: 200 }
+                            ]
+                        },
+                        {
+                            name: 'Page Header',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'line', w: 160, h: 4, x: -280, y: -168, delay: 250 }
+                            ]
+                        },
+                        {
+                            name: 'Modal Dialog',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 440, h: 280, x: -220, y: -100, delay: 300, featured: true },
+                                { type: 'line', w: 180, h: 3, x: -200, y: -76, delay: 350 },
+                                { type: 'circle', w: 28, h: 28, x: 178, y: -82, delay: 400 },
+                                { type: 'line', w: 380, h: 2, x: -200, y: -44, delay: 425 },
+                                { type: 'line', w: 370, h: 2, x: -200, y: -36, delay: 430 },
+                                { type: 'line', w: 390, h: 2, x: -200, y: -28, delay: 435 },
+                                { type: 'line', w: 360, h: 2, x: -200, y: -20, delay: 440 },
+                                { type: 'line', w: 375, h: 2, x: -200, y: -12, delay: 445 },
+                                { type: 'line', w: 380, h: 2, x: -200, y: -4, delay: 450 },
+                                { type: 'line', w: 390, h: 2, x: -200, y: 12, delay: 475 },
+                                { type: 'line', w: 365, h: 2, x: -200, y: 20, delay: 480 },
+                                { type: 'line', w: 370, h: 2, x: -200, y: 28, delay: 485 },
+                                { type: 'line', w: 350, h: 2, x: -200, y: 36, delay: 490 },
+                                { type: 'square', w: 100, h: 36, x: -60, y: 120, delay: 600 },
+                                { type: 'square', w: 100, h: 36, x: 60, y: 120, delay: 650 }
+                            ]
+                        }
+                    ]
+                },
+                'Drawer': {
+                    label: 'Side Drawer',
+                    position: 'center-right',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 50 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 100 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 150 },
+                                { type: 'circle', w: 28, h: 28, x: -80, y: -234, delay: 200 }
+                            ]
+                        },
+                        {
+                            name: 'Page Header',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'line', w: 180, h: 4, x: -280, y: -168, delay: 250 }
+                            ]
+                        },
+                        {
+                            name: 'Drawer Panel',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 280, h: 400, x: 12, y: -192, delay: 300, featured: true },
+                                { type: 'line', w: 140, h: 3, x: 32, y: -168, delay: 350 },
+                                { type: 'line', w: 100, h: 2, x: 32, y: -152, delay: 375 },
+                                { type: 'circle', w: 28, h: 28, x: 248, y: -174, delay: 400 },
+                                { type: 'square', w: 40, h: 40, x: 32, y: -100, delay: 450 },
+                                { type: 'line', w: 120, h: 2, x: 84, y: -88, delay: 475 },
+                                { type: 'line', w: 80, h: 2, x: 84, y: -76, delay: 480 },
+                                { type: 'square', w: 40, h: 40, x: 32, y: -30, delay: 550 },
+                                { type: 'line', w: 110, h: 2, x: 84, y: -18, delay: 575 },
+                                { type: 'line', w: 75, h: 2, x: 84, y: -6, delay: 580 },
+                                { type: 'square', w: 40, h: 40, x: 32, y: 40, delay: 650 },
+                                { type: 'line', w: 100, h: 2, x: 84, y: 52, delay: 675 },
+                                { type: 'line', w: 70, h: 2, x: 84, y: 64, delay: 680 }
+                            ]
+                        }
+                    ]
+                },
+                'Settings Page': {
+                    label: 'Settings',
+                    position: 'bottom-left',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 50 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 100 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 150 },
+                                { type: 'circle', w: 32, h: 32, x: 252, y: -232, delay: 200 }
+                            ]
+                        },
+                        {
+                            name: 'Page Header',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'line', w: 180, h: 4, x: -280, y: -168, delay: 250 },
+                                { type: 'line', w: 140, h: 2, x: -280, y: -152, delay: 300 }
+                            ]
+                        },
+                        {
+                            name: 'Settings Sidebar',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Sidebar - 200px wide, 24px below header
+                                { type: 'square', w: 200, h: 328, x: -280, y: -120, delay: 350 },
+                                { type: 'line', w: 120, h: 2, x: -268, y: -104, delay: 400, featured: true },
+                                { type: 'line', w: 100, h: 2, x: -268, y: -72, delay: 425 },
+                                { type: 'line', w: 110, h: 2, x: -268, y: -40, delay: 450 },
+                                { type: 'line', w: 90, h: 2, x: -268, y: -8, delay: 475 },
+                                { type: 'line', w: 105, h: 2, x: -268, y: 24, delay: 500 },
+                                { type: 'line', w: 95, h: 2, x: -268, y: 56, delay: 525 }
+                            ]
+                        },
+                        {
+                            name: 'Settings Content',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Content area - 16px gap from sidebar
+                                { type: 'square', w: 344, h: 328, x: -48, y: -120, delay: 550 },
+                                { type: 'line', w: 160, h: 3, x: -28, y: -104, delay: 600 },
+                                // Setting row 1 - 24px below title
+                                { type: 'line', w: 100, h: 2, x: -28, y: -72, delay: 650 },
+                                { type: 'square', w: 48, h: 24, x: 228, y: -76, delay: 675 },
+                                { type: 'line', w: 260, h: 2, x: -28, y: -56, delay: 680 },
+                                // Setting row 2 - 16px gap
+                                { type: 'line', w: 120, h: 2, x: -28, y: -32, delay: 700 },
+                                { type: 'square', w: 48, h: 24, x: 228, y: -36, delay: 725 },
+                                { type: 'line', w: 240, h: 2, x: -28, y: -16, delay: 730 },
+                                // Setting row 3 - 16px gap
+                                { type: 'line', w: 140, h: 2, x: -28, y: 8, delay: 750 },
+                                { type: 'square', w: 48, h: 24, x: 228, y: 4, delay: 775 },
+                                { type: 'line', w: 280, h: 2, x: -28, y: 24, delay: 780 }
+                            ]
+                        }
+                    ]
+                },
+                'Table Page': {
+                    label: 'Data Table',
+                    position: 'bottom-right',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Page Title',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'line', w: 160, h: 4, x: -280, y: -256, delay: 50 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 100 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 150 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 200 },
+                                { type: 'line', w: 60, h: 2, x: -140, y: -224, delay: 250 }
+                            ]
+                        },
+                        {
+                            name: 'Table Header',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Action button - top right, 16px below nav
+                                { type: 'square', w: 100, h: 32, x: 172, y: -176, delay: 300 }
+                            ]
+                        },
+                        {
+                            name: 'Table',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Table container - 16px below nav
+                                { type: 'square', w: 560, h: 424, x: -280, y: -176, delay: 350, featured: true },
+                                // Header row - 12px padding inside table
+                                { type: 'line', w: 100, h: 2, x: -268, y: -160, delay: 400 },
+                                { type: 'line', w: 120, h: 2, x: -148, y: -160, delay: 405 },
+                                { type: 'line', w: 90, h: 2, x: -8, y: -160, delay: 410 },
+                                { type: 'line', w: 80, h: 2, x: 102, y: -160, delay: 415 },
+                                { type: 'line', w: 60, h: 2, x: 202, y: -160, delay: 420 },
+                                // Data rows - 8px gaps
+                                { type: 'line', w: 520, h: 2, x: -268, y: -144, delay: 450 },
+                                { type: 'line', w: 510, h: 2, x: -268, y: -128, delay: 460 },
+                                { type: 'line', w: 515, h: 2, x: -268, y: -112, delay: 470 },
+                                { type: 'line', w: 505, h: 2, x: -268, y: -96, delay: 480 },
+                                { type: 'line', w: 520, h: 2, x: -268, y: -80, delay: 490 },
+                                { type: 'line', w: 500, h: 2, x: -268, y: -64, delay: 500 },
+                                { type: 'line', w: 515, h: 2, x: -268, y: -48, delay: 510 },
+                                { type: 'line', w: 510, h: 2, x: -268, y: -32, delay: 520 },
+                                { type: 'line', w: 520, h: 2, x: -268, y: -16, delay: 530 },
+                                { type: 'line', w: 505, h: 2, x: -268, y: 0, delay: 540 },
+                                { type: 'line', w: 515, h: 2, x: -268, y: 16, delay: 550 },
+                                { type: 'line', w: 510, h: 2, x: -268, y: 32, delay: 560 },
+                                { type: 'line', w: 520, h: 2, x: -268, y: 48, delay: 570 },
+                                { type: 'line', w: 500, h: 2, x: -268, y: 64, delay: 580 },
+                                { type: 'line', w: 515, h: 2, x: -268, y: 80, delay: 590 },
+                                { type: 'line', w: 510, h: 2, x: -268, y: 96, delay: 600 },
+                                { type: 'line', w: 520, h: 2, x: -268, y: 112, delay: 610 },
+                                { type: 'line', w: 505, h: 2, x: -268, y: 128, delay: 620 },
+                                { type: 'line', w: 515, h: 2, x: -268, y: 144, delay: 630 },
+                                { type: 'line', w: 510, h: 2, x: -268, y: 160, delay: 640 },
+                                // Pagination - 24px from bottom of table
+                                { type: 'square', w: 32, h: 32, x: 100, y: 200, delay: 700 },
+                                { type: 'square', w: 32, h: 32, x: 148, y: 200, delay: 710 },
+                                { type: 'square', w: 32, h: 32, x: 196, y: 200, delay: 720 }
+                            ]
+                        }
+                    ]
+                },
+                'Profile Page': {
+                    label: 'User Profile',
+                    position: 'center-left',
+                    patterns: [
+                        {
+                            name: 'Page Container',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 480, x: -300, y: -240, delay: 0 }
+                            ]
+                        },
+                        {
+                            name: 'Global Nav',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                { type: 'square', w: 600, h: 48, x: -300, y: -240, delay: 50 },
+                                { type: 'square', w: 32, h: 32, x: -288, y: -232, delay: 100 },
+                                { type: 'line', w: 80, h: 2, x: -240, y: -224, delay: 150 },
+                                { type: 'circle', w: 32, h: 32, x: 252, y: -232, delay: 200 }
+                            ]
+                        },
+                        {
+                            name: 'Profile Header',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Profile banner - 24px below nav
+                                { type: 'square', w: 560, h: 120, x: -280, y: -168, delay: 250, featured: true },
+                                // Avatar - centered, overlaps banner
+                                { type: 'circle', w: 80, h: 80, x: -40, y: -128, delay: 300 },
+                                // Name and bio - 16px below avatar
+                                { type: 'line', w: 160, h: 3, x: -80, y: -32, delay: 350 },
+                                { type: 'line', w: 200, h: 2, x: -100, y: -16, delay: 375 },
+                                { type: 'line', w: 180, h: 2, x: -90, y: -4, delay: 380 }
+                            ]
+                        },
+                        {
+                            name: 'Profile Tabs',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Tabs - 24px below header content
+                                { type: 'line', w: 80, h: 2, x: -280, y: 28, delay: 400 },
+                                { type: 'line', w: 100, h: 2, x: -184, y: 28, delay: 410 },
+                                { type: 'line', w: 90, h: 2, x: -68, y: 28, delay: 420 }
+                            ]
+                        },
+                        {
+                            name: 'Profile Content',
+                            offset: { x: 0, y: 0 },
+                            elements: [
+                                // Content cards - 24px below tabs
+                                { type: 'square', w: 560, h: 160, x: -280, y: 60, delay: 450 },
+                                { type: 'line', w: 140, h: 3, x: -260, y: 76, delay: 500 },
+                                { type: 'line', w: 480, h: 2, x: -260, y: 96, delay: 525 },
+                                { type: 'line', w: 460, h: 2, x: -260, y: 108, delay: 530 },
+                                { type: 'line', w: 470, h: 2, x: -260, y: 120, delay: 535 },
+                                { type: 'line', w: 450, h: 2, x: -260, y: 132, delay: 540 }
+                            ]
+                        }
+                    ]
+                }
+            };
+
+            // Count total primitives needed
+            let totalPrimitives = 0;
+            Object.values(pageLayouts).forEach(layout => {
+                layout.patterns.forEach(pattern => {
+                    totalPrimitives += pattern.elements.length;
+                });
+            });
+
+            // Create cloud of primitives (more than needed for visual richness)
+            const cloudSize = Math.max(totalPrimitives * 1.5, 200);
+            const typeDistribution = { square: 0.20, line: 0.75, circle: 0.05 };
+
+            for (let i = 0; i < cloudSize; i++) {
+                const rand = Math.random();
+                let type;
+                if (rand < typeDistribution.square) type = 'square';
+                else if (rand < typeDistribution.square + typeDistribution.line) type = 'line';
+                else type = 'circle';
+
+                const token = document.createElement('div');
+                token.className = 'token token-' + type + ' floating';
+
+                // Random size for cloud diversity
+                const size = type === 'line' ?
+                    { w: (20 + Math.random() * 60) * scale, h: 2 * scale } :
+                    { w: (16 + Math.random() * 32) * scale, h: (16 + Math.random() * 32) * scale };
+
+                token.style.width = size.w + 'px';
+                token.style.height = size.h + 'px';
+
+                // Random cloud position - spread widely across viewport
+                const cloudX = vw * (0.05 + Math.random() * 0.9);
+                const cloudY = vh * (0.05 + Math.random() * 0.9);
+                token.style.left = cloudX + 'px';
+                token.style.top = cloudY + 'px';
+                token.style.opacity = '0.15';
+
+                // Stagger animation
+                token.style.animationDelay = (Math.random() * 8) + 's';
+
+                container.appendChild(token);
+                tokens.push({
+                    element: token,
+                    type: type,
+                    inUse: false,
+                    cloudPos: { x: cloudX, y: cloudY },
+                    cloudSize: size
+                });
+            }
+
+            // Assemble a page layout from patterns
+            function assemblePageLayout(layoutName) {
+                const layout = pageLayouts[layoutName];
+                if (!layout) return;
+
+                pageLabel.textContent = layout.label;
+                pageLabel.classList.add('visible');
+
+                // Calculate base position based on layout.position
+                let baseX = vw / 2;
+                let baseY = vh / 2;
+
+                if (layout.position) {
+                    const padding = 100; // Padding from viewport edges
+                    switch (layout.position) {
+                        case 'top-left':
+                            baseX = 320 * scale;
+                            baseY = 260 * scale;
+                            break;
+                        case 'top-right':
+                            baseX = vw - 320 * scale;
+                            baseY = 260 * scale;
+                            break;
+                        case 'bottom-left':
+                            baseX = 320 * scale;
+                            baseY = vh - 260 * scale;
+                            break;
+                        case 'bottom-right':
+                            baseX = vw - 320 * scale;
+                            baseY = vh - 260 * scale;
+                            break;
+                        case 'center-left':
+                            baseX = 320 * scale;
+                            baseY = vh / 2;
+                            break;
+                        case 'center-right':
+                            baseX = vw - 320 * scale;
+                            baseY = vh / 2;
+                            break;
+                    }
+                }
+
+                // Assemble all patterns in the layout
+                layout.patterns.forEach(pattern => {
+                    pattern.elements.forEach((element, index) => {
+                        setTimeout(() => {
+                            // Find available primitive from cloud
+                            const token = tokens.find(t => t.type === element.type && !t.inUse);
+                            if (!token) return;
+
+                            token.inUse = true;
+                            const el = token.element;
+
+                            // Remove from cloud
+                            el.classList.remove('floating');
+                            el.classList.add('assembling');
+
+                            // Apply grid alignment
+                            const alignedX = Math.round(((pattern.offset.x + element.x) * scale) / grid) * grid;
+                            const alignedY = Math.round(((pattern.offset.y + element.y) * scale) / grid) * grid;
+                            const alignedW = Math.round((element.w * scale) / grid) * grid;
+                            const alignedH = Math.round((element.h * scale) / grid) * grid;
+
+                            // Pull from cloud to position with full opacity
+                            el.style.left = (baseX + alignedX) + 'px';
+                            el.style.top = (baseY + alignedY) + 'px';
+                            el.style.width = alignedW + 'px';
+                            el.style.height = alignedH + 'px';
+                            el.style.opacity = element.featured ? '1' : '0.8';
+
+                            if (element.featured) {
+                                el.classList.add('featured');
+                            }
+                        }, element.delay);
+                    });
+                });
+
+                // Calculate total assembly time
+                let maxDelay = 0;
+                layout.patterns.forEach(pattern => {
+                    pattern.elements.forEach(element => {
+                        maxDelay = Math.max(maxDelay, element.delay);
+                    });
+                });
+
+                return maxDelay + 800; // Return time when assembly is complete
+            }
+
+            function dissolveToCloud() {
+                pageLabel.classList.remove('visible');
+
+                // Return all primitives to cloud
+                tokens.forEach(token => {
+                    if (token.inUse) {
+                        const el = token.element;
+
+                        // Return to cloud position and size
+                        el.style.left = token.cloudPos.x + 'px';
+                        el.style.top = token.cloudPos.y + 'px';
+                        el.style.width = token.cloudSize.w + 'px';
+                        el.style.height = token.cloudSize.h + 'px';
+                        el.style.opacity = '0.15';
+
+                        el.classList.remove('assembling', 'featured');
+                        el.classList.add('floating');
+
+                        token.inUse = false;
+                    }
+                });
+            }
+
+            // Page layout cycling
+            const layoutNames = Object.keys(pageLayouts);
+            let currentLayoutIndex = 0;
+
+            function cyclePageLayouts() {
+                const layoutName = layoutNames[currentLayoutIndex];
+
+                // Assemble the page layout
+                const assemblyTime = assemblePageLayout(layoutName);
+
+                // Hold for viewing, then dissolve
+                setTimeout(() => {
+                    dissolveToCloud();
+
+                    // Wait for dissolution, then build next layout
+                    setTimeout(() => {
+                        currentLayoutIndex = (currentLayoutIndex + 1) % layoutNames.length;
+                        cyclePageLayouts();
+                    }, 1500); // Dissolve time
+                }, assemblyTime + 4000); // Assembly + hold time
+            }
+
+            // Start the generative cycle
+            setTimeout(() => {
+                cyclePageLayouts();
+            }, 1500);
+
+        })();
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Apply saved theme on load
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+
+            if (currentTheme === 'light') {
+                // Switch to dark
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                // Switch to light
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    html.removeAttribute('data-theme');
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                }
+            }
+        });
+
+        // Contact area theme buttons
+        const lightModeBtn = document.getElementById('lightModeBtn');
+        const darkModeBtn = document.getElementById('darkModeBtn');
+
+        if (lightModeBtn) {
+            lightModeBtn.addEventListener('click', () => {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            });
+        }
+
+        if (darkModeBtn) {
+            darkModeBtn.addEventListener('click', () => {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

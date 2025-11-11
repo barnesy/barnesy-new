@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Data Labs - AI Product Design | Chris Barnes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Chris Barnes</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html#work" class="back-link">← Back to Work</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <div class="project-hero-image" style="background-image: url('images/idl/idl-pipes.png');"></div>
+        <div class="container">
+            <h1>Industrial Data Labs</h1>
+            <p class="lead">From concept to AI product. Reducing RFQ response time by 80% through intelligent data analysis.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>Starting with business problems</h2>
+            <p>Industrial Data Labs aimed to address a critical challenge: reducing the time it took for sales reps to respond to RFQs without sacrificing accuracy. By leveraging data and implementing machine learning, they sought to automate key steps, streamline workflows, and enhance productivity.</p>
+
+            <img src="images/idl/idl-unstructured-data.png" alt="Unstructured Data Analysis" class="img-full">
+
+            <h2>Mapping Existing Workflows</h2>
+            <p>Industrial Data Labs began by conducting a detailed assessment of the current workflow for responding to RFQs. This included observing the entire process from receiving a proposal to sending a quote, identifying manual steps, and noting bottlenecks. By mapping the existing workflows, they gained a clear understanding of areas where time and resources were being underutilized.</p>
+
+            <img src="images/idl/idl-workflows.png" alt="Workflow Mapping" class="img-full">
+
+            <h2>Quantify Potential Time Savings</h2>
+            <p>The team then developed and tested new workflows incorporating the trained model to automatically fill in quote details and suggest responses. Early prototypes indicated a potential reduction in response time by up to 80%, enabling inside sales reps to focus more on high-priority tasks and relationship management.</p>
+
+            <img src="images/idl/idl-data-flow.png" alt="Data Flow Architecture" class="img-full">
+
+            <h2>Create a Proof of Concept</h2>
+            <p>A proof of concept was created using a limited set of RFQs to demonstrate the effectiveness of the new system. The prototype integrated seamlessly into the existing sales platform and was able to handle a diverse set of RFQs, showing a significant reduction in time spent on repetitive tasks.</p>
+
+            <img src="images/idl/idl-ui-sketch.png" alt="UI Design Sketches" class="img-full">
+
+            <h2>Product Screens</h2>
+            <div class="image-grid">
+                <img src="images/idl/idl_signin.jpg" alt="Sign In Screen">
+                <img src="images/idl/idl_sheet.jpg" alt="Data Sheet View">
+                <img src="images/idl/idl_sheet_search.jpg" alt="Sheet Search">
+                <img src="images/idl/idl_search_expanded.jpg" alt="Expanded Search">
+                <img src="images/idl/idl_column_controls.jpg" alt="Column Controls">
+                <img src="images/idl/idl_export.jpg" alt="Export Functionality">
+            </div>
+
+            <h2>Results</h2>
+            <p>By reengineering the RFQ response workflow, leveraging existing data, and implementing a machine learning model, Industrial Data Labs significantly reduced the time spent responding to RFQs. The automated system not only improved response efficiency but also empowered sales reps to focus on strategic tasks.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none; margin-right: 2rem;">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
+        </div>
+        <p><a href="index.html#work">← Back to Work</a></p>
+        <p style="margin-top: 1rem;">&copy; 2025 Chris Barnes</p>
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

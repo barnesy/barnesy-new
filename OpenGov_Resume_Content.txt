@@ -1,0 +1,38 @@
+UPDATED RESUME ENTRY FOR YOUR PDF:
+
+========================================
+
+OpenGov, Remote                                                         2022 – Present
+Product Designer
+
+• Given ownership of enterprise design system serving government software platform
+• Rebuilt Figma design system using official Material UI React library and integrated comprehensive design tokens
+• Tested and implemented code generation workflows using Figma MCP, achieving significant performance improvements
+• Created Patterns v37 - a comprehensive pattern library achieving 100% coverage through iterative improvements
+• Built Seamstress - an AI agent that generates pixel-perfect prototypes directly from Patterns v37
+• Designed Agent Studio - a novel agent and context management system for OpenGov products
+• 80% of Agent Studio designs were generated using AI-powered workflows, proving the system's production viability
+• Established design-to-code automation reducing development cycle time and eliminating design-dev translation gaps
+
+========================================
+
+INSTRUCTIONS:
+1. Open your Chris_Barnes_Resume.pdf in a PDF editor
+2. Add this OpenGov entry as the FIRST entry in Career Experience (2022 - Present)
+3. Move "Consultant, Atlanta, GA" entry to second position (2020 - 2022)
+4. Save the updated PDF
+5. Replace Chris_Barnes_Resume.pdf in the barnesy-new folder
+6. Run: vercel --prod --yes
+
+========================================
+
+KEY ACCOMPLISHMENTS TO HIGHLIGHT:
+- Design system ownership and complete rebuild
+- MUI React + Design Tokens integration
+- Figma MCP testing and performance improvements
+- 37 Pattern Library (100% coverage)
+- Seamstress (AI agent for code generation)
+- Agent Studio (real product with 80% AI-generated designs)
+- Design-to-code automation
+
+========================================

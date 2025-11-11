@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Powered Design System - Pattern Library | Chris Barnes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #1a1816;
+            --bg-card: #252321;
+            --text-primary: #faf8f5;
+            --text-secondary: #b8b3ad;
+            --accent: #d4a574;
+            --border: #3a3632;
+            --hero-overlay: rgba(15, 15, 15, 0.85);
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #faf8f5;
+            --bg-card: #ffffff;
+            --text-primary: #1a1816;
+            --text-secondary: #6b6560;
+            --accent: #c9955d;
+            --border: #e5e1dc;
+            --hero-overlay: rgba(255, 255, 255, 0.85);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.7;
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.2s;
+        }
+
+        .theme-toggle:hover svg {
+            stroke: var(--text-primary);
+        }
+
+        .theme-icon {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            position: absolute;
+        }
+
+        .theme-icon.hidden {
+            opacity: 0;
+            transform: rotate(180deg);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        nav .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        nav .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .wide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 4rem 2rem;
+        }
+
+        /* Content Sections */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content strong {
+            color: var(--text-primary);
+        }
+
+        /* Image Placeholder */
+        .image-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            color: var(--text-secondary);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 4px;
+        }
+
+        .quote-block p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            margin: 3rem 0;
+        }
+
+        .process-step {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .process-step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .tech-tag {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .container, .wide-container {
+                padding: 0 1rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Chris Barnes</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html#work" class="back-link">← Back to Work</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" style="background-image: url('images/pattern-library-hero.svg'); background-size: cover; background-position: center;">
+        <div style="background: var(--hero-overlay); padding: 3rem; border-radius: 8px; backdrop-filter: blur(10px);">
+            <span class="hero-badge">Case Study</span>
+            <h1>AI Powered Design System</h1>
+            <p class="subtitle">Building a Pattern Library for Generative UX</p>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">Multi-Version</span>
+                    <span class="hero-stat-label">System Architecture</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">100%</span>
+                    <span class="hero-stat-label">Pattern Coverage</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">Gen UX</span>
+                    <span class="hero-stat-label">AI-Ready System</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">The Challenge</h2>
+            <div class="section-content">
+                <p>
+                    When I was given ownership of the design system, it was clear that we needed more than incremental improvements.
+                    The existing system couldn't support the velocity we needed, and the design-to-code gap was slowing down
+                    the entire product development cycle.
+                </p>
+                <p>
+                    The vision was ambitious: rebuild the entire design system to enable AI-powered design workflows,
+                    achieve 100% pattern coverage, and create tooling that could generate production-ready code.
+                    This wasn't just a design system—it was the foundation for a new way of building products.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Approach -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">The Approach</h2>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <span class="step-number">1</span>
+                    <h3 class="step-title">Rebuild with MUI React + Design Tokens</h3>
+                    <p class="step-content">
+                        Completely rebuilt the Figma design system using the official Material UI React library as the foundation.
+                        Integrated comprehensive design tokens for colors, typography, spacing, and all system primitives.
+                        This created a single source of truth aligned with the production codebase.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span class="step-number">2</span>
+                    <h3 class="step-title">Test Code Generation with Figma MCP</h3>
+                    <p class="step-content">
+                        Tested code generation workflows using Figma's Model Context Protocol (MCP). This proved the concept
+                        that automated design-to-code was viable, with significant performance improvements. The experiment
+                        validated that the rebuilt system could power AI-driven workflows.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span class="step-number">3</span>
+                    <h3 class="step-title">Create Patterns v37</h3>
+                    <p class="step-content">
+                        Built Patterns v37, a comprehensive pattern library achieving 100% coverage of common
+                        interface needs. Each pattern was structured with semantic naming and consistent properties that both
+                        humans and AI systems could understand and manipulate. Version 37 represents the culmination of iterative
+                        improvements and expansions to the pattern vocabulary.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span class="step-number">4</span>
+                    <h3 class="step-title">Build Seamstress: AI Prototype Generator</h3>
+                    <p class="step-content">
+                        Created Seamstress, an AI agent that generates pixel-perfect prototypes directly from Patterns v37.
+                        This closed the design-to-code gap entirely—designers describe what they need, and Seamstress generates
+                        production-ready code using the exact patterns from the design system.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span class="step-number">5</span>
+                    <h3 class="step-title">Design Agent Studio with Generative AI</h3>
+                    <p class="step-content">
+                        Put the system to the ultimate test: designing Agent Studio, a brand new agent and context management
+                        system. 80% of the designs were generated using AI workflows, proving that the system could power
+                        real product development at scale.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section>
+        <div class="wide-container">
+            <h2 class="section-title">Key Features</h2>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="6"/>
+                        <circle cx="12" cy="12" r="2"/>
+                    </svg>
+                    <h3>100% Pattern Coverage</h3>
+                    <p>
+                        Comprehensive coverage of all common UI patterns ensures designers and AI systems
+                        always have the right component for any use case.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <line x1="9" y1="9" x2="15" y2="9"/>
+                        <line x1="9" y1="15" x2="15" y2="15"/>
+                        <circle cx="9" cy="12" r="1" fill="var(--accent)"/>
+                        <circle cx="12" cy="12" r="1" fill="var(--accent)"/>
+                        <circle cx="15" cy="12" r="1" fill="var(--accent)"/>
+                    </svg>
+                    <h3>Gen UX Ready</h3>
+                    <p>
+                        Architected for AI-powered design generation with semantic naming, clear relationships,
+                        and structured properties that AI models can understand.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <polyline points="16 18 22 12 16 6"/>
+                        <polyline points="8 6 2 12 8 18"/>
+                    </svg>
+                    <h3>Code Generation Tools</h3>
+                    <p>
+                        Custom-built tooling that generates clean code prototypes directly from design patterns,
+                        eliminating the design-to-code translation gap.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                    </svg>
+                    <h3>Component Foundation</h3>
+                    <p>
+                        Built on established component library foundations, ensuring compatibility with
+                        industry-standard patterns and best practices.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                        <polyline points="2 17 12 22 22 17"/>
+                        <polyline points="2 12 12 17 22 12"/>
+                    </svg>
+                    <h3>Rapid Prototyping</h3>
+                    <p>
+                        Pattern-based approach enables designers to build complex interfaces in minutes,
+                        not hours, with consistent quality.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                    </svg>
+                    <h3>Design-Dev Sync</h3>
+                    <p>
+                        Single source of truth between design and code means no more translation errors
+                        or inconsistencies between environments.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design-to-Code Deep Dive -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">Seamstress: AI Prototype Generator</h2>
+            <div class="section-content">
+                <p>
+                    Seamstress is an AI agent that generates pixel-perfect prototypes directly from Patterns v37.
+                    It's the culmination of the entire system rebuild—proof that a properly architected design system
+                    can power true AI-driven product development.
+                </p>
+                <p>
+                    <strong>How it works:</strong> Designers describe what they need in natural language. Seamstress understands
+                    the request, references Patterns v37, and generates production-ready code using the exact components
+                    from the design system. The generated code matches the design tokens, follows the established patterns,
+                    and works seamlessly with the existing codebase.
+                </p>
+                <p>
+                    This isn't just automation—it's a fundamental shift in how products are built. The design-to-code gap
+                    doesn't just shrink, it disappears entirely. Designers can iterate at the speed of thought, and every
+                    iteration produces code that developers can ship.
+                </p>
+            </div>
+
+            <div class="quote-block">
+                <p>
+                    "80% of Agent Studio was designed using generative AI workflows powered by this system."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Technology Stack</h2>
+
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">Design Tools</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">Figma</span>
+                <span class="tech-tag">MUI React Library</span>
+                <span class="tech-tag">Design Tokens</span>
+                <span class="tech-tag">Variables & Modes</span>
+                <span class="tech-tag">Figma MCP</span>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">Code Generation</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Material UI</span>
+                <span class="tech-tag">Seamstress (Custom AI Agent)</span>
+                <span class="tech-tag">Pattern Matching</span>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">AI/ML Integration</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">Generative UX Workflows</span>
+                <span class="tech-tag">Natural Language Processing</span>
+                <span class="tech-tag">Patterns v37</span>
+                <span class="tech-tag">AI-Powered Prototyping</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">Impact & Results</h2>
+            <div class="section-content">
+                <p>
+                    <strong>Design Velocity:</strong> Pattern-based workflow with AI assistance reduced design time dramatically.
+                    Complex interfaces that previously took days now take hours. Agent Studio proved the concept—80% of its
+                    designs were generated using AI workflows.
+                </p>
+                <p>
+                    <strong>Code Quality:</strong> Seamstress generates consistent, accessible, production-ready code directly
+                    from Patterns v37. Zero manual translation errors. Zero inconsistencies. Just working code that
+                    matches the design system perfectly.
+                </p>
+                <p>
+                    <strong>Real Product Development:</strong> This isn't theoretical—Agent Studio is a real product designed
+                    using these workflows. It's an agent and context management system built on top of existing products,
+                    demonstrating that AI-powered design can ship production features.
+                </p>
+                <p>
+                    <strong>System Performance:</strong> Testing code generation with Figma MCP showed significant performance
+                    improvements. The MUI foundation combined with comprehensive design tokens created a system that's both
+                    fast and reliable.
+                </p>
+                <p>
+                    <strong>Developer Experience:</strong> Engineering teams receive production-ready code that integrates
+                    seamlessly with the existing codebase. The design-to-development cycle went from weeks to hours.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+        <div class="container">
+            <div class="cta-section">
+                <h2>Interested in AI-Powered Design Systems?</h2>
+                <p>Let's discuss how pattern libraries and automation can transform your design workflow</p>
+                <div class="cta-buttons">
+                    <a href="index.html#contact" class="cta-button">Get in Touch</a>
+                    <a href="index.html#work" class="cta-button secondary">View More Work</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none; margin-right: 2rem;">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
+        </div>
+        <p><a href="index.html">← Back to Portfolio</a></p>
+        <p style="margin-top: 1rem; color: var(--text-secondary);">&copy; 2025 Chris Barnes</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Apply saved theme on load
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    html.removeAttribute('data-theme');
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

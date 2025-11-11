@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chris Barnes - Resume</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #1a1816;
+            --bg-card: #252321;
+            --text-primary: #faf8f5;
+            --text-secondary: #b8b3ad;
+            --accent: #d4a574;
+            --border: #3a3632;
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #faf8f5;
+            --bg-card: #ffffff;
+            --text-primary: #1a1816;
+            --text-secondary: #6b6560;
+            --accent: #c9955d;
+            --border: #e5e1dc;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.7;
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.2s;
+        }
+
+        .theme-toggle:hover svg {
+            stroke: var(--text-primary);
+        }
+
+        .theme-icon {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            position: absolute;
+        }
+
+        .theme-icon.hidden {
+            opacity: 0;
+            transform: rotate(180deg);
+        }
+
+        /* Navigation/Header Bar */
+        .top-bar {
+            max-width: 850px;
+            margin: 0 auto 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .top-bar a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .top-bar a:hover {
+            color: var(--text-primary);
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .resume-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .contact-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .summary {
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .job {
+            margin-bottom: 2rem;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.25rem;
+            flex-wrap: wrap;
+        }
+
+        .job-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .job-company {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .job-dates {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .job ul {
+            margin-top: 0.75rem;
+            margin-left: 1.25rem;
+        }
+
+        .job li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-category {
+            margin-bottom: 1rem;
+        }
+
+        .skill-category h3 {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .skill-category li:before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .software-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .software-tag {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .education {
+            color: var(--text-secondary);
+        }
+
+        .education strong {
+            color: var(--text-primary);
+        }
+
+        @media print {
+            .top-bar {
+                display: none;
+            }
+
+            body {
+                background: white;
+                color: #000;
+                padding: 0;
+            }
+
+            .resume-container {
+                background: white;
+                border: none;
+                padding: 1rem;
+            }
+
+            h1, h2, .job-title, .job-company {
+                color: #000;
+            }
+
+            .contact-info, .summary, .job li, .skill-category li, .education {
+                color: #333;
+            }
+
+            .contact-info a {
+                color: #666;
+            }
+
+            h2 {
+                color: #444;
+            }
+
+            .skill-category li:before {
+                color: #666;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .resume-container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .job-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <a href="index.html#work">← Back to Work</a>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <button class="download-btn" onclick="window.print()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download PDF
+            </button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="resume-container">
+        <header>
+            <h1>Chris Barnes</h1>
+            <div class="contact-info">
+                <span><a href="https://barnesy.me">barnesy.me</a></span>
+                <span><a href="mailto:chris@barnesy.me">chris@barnesy.me</a></span>
+                <span>(770) 757-2303</span>
+                <span><a href="https://linkedin.com/in/iambarnesy" target="_blank">LinkedIn</a></span>
+            </div>
+        </header>
+
+        <div class="summary">
+            Creative leader with extensive experience in design, product management, and development. Skilled in aligning
+            business solutions with goals, optimizing performance, and managing products from conception to implementation.
+            Expertise in working with cross-functional teams, Agile methodologies, and delivering innovative solutions for business
+            challenges.
+        </div>
+
+        <section>
+            <h2>Career Experience</h2>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-company">OpenGov, Remote</div>
+                        <div class="job-title">Product Designer</div>
+                    </div>
+                    <div class="job-dates">2022 – Present</div>
+                </div>
+                <ul>
+                    <li>Given ownership of enterprise design system serving government software platform</li>
+                    <li>Rebuilt Figma design system using official Material UI React library and integrated comprehensive design tokens</li>
+                    <li>Tested and implemented code generation workflows using Figma MCP, achieving significant performance improvements</li>
+                    <li>Created Patterns v37 - a comprehensive pattern library achieving 100% coverage through iterative improvements</li>
+                    <li>Built Seamstress - an AI agent that generates pixel-perfect prototypes directly from Patterns v37</li>
+                    <li>Designed Agent Studio - a novel agent and context management system for OpenGov products</li>
+                    <li>80% of Agent Studio designs were generated using AI-powered workflows, proving the system's production viability</li>
+                    <li>Established design-to-code automation reducing development cycle time and eliminating design-dev translation gaps</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-company">Consultant, Atlanta, GA</div>
+                        <div class="job-title">Product Designer</div>
+                    </div>
+                    <div class="job-dates">2020 – 2022</div>
+                </div>
+                <ul>
+                    <li>Led AI-powered product design initiatives, collaborating with machine learning experts to solve business problems</li>
+                    <li>Designed self-serve AI platform and product offering for the largest food re-distributor in the world</li>
+                    <li>Produced a multi-site publishing system to distribute news across Southern Company Gas' territory sites</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-company">CallRail, Atlanta, GA</div>
+                        <div class="job-title">Lead Designer</div>
+                    </div>
+                    <div class="job-dates">2018 – 2020</div>
+                </div>
+                <ul>
+                    <li>Led teams in creating scalable design architecture, supporting growth and innovation</li>
+                    <li>Produced a pattern library, automating process and reducing deployment time</li>
+                    <li>Integrated content management systems, enhancing content delivery workflows</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-company">4x4 Studios, Atlanta, GA</div>
+                        <div class="job-title">Product Designer - Founder</div>
+                    </div>
+                    <div class="job-dates">2017 – 2018</div>
+                </div>
+                <ul>
+                    <li>Co-founded an organization creating mobile education tools for families</li>
+                    <li>Directed user experience and product development, securing several features in Apple's App Store</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-company">Daniel, Atlanta, GA</div>
+                        <div class="job-title">Product Designer - Co-Founder</div>
+                    </div>
+                    <div class="job-dates">2010 – 2017</div>
+                </div>
+                <ul>
+                    <li>Managed teams of developers and designers to deliver technology solutions for startups and agencies</li>
+                    <li>Built native and web applications, enhancing user experience and operational efficiency</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Areas of Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <ul>
+                        <li>User Experience Design</li>
+                        <li>Full-stack Development</li>
+                        <li>Product Design & Management</li>
+                        <li>Tech Project Lifecycle</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <ul>
+                        <li>Stakeholder Engagement</li>
+                        <li>Agile Methodologies</li>
+                        <li>Kanban, Scrum, SAFe</li>
+                        <li>System Architecture</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <ul>
+                        <li>SaaS Applications</li>
+                        <li>Workday, CI/CD, AWS, Azure</li>
+                        <li>Business Process Improvement</li>
+                        <li>JIRA, Smartsheet, Confluence</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Software Skills</h2>
+            <div class="software-skills">
+                <span class="software-tag">Figma</span>
+                <span class="software-tag">Trello</span>
+                <span class="software-tag">Digital Illustration</span>
+                <span class="software-tag">SVG</span>
+                <span class="software-tag">MS Office</span>
+                <span class="software-tag">MS Teams</span>
+                <span class="software-tag">Jira</span>
+                <span class="software-tag">Slack</span>
+                <span class="software-tag">Adobe Creative Suite</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <div class="education">
+                <strong>Bachelor of Arts in Communications</strong><br>
+                Georgia Southern University
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Apply saved theme on load
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+
+            if (currentTheme === 'light') {
+                // Switch to dark
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                // Switch to light
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    html.removeAttribute('data-theme');
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

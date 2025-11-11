@@ -6,7 +6,7 @@
     <title>AI Powered Design System - Pattern Library | Chris Barnes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
             --bg-card: #252321;
             --text-primary: #faf8f5;
             --text-secondary: #b8b3ad;
-            --accent: #d4a574;
+            --accent: #22c55e;
             --border: #3a3632;
             --hero-overlay: rgba(15, 15, 15, 0.85);
 
@@ -34,13 +34,13 @@
             --bg-card: #ffffff;
             --text-primary: #1a1816;
             --text-secondary: #6b6560;
-            --accent: #c9955d;
+            --accent: #3b82f6;
             --border: #e5e1dc;
             --hero-overlay: rgba(255, 255, 255, 0.85);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             background: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
@@ -48,7 +48,8 @@
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: -0.02em;
         }
 
         /* Theme Toggle */
@@ -438,6 +439,7 @@
             line-height: 40px;
             font-weight: 700;
             margin-bottom: 1rem;
+            color: white;
         }
 
         .step-title {
@@ -513,6 +515,7 @@
         }
 
         .cta-button.secondary {
+            color: var(--text-secondary);
             background: transparent;
             border: 1px solid var(--border);
         }
@@ -608,149 +611,172 @@
             <div class="page-label" id="pageLabel"></div>
         </div>
         <div class="hero-content">
-            <div style="background: var(--hero-overlay); padding: 3rem; border-radius: 8px; backdrop-filter: blur(10px);">
+            <div style="background: none; padding: 3rem; border-radius: 8px; backdrop-filter: blur(10px);">
                 <span class="hero-badge">Case Study</span>
                 <h1>AI Powered Design System</h1>
                 <p class="subtitle">Building a Pattern Library for Generative UX</p>
-
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <span class="hero-stat-number">Versioned</span>
-                        <span class="hero-stat-label">System Architecture</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-number">100%</span>
-                        <span class="hero-stat-label">Pattern Coverage</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-number">Gen UX</span>
-                        <span class="hero-stat-label">AI-Ready System</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Overview -->
-    <section>
-        <div class="container">
+    <section style="background: var(--bg-card);">
+        <div class="wide-container">
             <h2 class="section-title">The Challenge</h2>
             <div class="section-content">
                 <p>
-                    When I took ownership of the design system, we needed more than incremental improvements.
-                    The existing system couldn't support our velocity, and the design-to-code gap slowed the entire product development cycle.
+                    Leading the design system for a multi-product SaaS platform serving government organizations.
+                    The challenge: create a unified design language that scales across diverse products while enabling
+                    rapid development and maintaining consistency.
                 </p>
                 <p>
-                    The vision: rebuild the design system to enable AI-powered workflows, achieve 100% pattern coverage,
-                    and generate production-ready code. A foundation for a new way of building products.
+                    The solution: a comprehensive design system with 100% pattern coverage, AI-powered workflows,
+                    and production-ready components that work seamlessly across the entire product suite.
                 </p>
-            </div>
-
-            <!-- Agent Studio Dashboard Screenshot -->
-            <div class="case-study-image-container">
-                <img src="images/design-system/agent-studio-dashboard.png"
-                     alt="Agent Studio Dashboard Interface"
-                     class="case-study-image"
-                     onerror="this.parentElement.innerHTML='<div class=\'image-block\'>📸 Screenshot: Agent Studio Dashboard<br><small>Add agent-studio-dashboard.png to images/design-system/</small></div>'">
-                <p class="image-caption">Agent Studio dashboard showing the AI-powered design system in action</p>
             </div>
         </div>
     </section>
 
-    <!-- The Approach -->
-    <section style="background: var(--bg-card);">
+     <!-- Core Layout Pattern -->
+     <section>
         <div class="container">
-            <h2 class="section-title">The Approach</h2>
+            <h2 class="section-title">The Foundation: Core Layout Pattern</h2>
+            <div class="section-content">
+                <p>
+                    Every screen in Agent Studio is built on a single, consistent layout pattern. This foundational
+                    pattern establishes the navigation, content hierarchy, and action patterns that repeat throughout
+                    the entire application.
+                </p>
+            </div>
+
+            <div class="case-study-image-container">
+                <img src="images/design-system/layout-pattern.png"
+                     alt="Core Layout Pattern"
+                     class="case-study-image">
+                <p class="image-caption">The core layout pattern that serves as the foundation for all Agent Studio screens</p>
+            </div>
+
+            <div class="section-content">
+                <p>
+                    <strong>The Workflow Evolution:</strong> This layout pattern enabled a progressive approach to
+                    AI-powered development:
+                </p>
+            </div>
 
             <div class="process-steps">
                 <div class="process-step">
                     <span class="step-number">1</span>
-                    <h3 class="step-title">Rebuild with MUI React + Design Tokens</h3>
+                    <h3 class="step-title">Design the Foundation</h3>
                     <p class="step-content">
-                        Rebuilt the Figma design system using Material UI React as the foundation.
-                        Integrated design tokens for colors, typography, spacing, and all system primitives.
-                        Created a single source of truth aligned with production code.
+                        Created the core layout pattern and initial screens in Figma—the Agents list view and
+                        Agent edit/detail pages. These established the visual language, component usage, and
+                        interaction patterns for the entire system.
                     </p>
                 </div>
 
                 <div class="process-step">
                     <span class="step-number">2</span>
-                    <h3 class="step-title">Test Code Generation with Figma MCP</h3>
+                    <h3 class="step-title">Train the AI Agent</h3>
                     <p class="step-content">
-                        Tested code generation using Figma's Model Context Protocol (MCP). Proved automated design-to-code was viable with significant performance improvements. Validated the system could power AI-driven workflows.
+                        Built these initial Figma designs in code manually, teaching the AI agent the patterns,
+                        component structure, and implementation details. The agent learned how to translate the
+                        design system into production-ready React code.
                     </p>
                 </div>
 
                 <div class="process-step">
                     <span class="step-number">3</span>
-                    <h3 class="step-title">Create Patterns Figma</h3>
+                    <h3 class="step-title">Generate from Specifications</h3>
                     <p class="step-content">
-                        Built Patterns Figma, a comprehensive pattern library achieving 100% coverage of common
-                        interface needs. Each pattern structured with semantic naming and consistent properties that both
-                        humans and AI systems can understand.
-                    </p>
-
-                    <!-- Patterns Figma Screenshot -->
-                    <div class="case-study-image-container">
-                        <img src="images/design-system/patterns-figma-overview.png"
-                             alt="Patterns Figma Library Overview"
-                             class="case-study-image"
-                             onerror="this.parentElement.innerHTML='<div class=\'image-block\'>📸 Screenshot: Patterns Figma Library<br><small>Add patterns-figma-overview.png to images/design-system/</small></div>'">
-                        <p class="image-caption">Patterns Figma library showing comprehensive component coverage</p>
-                    </div>
-                </div>
-
-                <div class="process-step">
-                    <span class="step-number">4</span>
-                    <h3 class="step-title">Build Seamstress: AI Prototype Generator</h3>
-                    <p class="step-content">
-                        Created Seamstress, an AI agent that generates pixel-perfect prototypes directly from Patterns Figma.
-                        Closed the design-to-code gap—describe what you need, get production-ready code using exact design system patterns.
+                        With the patterns established, prompted the trained AI agent to build the Dashboard and
+                        Knowledge Management pages directly from specification documents—no Figma designs required.
+                        The agent understood the layout pattern and design system well enough to generate complete,
+                        consistent screens from written requirements.
                     </p>
                 </div>
+            </div>
 
-                <div class="process-step">
-                    <span class="step-number">5</span>
-                    <h3 class="step-title">Design Agent Studio with Generative AI</h3>
-                    <p class="step-content">
-                        Ultimate test: designing Agent Studio, a new agent and context management system.
-                        80% of designs generated using AI workflows, proving the system powers real product development at scale.
-                    </p>
+            <div class="quote-block">
+                <p>
+                    "From manual Figma-to-code translation to AI generating complete screens from specs—the design
+                    system enabled this evolution in our development workflow."
+                </p>
+            </div>
+        </div>
+    </section>
 
-                    <!-- Agent Studio Screenshots Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                        <!-- Assistants View -->
-                        <div class="case-study-image-container">
-                            <img src="images/design-system/agent-studio-assistants.png"
-                                 alt="Agent Studio Assistants Management Interface"
-                                 class="case-study-image">
-                            <p class="image-caption">Assistants management showing agents like Category Code Recommender and OG Helper</p>
-                        </div>
+    <!-- Product Suite -->
+    <section style="background: var(--bg-card);">
+        <div class="wide-container">
+            <h2 class="section-title">The Challenge</h2>
+            <div class="section-content">
+                <p>
+                    Leading the design system for a multi-product SaaS platform serving government organizations.
+                    The challenge: create a unified design language that scales across diverse products while enabling
+                    rapid development and maintaining consistency.
+                </p>
+                <p>
+                    The solution: a comprehensive design system with 100% pattern coverage, AI-powered workflows,
+                    and production-ready components that work seamlessly across the entire product suite.
+                </p>
+            </div>
+            <div style="background: var(--hero-overlay); padding: 3rem; border-radius: 8px; backdrop-filter: blur(10px);"></div>
+            <h2 class="section-title">Design System in Action</h2>
+            <div class="section-content">
+                <p>
+                    Agent Studio demonstrates the design system's capabilities—a complete AI agent management
+                    platform built entirely with the pattern library, showcasing consistent patterns across
+                    complex workflows.
+                </p>
+            </div>
 
-                        <!-- Skills Management -->
-                        <div class="case-study-image-container">
-                            <img src="images/design-system/agent-studio-skills-management.png"
-                                 alt="Agent Studio Skills Management Interface"
-                                 class="case-study-image">
-                            <p class="image-caption">Skills Studio for creating and managing agent capabilities</p>
-                        </div>
+            <!-- Agent Studio Screenshots -->
+            <div style="display: grid; gap: 2rem; margin-top: 3rem;">
+                <!-- Dashboard Overview -->
+                <div class="case-study-image-container">
+                    <img src="images/design-system/agent-studio-dashboard.png"
+                         alt="Agent Studio Dashboard"
+                         class="case-study-image">
+                    <p class="image-caption">Dashboard overview showcasing consistent card layouts, navigation, and data visualization patterns</p>
+                </div>
 
-                        <!-- Agent Detail View -->
-                        <div class="case-study-image-container">
-                            <img src="images/design-system/agent-studio-agent-detail.png"
-                                 alt="Agent Studio Agent Detail and Configuration"
-                                 class="case-study-image">
-                            <p class="image-caption">Detailed agent configuration showing skills, knowledge base, and personality settings</p>
-                        </div>
+                <!-- Assistants Management -->
+                <div class="case-study-image-container">
+                    <img src="images/design-system/agent-studio-assistants.png"
+                         alt="Assistants Management Interface"
+                         class="case-study-image">
+                    <p class="image-caption">Assistants management with unified list patterns and action menus</p>
+                </div>
 
-                        <!-- Knowledge Management -->
-                        <div class="case-study-image-container">
-                            <img src="images/design-system/agent-studio-knowledge-management.png"
-                                 alt="Agent Studio Knowledge Management"
-                                 class="case-study-image">
-                            <p class="image-caption">Knowledge management system with document organization and tagging</p>
-                        </div>
-                    </div>
+                <!-- Agent Detail View -->
+                <div class="case-study-image-container">
+                    <img src="images/design-system/agent-studio-agent-detail.png"
+                         alt="Agent Detail Configuration"
+                         class="case-study-image">
+                    <p class="image-caption">Detailed agent configuration demonstrating form patterns, tabs, and content organization</p>
+                </div>
+
+                <!-- Knowledge Management -->
+                <div class="case-study-image-container">
+                    <img src="images/design-system/agent-studio-knowledge-management.png"
+                         alt="Knowledge Base Management"
+                         class="case-study-image">
+                    <p class="image-caption">Knowledge management with consistent table patterns and filtering</p>
+                </div>
+
+                <!-- Knowledge Document Detail -->
+                <div class="case-study-image-container">
+                    <img src="images/design-system/agent-studio-knowledge-document.png"
+                         alt="Knowledge Document View"
+                         class="case-study-image">
+                    <p class="image-caption">Document detail view demonstrating content layout and action patterns</p>
+                </div>
+
+                <!-- Detailed Dashboard -->
+                <div class="case-study-image-container">
+                    <img src="images/design-system/agent-studio-dashboard-detailed.png"
+                         alt="Detailed Dashboard View"
+                         class="case-study-image">
+                    <p class="image-caption">Comprehensive dashboard view showing the full design system integration</p>
                 </div>
             </div>
         </div>
@@ -828,114 +854,33 @@
         </div>
     </section>
 
-    <!-- Design-to-Code Deep Dive -->
-    <section style="background: var(--bg-card);">
-        <div class="container">
-            <h2 class="section-title">Seamstress: AI Prototype Generator</h2>
-            <div class="section-content">
-                <p>
-                    Seamstress is an AI agent that generates pixel-perfect prototypes directly from Patterns Figma.
-                    It's the culmination of the entire system rebuild—proof that a properly architected design system
-                    can power true AI-driven product development.
-                </p>
-                <p>
-                    <strong>How it works:</strong> Describe needs in natural language. Seamstress understands
-                    the request, references Patterns Figma, and generates production-ready code using exact components
-                    from the design system. Code matches design tokens, follows patterns, works with existing codebase.
-                </p>
-                <p>
-                    The design-to-code gap disappears. Designers iterate at the speed of thought, producing shippable code.
-                </p>
-            </div>
-
-            <!-- Seamstress in Action Screenshot -->
-            <div class="case-study-image-container">
-                <img src="images/design-system/seamstress-generation.png"
-                     alt="Seamstress AI generating code from patterns"
-                     class="case-study-image"
-                     onerror="this.parentElement.innerHTML='<div class=\'image-block\'>📸 Screenshot: Seamstress AI Code Generation<br><small>Add seamstress-generation.png to images/design-system/</small></div>'">
-                <p class="image-caption">Seamstress generating production-ready code from natural language descriptions</p>
-            </div>
-
-            <div class="quote-block">
-                <p>
-                    "80% of Agent Studio was designed using generative AI workflows powered by this system."
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Component Showcase -->
-    <section>
-        <div class="wide-container">
-            <h2 class="section-title">Component Showcase</h2>
-            <div class="section-content">
-                <p>
-                    Real examples from Agent Studio demonstrating the design system's components in production.
-                </p>
-            </div>
-
-            <div class="image-grid">
-                <div>
-                    <img src="images/design-system/component-cards.png"
-                         alt="Card components"
-                         onerror="this.outerHTML='<div class=\'image-block\' style=\'padding: 2rem;\'>📸 Card Components<br><small>Add component-cards.png</small></div>'">
-                    <p class="image-caption">Card components with consistent spacing and hierarchy</p>
-                </div>
-                <div>
-                    <img src="images/design-system/component-forms.png"
-                         alt="Form components"
-                         onerror="this.outerHTML='<div class=\'image-block\' style=\'padding: 2rem;\'>📸 Form Components<br><small>Add component-forms.png</small></div>'">
-                    <p class="image-caption">Form inputs and validation patterns</p>
-                </div>
-                <div>
-                    <img src="images/design-system/component-navigation.png"
-                         alt="Navigation components"
-                         onerror="this.outerHTML='<div class=\'image-block\' style=\'padding: 2rem;\'>📸 Navigation<br><small>Add component-navigation.png</small></div>'">
-                    <p class="image-caption">Navigation and menu patterns</p>
-                </div>
-            </div>
-
-            <!-- Design Tokens -->
-            <div class="case-study-image-container">
-                <img src="images/design-system/design-tokens.png"
-                     alt="Design tokens and system variables"
-                     class="case-study-image"
-                     onerror="this.parentElement.innerHTML='<div class=\'image-block\'>📸 Screenshot: Design Tokens & Variables<br><small>Add design-tokens.png to images/design-system/</small></div>'">
-                <p class="image-caption">Design tokens powering consistent colors, typography, and spacing across the system</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Tech Stack -->
     <section>
         <div class="container">
             <h2 class="section-title">Technology Stack</h2>
 
-            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">Design Tools</h3>
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">Design Foundation</h3>
             <div class="tech-stack">
                 <span class="tech-tag">Figma</span>
-                <span class="tech-tag">MUI React Library</span>
+                <span class="tech-tag">Material UI</span>
                 <span class="tech-tag">Design Tokens</span>
-                <span class="tech-tag">Variables & Modes</span>
-                <span class="tech-tag">Figma MCP</span>
+                <span class="tech-tag">Component Library</span>
             </div>
 
-            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">Code Generation</h3>
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">Development</h3>
             <div class="tech-stack">
                 <span class="tech-tag">React</span>
                 <span class="tech-tag">TypeScript</span>
-                <span class="tech-tag">Material UI</span>
-                <span class="tech-tag">Seamstress (Custom AI Agent)</span>
-                <span class="tech-tag">Pattern Matching</span>
+                <span class="tech-tag">Storybook</span>
+                <span class="tech-tag">Design System Documentation</span>
             </div>
 
-            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">AI/ML Integration</h3>
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">AI Integration</h3>
             <div class="tech-stack">
-                <span class="tech-tag">Generative UX Workflows</span>
-                <span class="tech-tag">Natural Language Processing</span>
-                <span class="tech-tag">Patterns Figma</span>
-                <span class="tech-tag">AI-Powered Prototyping</span>
+                <span class="tech-tag">AI-Powered Code Generation</span>
+                <span class="tech-tag">Pattern Recognition</span>
+                <span class="tech-tag">Automated Prototyping</span>
             </div>
         </div>
     </section>
@@ -946,23 +891,27 @@
             <h2 class="section-title">Impact & Results</h2>
             <div class="section-content">
                 <p>
-                    <strong>Design Velocity:</strong> Pattern-based workflow with AI assistance reduced design time dramatically.
-                    Complex interfaces that previously took days now take hours. Agent Studio proved the concept—80% of its
-                    designs were generated using AI workflows.
+                    <strong>Design Velocity:</strong> Pattern-based workflow with AI assistance dramatically reduced
+                    design and development time. Agent Studio's complete interface was built in a fraction of the time
+                    traditional methods would require.
                 </p>
                 <p>
-                    <strong>Code Quality:</strong> Seamstress generates consistent, accessible, production-ready code directly
-                    from Patterns Figma. Zero manual translation errors. Zero inconsistencies. Just working code that
-                    matches the design system perfectly.
+                    <strong>Consistent Experience:</strong> Unified design language across all views—from dashboards
+                    to detail pages to management interfaces—ensures users experience a cohesive product regardless
+                    of which feature they're using.
                 </p>
                 <p>
-                    <strong>Real Product:</strong> Agent Studio was designed using these workflows—a real agent and context management system, proving AI-powered design ships production features.
+                    <strong>Code Quality:</strong> Design tokens and component library generate consistent, accessible,
+                    production-ready code. Single source of truth eliminates translation errors and inconsistencies.
                 </p>
                 <p>
-                    <strong>Performance:</strong> Figma MCP testing showed significant improvements. MUI foundation plus design tokens created a fast, reliable system.
+                    <strong>Scalability:</strong> System successfully scales from simple list views to complex
+                    data-heavy interfaces like agent configuration and knowledge management workflows.
                 </p>
                 <p>
-                    <strong>Developer Experience:</strong> Teams receive production-ready code that integrates seamlessly. Design-to-development cycle: weeks → hours.
+                    <strong>AI-Powered Development:</strong> 80% of Agent Studio's designs were generated using
+                    AI workflows powered by the design system, proving the system enables true AI-driven
+                    product development.
                 </p>
             </div>
         </div>

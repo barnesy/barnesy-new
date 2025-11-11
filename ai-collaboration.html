@@ -6,7 +6,7 @@
     <title>AI Collaboration Tools & Context | Chris Barnes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -44,7 +44,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             background: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
@@ -52,7 +52,8 @@
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: -0.02em;
         }
 
         /* Navigation */
@@ -912,7 +913,7 @@
                     <!-- Figma Box -->
                     <g class="workflow-node" data-delay="0">
                         <rect x="50" y="150" width="200" height="100" rx="8" fill="var(--bg-card)" stroke="var(--accent-purple)" stroke-width="2"/>
-                        <text x="150" y="185" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="18" font-weight="600">Figma Design</text>
+                        <text x="150" y="185" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="18" font-weight="600">Figma Design</text>
                         <text x="150" y="210" text-anchor="middle" fill="var(--text-secondary)" font-size="14">Design System</text>
                         <text x="150" y="230" text-anchor="middle" fill="var(--text-secondary)" font-size="14">Components & Tokens</text>
                     </g>
@@ -929,7 +930,7 @@
                     <!-- Schema Box -->
                     <g class="workflow-node" data-delay="1">
                         <rect x="340" y="150" width="200" height="100" rx="8" fill="var(--bg-card)" stroke="var(--accent-orange)" stroke-width="2"/>
-                        <text x="440" y="185" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="18" font-weight="600">Schema</text>
+                        <text x="440" y="185" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="18" font-weight="600">Schema</text>
                         <text x="440" y="210" text-anchor="middle" fill="var(--text-secondary)" font-size="14">Patterns & Rules</text>
                         <text x="440" y="230" text-anchor="middle" fill="var(--text-secondary)" font-size="14">Knowledge Base</text>
                     </g>
@@ -946,7 +947,7 @@
                     <!-- Claude Code Box -->
                     <g class="workflow-node" data-delay="2">
                         <rect x="630" y="150" width="200" height="100" rx="8" fill="var(--bg-card)" stroke="var(--accent-blue)" stroke-width="2"/>
-                        <text x="730" y="185" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="18" font-weight="600">Claude Code</text>
+                        <text x="730" y="185" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="18" font-weight="600">Claude Code</text>
                         <text x="730" y="210" text-anchor="middle" fill="var(--text-secondary)" font-size="14">AI Agent</text>
                         <text x="730" y="230" text-anchor="middle" fill="var(--text-secondary)" font-size="14">Code Generation</text>
                     </g>
@@ -963,7 +964,7 @@
                     <!-- Output Box -->
                     <g class="workflow-node" data-delay="3">
                         <rect x="920" y="150" width="230" height="100" rx="8" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/>
-                        <text x="1035" y="185" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="18" font-weight="600">Production Code</text>
+                        <text x="1035" y="185" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="18" font-weight="600">Production Code</text>
                         <text x="1035" y="210" text-anchor="middle" fill="var(--text-secondary)" font-size="14">Consistent & Tested</text>
                         <text x="1035" y="230" text-anchor="middle" fill="var(--text-secondary)" font-size="14">Design-Aligned</text>
                     </g>
@@ -1031,7 +1032,7 @@
                         <rect x="550" y="30" width="300" height="100" rx="12" fill="url(#tokenGradient)" opacity="0.9" stroke="#fbbf24" stroke-width="3" filter="url(#glow)">
                             <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
                         </rect>
-                        <text x="700" y="65" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="24" font-weight="700">DESIGN TOKENS</text>
+                        <text x="700" y="65" text-anchor="middle" fill="white" font-family="DM Sans" font-size="24" font-weight="700">DESIGN TOKENS</text>
                         <text x="700" y="90" text-anchor="middle" fill="white" font-size="14" opacity="0.9">Source of Truth</text>
                         <text x="700" y="110" text-anchor="middle" fill="white" font-size="12" opacity="0.8">Colors • Typography • Spacing • Shadows</text>
                     </g>
@@ -1067,7 +1068,7 @@
                     <!-- Figma Components -->
                     <g id="figma-components">
                         <rect x="100" y="220" width="300" height="120" rx="8" fill="rgba(168,85,247,0.2)" stroke="#a855f7" stroke-width="2"/>
-                        <text x="250" y="250" text-anchor="middle" fill="#a855f7" font-family="Space Grotesk" font-size="18" font-weight="700">FIGMA COMPONENTS</text>
+                        <text x="250" y="250" text-anchor="middle" fill="#a855f7" font-family="DM Sans" font-size="18" font-weight="700">FIGMA COMPONENTS</text>
                         <text x="250" y="275" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Button • Card • Input • Modal</text>
                         <text x="250" y="295" text-anchor="middle" fill="var(--text-secondary)" font-size="12" opacity="0.8">🎨 Design Source</text>
                         <text x="250" y="315" text-anchor="middle" fill="#fbbf24" font-size="11" opacity="0.9">↓ Using Design Tokens</text>
@@ -1076,7 +1077,7 @@
                     <!-- MUI Theme + Components (center) -->
                     <g id="mui-layer">
                         <rect x="550" y="220" width="300" height="120" rx="8" fill="rgba(59,130,246,0.2)" stroke="#3b82f6" stroke-width="2"/>
-                        <text x="700" y="250" text-anchor="middle" fill="#3b82f6" font-family="Space Grotesk" font-size="18" font-weight="700">MUI COMPONENTS</text>
+                        <text x="700" y="250" text-anchor="middle" fill="#3b82f6" font-family="DM Sans" font-size="18" font-weight="700">MUI COMPONENTS</text>
                         <text x="700" y="275" text-anchor="middle" fill="var(--text-secondary)" font-size="13">+ MUI THEME</text>
                         <text x="700" y="295" text-anchor="middle" fill="var(--text-secondary)" font-size="12" opacity="0.8">⚛️ React Implementation</text>
                         <text x="700" y="315" text-anchor="middle" fill="#fbbf24" font-size="11" opacity="0.9">↓ Using Design Tokens</text>
@@ -1085,7 +1086,7 @@
                     <!-- NPM Packages (right) -->
                     <g id="npm-packages">
                         <rect x="1000" y="220" width="300" height="120" rx="8" fill="rgba(34,197,94,0.2)" stroke="#22c55e" stroke-width="2"/>
-                        <text x="1150" y="250" text-anchor="middle" fill="#22c55e" font-family="Space Grotesk" font-size="18" font-weight="700">PATTERN PACKAGES</text>
+                        <text x="1150" y="250" text-anchor="middle" fill="#22c55e" font-family="DM Sans" font-size="18" font-weight="700">PATTERN PACKAGES</text>
                         <text x="1150" y="275" text-anchor="middle" fill="var(--text-secondary)" font-size="13">npm registry</text>
                         <text x="1150" y="295" text-anchor="middle" fill="var(--text-secondary)" font-size="12" opacity="0.8">📦 Distribution</text>
                         <text x="1150" y="315" text-anchor="middle" fill="#fbbf24" font-size="11" opacity="0.9">↓ Versioned Patterns</text>
@@ -1103,7 +1104,7 @@
                     <!-- Figma Patterns -->
                     <g id="figma-patterns">
                         <rect x="100" y="410" width="300" height="100" rx="8" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="2" stroke-dasharray="4,2"/>
-                        <text x="250" y="440" text-anchor="middle" fill="#a855f7" font-family="Space Grotesk" font-size="16" font-weight="700">FIGMA PATTERNS</text>
+                        <text x="250" y="440" text-anchor="middle" fill="#a855f7" font-family="DM Sans" font-size="16" font-weight="700">FIGMA PATTERNS</text>
                         <text x="250" y="465" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Login Form • Dashboard • Nav</text>
                         <text x="250" y="485" text-anchor="middle" fill="var(--text-secondary)" font-size="11" opacity="0.8">Composed from Components</text>
                     </g>
@@ -1112,7 +1113,7 @@
                     <g id="agent-coordinator">
                         <rect x="500" y="580" width="400" height="200" rx="12" fill="rgba(239,68,68,0.15)" stroke="#ef4444" stroke-width="3"/>
                         <rect x="520" y="600" width="360" height="40" rx="6" fill="#ef4444" opacity="0.9"/>
-                        <text x="700" y="628" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="20" font-weight="700">🤖 AGENT COORDINATOR</text>
+                        <text x="700" y="628" text-anchor="middle" fill="white" font-family="DM Sans" font-size="20" font-weight="700">🤖 AGENT COORDINATOR</text>
 
                         <g font-size="13" fill="var(--text-secondary)">
                             <text x="530" y="670" font-weight="600">1. Interprets Figma Designs</text>
@@ -1180,7 +1181,7 @@
                         <rect x="450" y="840" width="500" height="80" rx="10" fill="rgba(34,197,94,0.2)" stroke="#22c55e" stroke-width="3" filter="url(#glow)">
                             <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
                         </rect>
-                        <text x="700" y="870" text-anchor="middle" fill="#22c55e" font-family="Space Grotesk" font-size="22" font-weight="700">✨ GENERATED PATTERNS</text>
+                        <text x="700" y="870" text-anchor="middle" fill="#22c55e" font-family="DM Sans" font-size="22" font-weight="700">✨ GENERATED PATTERNS</text>
                         <text x="700" y="895" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Production-Ready React Code</text>
                         <text x="700" y="913" text-anchor="middle" fill="#22c55e" font-size="11" opacity="0.9">Pixel-Perfect • Typed • Accessible • Themed</text>
                     </g>
@@ -1413,7 +1414,7 @@
                         <rect x="50" y="100" width="200" height="250" rx="8" fill="var(--accent-purple)" opacity="0.2" stroke="var(--accent-purple)" stroke-width="3"/>
                         <circle cx="150" cy="150" r="30" fill="var(--accent-purple)"/>
                         <text x="150" y="160" text-anchor="middle" fill="white" font-size="24">👤</text>
-                        <text x="150" y="220" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="20" font-weight="700">Persona</text>
+                        <text x="150" y="220" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="20" font-weight="700">Persona</text>
                         <text x="150" y="250" text-anchor="middle" fill="var(--text-secondary)" font-size="14">Who is the AI?</text>
                         <text x="150" y="275" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Define role &amp;</text>
                         <text x="150" y="295" text-anchor="middle" fill="var(--text-secondary)" font-size="13">perspective</text>
@@ -1425,7 +1426,7 @@
                         <rect x="280" y="100" width="200" height="250" rx="8" fill="var(--accent-orange)" opacity="0.2" stroke="var(--accent-orange)" stroke-width="3"/>
                         <circle cx="380" cy="150" r="30" fill="var(--accent-orange)"/>
                         <text x="380" y="160" text-anchor="middle" fill="white" font-size="24">🎯</text>
-                        <text x="380" y="220" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="20" font-weight="700">Task</text>
+                        <text x="380" y="220" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="20" font-weight="700">Task</text>
                         <text x="380" y="250" text-anchor="middle" fill="var(--text-secondary)" font-size="14">What to do?</text>
                         <text x="380" y="275" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Clear action &amp;</text>
                         <text x="380" y="295" text-anchor="middle" fill="var(--text-secondary)" font-size="13">objective</text>
@@ -1437,7 +1438,7 @@
                         <rect x="510" y="100" width="200" height="250" rx="8" fill="var(--accent-blue)" opacity="0.2" stroke="var(--accent-blue)" stroke-width="3"/>
                         <circle cx="610" cy="150" r="30" fill="var(--accent-blue)"/>
                         <text x="610" y="160" text-anchor="middle" fill="white" font-size="24">📋</text>
-                        <text x="610" y="220" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="20" font-weight="700">Context</text>
+                        <text x="610" y="220" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="20" font-weight="700">Context</text>
                         <text x="610" y="250" text-anchor="middle" fill="var(--text-secondary)" font-size="14">What background?</text>
                         <text x="610" y="275" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Relevant details</text>
                         <text x="610" y="295" text-anchor="middle" fill="var(--text-secondary)" font-size="13">&amp; constraints</text>
@@ -1449,7 +1450,7 @@
                         <rect x="740" y="100" width="200" height="250" rx="8" fill="var(--accent)" opacity="0.2" stroke="var(--accent)" stroke-width="3"/>
                         <circle cx="840" cy="150" r="30" fill="var(--accent)"/>
                         <text x="840" y="160" text-anchor="middle" fill="white" font-size="24">📝</text>
-                        <text x="840" y="220" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="20" font-weight="700">Format</text>
+                        <text x="840" y="220" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="20" font-weight="700">Format</text>
                         <text x="840" y="250" text-anchor="middle" fill="var(--text-secondary)" font-size="14">How to present?</text>
                         <text x="840" y="275" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Output structure</text>
                         <text x="840" y="295" text-anchor="middle" fill="var(--text-secondary)" font-size="13">&amp; style</text>
@@ -1520,15 +1521,15 @@
                             <animate attributeName="stroke-dasharray" values="8,4;12,6;8,4" dur="2s" repeatCount="indefinite"/>
                         </circle>
                         <text x="150" y="135" text-anchor="middle" fill="#ef4444" font-size="48">⚠️</text>
-                        <text x="150" y="175" text-anchor="middle" fill="#ef4444" font-family="Space Grotesk" font-size="16" font-weight="700">HALLUCINATIONS</text>
+                        <text x="150" y="175" text-anchor="middle" fill="#ef4444" font-family="DM Sans" font-size="16" font-weight="700">HALLUCINATIONS</text>
                         <text x="150" y="195" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Unreliable Output</text>
                     </g>
 
                     <!-- Barrier/Shield in middle -->
                     <g>
                         <rect x="340" y="50" width="120" height="200" rx="12" fill="rgba(34,197,94,0.15)" stroke="#22c55e" stroke-width="3"/>
-                        <text x="400" y="85" text-anchor="middle" fill="#22c55e" font-family="Space Grotesk" font-size="14" font-weight="700">PREVENTION</text>
-                        <text x="400" y="105" text-anchor="middle" fill="#22c55e" font-family="Space Grotesk" font-size="14" font-weight="700">STRATEGIES</text>
+                        <text x="400" y="85" text-anchor="middle" fill="#22c55e" font-family="DM Sans" font-size="14" font-weight="700">PREVENTION</text>
+                        <text x="400" y="105" text-anchor="middle" fill="#22c55e" font-family="DM Sans" font-size="14" font-weight="700">STRATEGIES</text>
 
                         <!-- 5 dots representing strategies -->
                         <circle cx="400" cy="130" r="6" fill="#22c55e">
@@ -1565,7 +1566,7 @@
                             <animate attributeName="r" values="80;82;80" dur="2s" repeatCount="indefinite"/>
                         </circle>
                         <text x="650" y="135" text-anchor="middle" fill="#22c55e" font-size="48">✓</text>
-                        <text x="650" y="175" text-anchor="middle" fill="#22c55e" font-family="Space Grotesk" font-size="16" font-weight="700">RELIABLE OUTPUT</text>
+                        <text x="650" y="175" text-anchor="middle" fill="#22c55e" font-family="DM Sans" font-size="16" font-weight="700">RELIABLE OUTPUT</text>
                         <text x="650" y="195" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Accurate & Grounded</text>
                     </g>
 
@@ -1838,10 +1839,10 @@
                     <table style="width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: 8px; overflow: hidden;">
                         <thead>
                             <tr style="background: var(--bg-dark); border-bottom: 2px solid var(--border);">
-                                <th style="padding: 1.25rem; text-align: left; color: var(--text-primary); font-family: 'Space Grotesk', sans-serif; font-weight: 700;"></th>
-                                <th style="padding: 1.25rem; text-align: center; color: var(--accent-blue); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem;">Chain of Thought</th>
-                                <th style="padding: 1.25rem; text-align: center; color: var(--accent-purple); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem;">Self-Consistency</th>
-                                <th style="padding: 1.25rem; text-align: center; color: var(--accent-orange); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem;">Tree of Thoughts</th>
+                                <th style="padding: 1.25rem; text-align: left; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-weight: 700;"></th>
+                                <th style="padding: 1.25rem; text-align: center; color: var(--accent-blue); font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem;">Chain of Thought</th>
+                                <th style="padding: 1.25rem; text-align: center; color: var(--accent-purple); font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem;">Self-Consistency</th>
+                                <th style="padding: 1.25rem; text-align: center; color: var(--accent-orange); font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem;">Tree of Thoughts</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1970,40 +1971,40 @@
                     <!-- Layer 4: Historical (Bottom - Widest) -->
                     <g class="context-layer" opacity="0">
                         <rect x="50" y="380" width="700" height="80" rx="8" fill="var(--accent-purple)" opacity="0.3" stroke="var(--accent-purple)" stroke-width="2"/>
-                        <text x="400" y="410" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="18" font-weight="700">Historical Context</text>
+                        <text x="400" y="410" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="18" font-weight="700">Historical Context</text>
                         <text x="400" y="435" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Previous decisions, patterns that worked, lessons learned</text>
                         <circle cx="80" cy="410" r="20" fill="var(--accent-purple)" opacity="0.6"/>
-                        <text x="80" y="418" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="16" font-weight="700">4</text>
+                        <text x="80" y="418" text-anchor="middle" fill="white" font-family="DM Sans" font-size="16" font-weight="700">4</text>
                         <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.5s" fill="freeze"/>
                     </g>
 
                     <!-- Layer 3: Task (Third - Narrower) -->
                     <g class="context-layer" opacity="0">
                         <rect x="100" y="280" width="600" height="80" rx="8" fill="var(--accent-orange)" opacity="0.4" stroke="var(--accent-orange)" stroke-width="2"/>
-                        <text x="400" y="310" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="18" font-weight="700">Task Context</text>
+                        <text x="400" y="310" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="18" font-weight="700">Task Context</text>
                         <text x="400" y="335" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Current objective, constraints, success criteria</text>
                         <circle cx="130" cy="310" r="20" fill="var(--accent-orange)" opacity="0.7"/>
-                        <text x="130" y="318" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="16" font-weight="700">3</text>
+                        <text x="130" y="318" text-anchor="middle" fill="white" font-family="DM Sans" font-size="16" font-weight="700">3</text>
                         <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1s" fill="freeze"/>
                     </g>
 
                     <!-- Layer 2: Design System (Second) -->
                     <g class="context-layer" opacity="0">
                         <rect x="150" y="180" width="500" height="80" rx="8" fill="var(--accent-blue)" opacity="0.5" stroke="var(--accent-blue)" stroke-width="2"/>
-                        <text x="400" y="210" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="18" font-weight="700">Design System Context</text>
+                        <text x="400" y="210" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="18" font-weight="700">Design System Context</text>
                         <text x="400" y="235" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Patterns, tokens, components available</text>
                         <circle cx="180" cy="210" r="20" fill="var(--accent-blue)" opacity="0.8"/>
-                        <text x="180" y="218" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="16" font-weight="700">2</text>
+                        <text x="180" y="218" text-anchor="middle" fill="white" font-family="DM Sans" font-size="16" font-weight="700">2</text>
                         <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.5s" fill="freeze"/>
                     </g>
 
                     <!-- Layer 1: Project (Top - Narrowest, Most Important) -->
                     <g class="context-layer" opacity="0">
                         <rect x="200" y="80" width="400" height="80" rx="8" fill="var(--accent)" opacity="0.6" stroke="var(--accent)" stroke-width="3"/>
-                        <text x="400" y="110" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="18" font-weight="700">Project Context</text>
+                        <text x="400" y="110" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="18" font-weight="700">Project Context</text>
                         <text x="400" y="135" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Tech stack, architecture, conventions</text>
                         <circle cx="230" cy="110" r="20" fill="var(--accent)"/>
-                        <text x="230" y="118" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="16" font-weight="700">1</text>
+                        <text x="230" y="118" text-anchor="middle" fill="white" font-family="DM Sans" font-size="16" font-weight="700">1</text>
                         <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0s" fill="freeze"/>
                     </g>
 
@@ -2081,7 +2082,7 @@
                 <svg viewBox="0 0 800 800" style="width: 100%; max-width: 600px; margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
                     <!-- Center Circle -->
                     <circle cx="400" cy="400" r="80" fill="var(--bg-dark)" stroke="var(--accent)" stroke-width="3"/>
-                    <text x="400" y="395" text-anchor="middle" fill="var(--accent)" font-family="Space Grotesk" font-size="16" font-weight="700">CONTEXT</text>
+                    <text x="400" y="395" text-anchor="middle" fill="var(--accent)" font-family="DM Sans" font-size="16" font-weight="700">CONTEXT</text>
                     <text x="400" y="415" text-anchor="middle" fill="var(--accent)" font-size="14" font-weight="600">ENGINEERING</text>
 
                     <!-- Circular Path -->
@@ -2092,7 +2093,7 @@
                         <circle cx="400" cy="130" r="60" fill="var(--accent-blue)" stroke="var(--bg-card)" stroke-width="3">
                             <animate attributeName="r" values="60;65;60" dur="3s" begin="0s" repeatCount="indefinite"/>
                         </circle>
-                        <text x="400" y="125" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="24" font-weight="700">1</text>
+                        <text x="400" y="125" text-anchor="middle" fill="white" font-family="DM Sans" font-size="24" font-weight="700">1</text>
                         <text x="400" y="145" text-anchor="middle" fill="white" font-size="14" font-weight="600">Experiment</text>
                     </g>
                     <text x="400" y="85" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Write context & give task</text>
@@ -2102,7 +2103,7 @@
                         <circle cx="616" cy="184" r="60" fill="var(--accent-purple)" stroke="var(--bg-card)" stroke-width="3">
                             <animate attributeName="r" values="60;65;60" dur="3s" begin="0.5s" repeatCount="indefinite"/>
                         </circle>
-                        <text x="616" y="179" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="24" font-weight="700">2</text>
+                        <text x="616" y="179" text-anchor="middle" fill="white" font-family="DM Sans" font-size="24" font-weight="700">2</text>
                         <text x="616" y="199" text-anchor="middle" fill="white" font-size="14" font-weight="600">Execute</text>
                     </g>
                     <text x="710" y="184" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Run agent</text>
@@ -2112,7 +2113,7 @@
                         <circle cx="616" cy="616" r="60" fill="var(--accent-orange)" stroke="var(--bg-card)" stroke-width="3">
                             <animate attributeName="r" values="60;65;60" dur="3s" begin="1s" repeatCount="indefinite"/>
                         </circle>
-                        <text x="616" y="611" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="24" font-weight="700">3</text>
+                        <text x="616" y="611" text-anchor="middle" fill="white" font-family="DM Sans" font-size="24" font-weight="700">3</text>
                         <text x="616" y="631" text-anchor="middle" fill="white" font-size="14" font-weight="600">Review</text>
                     </g>
                     <text x="710" y="660" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Analyze results</text>
@@ -2122,7 +2123,7 @@
                         <circle cx="400" cy="670" r="60" fill="var(--accent-blue)" stroke="var(--bg-card)" stroke-width="3">
                             <animate attributeName="r" values="60;65;60" dur="3s" begin="1.5s" repeatCount="indefinite"/>
                         </circle>
-                        <text x="400" y="665" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="24" font-weight="700">4</text>
+                        <text x="400" y="665" text-anchor="middle" fill="white" font-family="DM Sans" font-size="24" font-weight="700">4</text>
                         <text x="400" y="685" text-anchor="middle" fill="white" font-size="14" font-weight="600">Measure</text>
                     </g>
                     <text x="400" y="720" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Track performance</text>
@@ -2132,7 +2133,7 @@
                         <circle cx="184" cy="616" r="60" fill="var(--accent-purple)" stroke="var(--bg-card)" stroke-width="3">
                             <animate attributeName="r" values="60;65;60" dur="3s" begin="2s" repeatCount="indefinite"/>
                         </circle>
-                        <text x="184" y="611" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="24" font-weight="700">5</text>
+                        <text x="184" y="611" text-anchor="middle" fill="white" font-family="DM Sans" font-size="24" font-weight="700">5</text>
                         <text x="184" y="631" text-anchor="middle" fill="white" font-size="14" font-weight="600">Refine</text>
                     </g>
                     <text x="90" y="660" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Edit context</text>
@@ -2142,7 +2143,7 @@
                         <circle cx="184" cy="184" r="60" fill="var(--accent-orange)" stroke="var(--bg-card)" stroke-width="3">
                             <animate attributeName="r" values="60;65;60" dur="3s" begin="2.5s" repeatCount="indefinite"/>
                         </circle>
-                        <text x="184" y="179" text-anchor="middle" fill="white" font-family="Space Grotesk" font-size="24" font-weight="700">6</text>
+                        <text x="184" y="179" text-anchor="middle" fill="white" font-family="DM Sans" font-size="24" font-weight="700">6</text>
                         <text x="184" y="199" text-anchor="middle" fill="white" font-size="14" font-weight="600">Repeat</text>
                     </g>
                     <text x="90" y="184" text-anchor="middle" fill="var(--text-secondary)" font-size="13">Iterate</text>
@@ -2473,7 +2474,7 @@ Must: WCAG AA, match design tokens."</pre>
                     <!-- Metrics Labels -->
                     <g opacity="0">
                         <rect x="680" y="80" width="150" height="220" rx="8" fill="var(--bg-dark)" stroke="var(--border)" stroke-width="2"/>
-                        <text x="755" y="105" text-anchor="middle" fill="var(--text-primary)" font-family="Space Grotesk" font-size="14" font-weight="700">Metrics</text>
+                        <text x="755" y="105" text-anchor="middle" fill="var(--text-primary)" font-family="DM Sans" font-size="14" font-weight="700">Metrics</text>
 
                         <text x="695" y="135" fill="var(--text-secondary)" font-size="11">Accuracy:</text>
                         <text x="815" y="135" text-anchor="end" fill="var(--accent)" font-size="11" font-weight="700">+138%</text>

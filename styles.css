@@ -153,16 +153,13 @@ nav .back-link:hover {
 .project-hero--callrail {
     background: var(--callrail-brand, #1c4e8c);
     color: #ffffff;
-    padding: 7rem var(--gutter) 5rem;
+    padding: 10rem var(--gutter) 8rem;
     margin-bottom: 0;
 }
 
-.project-hero--callrail h1 {
-    color: #ffffff;
-}
-
+.project-hero--callrail h1,
 .project-hero--callrail .lead {
-    color: rgba(255, 255, 255, 0.88);
+    color: #ffffff;
 }
 
 /* Generic project-hero meta elements — eyebrow, divider, meta row */
@@ -208,21 +205,15 @@ nav .back-link:hover {
     color: var(--text-primary);
 }
 
-/* Colored hero overrides — white text on the brand color */
-.project-hero--callrail .hero-eyebrow {
-    color: rgba(255, 255, 255, 0.78);
+/* Colored hero overrides — pure white text on the brand color */
+.project-hero--callrail .hero-eyebrow,
+.project-hero--callrail .hero-meta-label,
+.project-hero--callrail .hero-meta-value {
+    color: #ffffff;
 }
 
 .project-hero--callrail .hero-divider {
-    border-top-color: rgba(255, 255, 255, 0.22);
-}
-
-.project-hero--callrail .hero-meta-label {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.project-hero--callrail .hero-meta-value {
-    color: #ffffff;
+    border-top-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Inline text link */

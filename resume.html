@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chris Barnes - Resume</title>
+    <title>Chris Barnes — Principal Designer · AI Systems & Platform Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -211,7 +211,36 @@
             color: #000;
         }
 
+        /* Accessibility: skip link + focus indicators */
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.75rem 1rem;
+            background: #000;
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0 0 6px 0;
+            transform: translateY(-150%);
+            transition: transform 0.15s ease;
+            z-index: 1000;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+            outline: 2px solid #000;
+            outline-offset: 2px;
+        }
+
+        :focus-visible {
+            outline: 2px solid #000;
+            outline-offset: 3px;
+            border-radius: 3px;
+        }
+
         @media print {
+            .skip-link { display: none; }
             @page {
                 margin: 0.5in;
                 size: letter;
@@ -270,6 +299,8 @@
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- Top Bar -->
     <div class="top-bar">
         <a href="index.html#work">← Back to Work</a>
@@ -283,7 +314,7 @@
         </button>
     </div>
 
-    <div class="resume-container">
+    <div class="resume-container" id="main">
         <header>
             <h1>Chris Barnes</h1>
             <div class="contact-info">
@@ -295,7 +326,7 @@
         </header>
 
         <div class="summary">
-            Creative leader with extensive experience in design, product management, and development. Skilled in aligning business solutions with goals, optimizing performance, and delivering innovative solutions. Expertise in cross-functional teams, Agile methodologies, and AI-powered design systems.
+            Designer working at the intersection of AI systems and platform design — pattern libraries, agent UX, and the design infrastructure that lets product teams ship AI features at scale. Designer who ships code: tokens, components, and agent tooling end-to-end, with no translation gap between design and engineering.
         </div>
 
         <section>
@@ -310,12 +341,11 @@
                     <div class="job-dates">2024 – Present</div>
                 </div>
                 <ul>
-                    <li>Rebuilt enterprise design system with Material UI React and comprehensive design tokens</li>
-                    <li>Created Patterns Figma - comprehensive pattern library achieving 100% UI coverage</li>
-                    <li>Built Seamstress AI agent generating pixel-perfect prototypes from design patterns</li>
-                    <li>Designed Agent Studio using AI workflows (80% of designs AI-generated)</li>
-                    <li>Implemented code generation workflows using Figma MCP with significant performance gains</li>
-                    <li>Established design-to-code automation eliminating translation gaps</li>
+                    <li>Lead the Capital Design System — tokens, components, layouts (incl. BaseLayout), with Storybook as the source of truth across distributed packages</li>
+                    <li>Shipped the CDS Front-end agent — a Claude Code plugin that scores production repos across compliance, accessibility, responsiveness, type, and transitions</li>
+                    <li>Designed Government Artifacts — an AI-first workspace UX that modularizes government workflows around artifact definitions, with AI as the primary interaction</li>
+                    <li>Trained Seamstress (Claude Code) for AI-driven design — generated 80% of Agent Studio's UI; now powers the seamstress-design prototyping repo</li>
+                    <li>Distributing a CDS Pencil file — designers prompt designs in-repo and translate directly to production code, bypassing Figma</li>
                 </ul>
             </div>
 
@@ -369,41 +399,41 @@
             <div class="skills-grid">
                 <div class="skill-category">
                     <ul>
-                        <li>User Experience Design</li>
-                        <li>Full-stack Development</li>
-                        <li>Product Management</li>
-                        <li>AI-Powered Design Systems</li>
+                        <li>Platform Design</li>
+                        <li>AI Systems Design</li>
+                        <li>Design Infrastructure</li>
+                        <li>Agent UX</li>
                     </ul>
                 </div>
                 <div class="skill-category">
                     <ul>
-                        <li>Stakeholder Engagement</li>
-                        <li>Agile/Scrum/SAFe</li>
-                        <li>System Architecture</li>
+                        <li>Pattern Libraries</li>
                         <li>Design Tokens</li>
+                        <li>Component API Design</li>
+                        <li>System Architecture</li>
                     </ul>
                 </div>
                 <div class="skill-category">
                     <ul>
-                        <li>SaaS Applications</li>
-                        <li>CI/CD, AWS, Azure</li>
-                        <li>Business Process Improvement</li>
-                        <li>JIRA, Confluence</li>
+                        <li>MCP / Code Generation</li>
+                        <li>Design-to-Code Pipelines</li>
+                        <li>Prototyping with Code</li>
+                        <li>Cross-Functional Leadership</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2>Software Skills</h2>
+            <h2>Tools</h2>
             <div class="software-skills">
                 <span class="software-tag">Figma</span>
+                <span class="software-tag">Figma MCP</span>
+                <span class="software-tag">Claude Code</span>
+                <span class="software-tag">React</span>
+                <span class="software-tag">TypeScript</span>
+                <span class="software-tag">Material UI</span>
                 <span class="software-tag">Adobe Creative Suite</span>
-                <span class="software-tag">Jira</span>
-                <span class="software-tag">Slack</span>
-                <span class="software-tag">MS Office/Teams</span>
-                <span class="software-tag">Trello</span>
-                <span class="software-tag">Digital Illustration</span>
                 <span class="software-tag">SVG</span>
             </div>
         </section>

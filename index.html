@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chris Barnes - AI & Design Systems Leader</title>
+    <title>Chris Barnes — Principal Designer · AI Systems & Platform Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -314,7 +314,7 @@
         .featured-badge {
             display: inline-block;
             padding: 0.5rem 1rem;
-            background: whitesmoke;
+            background: var(--bg-dark);
             color: var(--accent);
             border: 1px solid var(--accent);
             border-radius: 4px;
@@ -323,6 +323,96 @@
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .featured-lede {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .featured-detail {
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            font-size: 1rem;
+        }
+
+        .featured-cta {
+            margin-top: 1rem;
+        }
+
+        .section-header--spaced {
+            margin-top: 4rem;
+        }
+
+        /* Contact Section */
+        .contact-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .contact-actions--theme {
+            margin-top: 2rem;
+        }
+
+        .cta-button--secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .cta-button--with-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copyright-meta-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Accessibility: skip link + focus indicators */
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.75rem 1rem;
+            background: var(--accent);
+            color: var(--bg-dark);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0 0 6px 0;
+            transform: translateY(-150%);
+            transition: transform 0.15s ease;
+            z-index: 1000;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 3px;
+        }
+
+        .cta-button:focus-visible,
+        .project-card:focus-visible,
+        .skill-tag:focus-visible,
+        .theme-toggle:focus-visible,
+        nav a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
         }
 
         .featured-project h3 {
@@ -406,6 +496,23 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 100%);
+        }
+
+        .project-image--raceday   { background-color: #0a0a0a; background-image: url('images/raceday/hero.jpg'); }
+        .project-image--idl       { background-image: url('images/idl/idl-pipes.png'); }
+        .project-image--callrail  { background-image: url('images/callrail/callrail-11.png'); }
+        .project-image--lets-read { background-image: url('images/letsread/LR+Hero.jpg'); }
+
+        /* "In progress" card variant — no link, no hover affordance */
+        .project-card--in-progress,
+        .project-card--in-progress:hover {
+            border-color: var(--border);
+            cursor: default;
+        }
+
+        .project-tag--live {
+            color: var(--accent);
+            border-color: var(--accent);
         }
 
         .project-content {
@@ -551,6 +658,8 @@
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- Navigation -->
     <nav>
         <div class="container">
@@ -582,13 +691,13 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="main">
         <div class="token-animation" id="tokenAnimation">
             <div class="page-label" id="pageLabel"></div>
         </div>
         <div class="hero-content">
-            <h1>AI-Powered Product Design</h1>
-            <p class="subtitle">Building intelligent design systems and tools that generate production-ready code</p>
+            <h1>Designing platforms for AI products.</h1>
+            <p class="subtitle">Principal designer working at the intersection of AI systems and platform design — pattern libraries, agent UX, and the design infrastructure other teams build on.</p>
             <a href="#contact" class="cta-button">Let's Build Something</a>
         </div>
     </section>
@@ -603,206 +712,59 @@
 
             <div class="featured-project">
                 <span class="featured-badge">Case Study</span>
-                <h3>AI Powered Design System</h3>
-                <p class="subtitle">Pattern Library for Generative UX</p>
+                <h3>Platform Design w/ Claude</h3>
+                <p class="subtitle">Pattern library, agent tooling, and the design infrastructure for OpenGov's AI products</p>
 
-                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
-                    I was given ownership of the OpenGov design system with a charge to make it more comprehensive and scalable. I rebuilt the system based on Google's official Material React Figma library(OpenGov's official frontend framework). With the component library rebuilt I composed a pattern library to compose official default layouts for our system. I then used those default layouts to build out our AI Agent Studio product.  
+                <p class="featured-lede">
+                    At OpenGov, I'm building the platform other designers and engineers compose against — a Material UI-based system with versioned tokens, a Storybook of layouts and components that's the source of truth, and a Claude Code plugin that validates production code against the system on every PR.
                 </p>
 
                 <div class="stats-grid">
                     <div class="stat">
-                        <span class="stat-number">Versioned</span>
-                        <p class="stat-label">System Architecture</p>
+                        <span class="stat-number">Storybook</span>
+                        <p class="stat-label">System of Record</p>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">Full</span>
-                        <p class="stat-label">Pattern Coverage</p>
+                        <span class="stat-number">Plugin</span>
+                        <p class="stat-label">Distributed via Claude Code</p>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">Gen UX</span>
-                        <p class="stat-label">AI-Ready System</p>
+                        <span class="stat-number">80%</span>
+                        <p class="stat-label">Agent-Generated UX</p>
                     </div>
                 </div>
 
-                <p style="color: var(--text-secondary); margin-top: 2rem; font-size: 1rem;">
-                    <strong>Seamstress:</strong> Using Claude Code I built an AI agent that understands our framework and codebase as well as our design system. This agent was used to generate 80% of the designs for Agent Studio.
+                <p class="featured-detail">
+                    <strong>CDS Front-end agent:</strong> A Claude Code plugin I built that scores and fixes inconsistencies in production repos — design-system compliance, accessibility, responsiveness, typography, transitions. It replaced Seamstress as the production agent, freeing the seamstress-design repo to become a rapid-prototyping environment running on the same system code that ships.
                 </p>
 
-                <p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.9rem;">
+                <p class="featured-detail">
+                    Next: distributing a Pencil file with the design system so designers can prompt designs from inside the repo and translate directly to production code — bypassing Figma entirely.
+                </p>
+
+                <p class="featured-cta">
                     <a class="cta-button" href="design-system-case-study.html">Read Full Case Study →</a>
                 </p>
             </div>
 
-            <!-- AI Projects Grid -->
-            <div class="section-header" style="margin-top: 4rem;">
-                <h2>AI & Product Design</h2>
-                <p>Building intelligent experiences from concept to production</p>
+            <!-- Selected Work Grid -->
+            <div class="section-header section-header--spaced">
+                <h2>Selected Work</h2>
+                <p>From AI products and platforms to mobile experiences</p>
             </div>
 
             <div class="project-grid">
-                <a href="ai-collaboration.html" class="project-card">
-                    <div class="project-image" style="background: #000000; position: relative; overflow: hidden;">
-                        <svg viewBox="0 0 400 160" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Background circuits/network -->
-                            <g opacity="0.1">
-                                <line x1="0" y1="40" x2="400" y2="40" stroke="white" stroke-width="1" stroke-dasharray="4,4">
-                                    <animate attributeName="stroke-dashoffset" from="0" to="8" dur="1s" repeatCount="indefinite"/>
-                                </line>
-                                <line x1="0" y1="80" x2="400" y2="80" stroke="white" stroke-width="1" stroke-dasharray="4,4">
-                                    <animate attributeName="stroke-dashoffset" from="0" to="8" dur="1.5s" repeatCount="indefinite"/>
-                                </line>
-                                <line x1="0" y1="120" x2="400" y2="120" stroke="white" stroke-width="1" stroke-dasharray="4,4">
-                                    <animate attributeName="stroke-dashoffset" from="0" to="8" dur="2s" repeatCount="indefinite"/>
-                                </line>
-                            </g>
-
-                            <!-- Three connected nodes: Claude + Figma + Schema -->
-                            <!-- Node 1: Claude Code -->
-                            <g>
-                                <circle cx="80" cy="80" r="28" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="2">
-                                    <animate attributeName="r" values="28;30;28" dur="2s" repeatCount="indefinite"/>
-                                </circle>
-                                <text x="80" y="88" text-anchor="middle" fill="white" font-size="32" font-weight="bold">⚡</text>
-                                <text x="80" y="130" text-anchor="middle" fill="white" font-size="10" font-weight="600" opacity="0.9">CLAUDE</text>
-                            </g>
-
-                            <!-- Connection line 1 -->
-                            <line x1="108" y1="80" x2="172" y2="80" stroke="white" stroke-width="2" opacity="0.6" stroke-dasharray="4,2">
-                                <animate attributeName="stroke-dashoffset" from="6" to="0" dur="1s" repeatCount="indefinite"/>
-                            </line>
-                            <circle cx="140" cy="80" r="3" fill="white">
-                                <animateMotion dur="1.5s" repeatCount="indefinite" path="M 108,80 L 172,80"/>
-                            </circle>
-
-                            <!-- Node 2: Figma -->
-                            <g>
-                                <circle cx="200" cy="80" r="28" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="2">
-                                    <animate attributeName="r" values="28;30;28" dur="2s" begin="0.7s" repeatCount="indefinite"/>
-                                </circle>
-                                <text x="200" y="88" text-anchor="middle" fill="white" font-size="32" font-weight="bold">🎨</text>
-                                <text x="200" y="130" text-anchor="middle" fill="white" font-size="10" font-weight="600" opacity="0.9">FIGMA</text>
-                            </g>
-
-                            <!-- Connection line 2 -->
-                            <line x1="228" y1="80" x2="292" y2="80" stroke="white" stroke-width="2" opacity="0.6" stroke-dasharray="4,2">
-                                <animate attributeName="stroke-dashoffset" from="6" to="0" dur="1s" repeatCount="indefinite"/>
-                            </line>
-                            <circle cx="260" cy="80" r="3" fill="white">
-                                <animateMotion dur="1.5s" repeatCount="indefinite" path="M 228,80 L 292,80"/>
-                            </circle>
-
-                            <!-- Node 3: Schema -->
-                            <g>
-                                <circle cx="320" cy="80" r="28" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="2">
-                                    <animate attributeName="r" values="28;30;28" dur="2s" begin="1.4s" repeatCount="indefinite"/>
-                                </circle>
-                                <text x="320" y="88" text-anchor="middle" fill="white" font-size="32" font-weight="bold">📋</text>
-                                <text x="320" y="130" text-anchor="middle" fill="white" font-size="10" font-weight="600" opacity="0.9">SCHEMA</text>
-                            </g>
-
-                            <!-- Flowing particles -->
-                            <circle r="2" fill="rgba(255,255,255,0.8)">
-                                <animateMotion dur="3s" repeatCount="indefinite" path="M 80,80 Q 140,60 200,80 T 320,80"/>
-                                <animate attributeName="opacity" values="0;1;1;0" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle r="2" fill="rgba(255,255,255,0.8)">
-                                <animateMotion dur="3s" begin="1s" repeatCount="indefinite" path="M 80,80 Q 140,100 200,80 T 320,80"/>
-                                <animate attributeName="opacity" values="0;1;1;0" dur="3s" begin="1s" repeatCount="indefinite"/>
-                            </circle>
-                        </svg>
-                    </div>
+                <div class="project-card project-card--in-progress">
+                    <div class="project-image project-image--raceday"></div>
                     <div class="project-content">
-                        <span class="project-tag">AI Workflow</span>
-                        <h3>AI Collaboration Framework</h3>
-                        <p>How I leverage Claude Code Agent + Figma MCP + Schema to achieve breakthrough results.
-                        Explore prompting styles, types of thinking, and context distillation techniques that
-                        amplify human creativity with AI capabilities.</p>
+                        <span class="project-tag project-tag--live">In Progress · UEFN</span>
+                        <h3>RaceDay</h3>
+                        <p>Building a racing game in UEFN with Claude Code as my engineering partner. AAA-tier performance is the bar — gameplay systems, asset pipelines, and runtime budgets shipped through human-AI collaboration.</p>
                     </div>
-                </a>
+                </div>
 
                 <a href="industrial-data-labs.html" class="project-card">
-                    <div class="project-image" style="background-image: url('images/idl/idl-pipes.png'); position: relative; overflow: hidden;">
-                        <svg viewBox="0 0 400 160" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Data pipeline paths -->
-                            <defs>
-                                <linearGradient id="dataGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0" />
-                                    <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:0.8" />
-                                    <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0" />
-                                </linearGradient>
-                            </defs>
-
-                            <!-- Pipeline structure -->
-                            <g opacity="0.7">
-                                <!-- Main horizontal pipeline -->
-                                <rect x="50" y="75" width="300" height="10" rx="5" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.5)" stroke-width="2"/>
-
-                                <!-- Vertical branches -->
-                                <rect x="120" y="40" width="6" height="40" rx="3" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
-                                <rect x="230" y="40" width="6" height="40" rx="3" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
-                                <rect x="280" y="85" width="6" height="40" rx="3" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
-
-                                <!-- Data nodes -->
-                                <circle cx="123" cy="30" r="8" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="2">
-                                    <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite"/>
-                                </circle>
-                                <circle cx="233" cy="30" r="8" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="2">
-                                    <animate attributeName="r" values="8;10;8" dur="2s" begin="0.7s" repeatCount="indefinite"/>
-                                </circle>
-                                <circle cx="283" cy="135" r="8" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="2">
-                                    <animate attributeName="r" values="8;10;8" dur="2s" begin="1.4s" repeatCount="indefinite"/>
-                                </circle>
-                            </g>
-
-                            <!-- Flowing data packets -->
-                            <circle r="5" fill="#3b82f6" opacity="0.9">
-                                <animateMotion dur="4s" repeatCount="indefinite" path="M 50,80 L 350,80"/>
-                                <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="4s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle r="4" fill="#60a5fa" opacity="0.8">
-                                <animateMotion dur="4s" begin="1s" repeatCount="indefinite" path="M 50,80 L 350,80"/>
-                                <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="4s" begin="1s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle r="4" fill="#93c5fd" opacity="0.8">
-                                <animateMotion dur="4s" begin="2s" repeatCount="indefinite" path="M 50,80 L 350,80"/>
-                                <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="4s" begin="2s" repeatCount="indefinite"/>
-                            </circle>
-
-                            <!-- Branch data packets -->
-                            <circle r="3" fill="#3b82f6">
-                                <animateMotion dur="2s" repeatCount="indefinite" path="M 123,80 L 123,30"/>
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle r="3" fill="#3b82f6">
-                                <animateMotion dur="2s" begin="0.5s" repeatCount="indefinite" path="M 233,80 L 233,30"/>
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle r="3" fill="#3b82f6">
-                                <animateMotion dur="2s" begin="1s" repeatCount="indefinite" path="M 283,85 L 283,135"/>
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1s" repeatCount="indefinite"/>
-                            </circle>
-
-                            <!-- AI Processing indicator -->
-                            <g opacity="0.85">
-                                <circle cx="360" cy="80" r="20" fill="rgba(34,197,94,0.3)" stroke="#22c55e" stroke-width="2">
-                                    <animate attributeName="r" values="20;24;20" dur="1.5s" repeatCount="indefinite"/>
-                                </circle>
-                                <text x="360" y="88" text-anchor="middle" fill="#22c55e" font-size="20" font-weight="bold">AI</text>
-                            </g>
-
-                            <!-- Data metrics -->
-                            <g opacity="0.75" font-family="monospace" font-size="9" fill="#3b82f6">
-                                <text x="10" y="15">SENSOR DATA</text>
-                                <text x="10" y="30">▸ Temperature</text>
-                                <text x="10" y="42">▸ Pressure</text>
-                                <text x="10" y="54">▸ Flow Rate</text>
-
-                                <text x="320" y="25">ML ANALYSIS</text>
-                                <text x="320" y="40" fill="#22c55e">✓ Optimized</text>
-                            </g>
-                        </svg>
-                    </div>
+                    <div class="project-image project-image--idl"></div>
                     <div class="project-content">
                         <span class="project-tag">AI Product</span>
                         <h3>Industrial Data Labs</h3>
@@ -813,7 +775,7 @@
                 </a>
 
                 <a href="callrail.html" class="project-card">
-                    <div class="project-image" style="background-image: url('images/callrail/callrail-11.png');"></div>
+                    <div class="project-image project-image--callrail"></div>
                     <div class="project-content">
                         <span class="project-tag">Design System</span>
                         <h3>CallRail Design System</h3>
@@ -823,7 +785,7 @@
                 </a>
 
                 <a href="lets-read.html" class="project-card">
-                    <div class="project-image" style="background-image: url('images/letsread/LR+Hero.jpg');"></div>
+                    <div class="project-image project-image--lets-read"></div>
                     <div class="project-content">
                         <span class="project-tag">Product Design</span>
                         <h3>Let's Read</h3>
@@ -843,32 +805,32 @@
                     <h2>About Me</h2>
                 </div>
                 <p>
-                    I'm a designer and creative programmer based in Atlanta, GA, with a track record of
-                    collaborating on projects for renowned brands such as Disney, Intel, Weather Channel,
-                    Southern Company Gas, Kimberly Clark, and IHG.
+                    I design the platforms behind AI products — pattern libraries, agent UX, and the
+                    design infrastructure other designers and engineers build on. Right now that means
+                    leading the design system and AI tooling at OpenGov; before that, similar work
+                    inside startups, agencies, and as a consultant.
                 </p>
                 <p>
-                    I specialize in the intersection of AI and design systems—building scalable design
-                    infrastructure and intelligent product experiences. My work spans strategy, product design,
-                    system architecture, system engineering, and full-stack development.
+                    Atlanta-based. Past collaborators include Disney, Intel, Weather Channel,
+                    Southern Company Gas, Kimberly Clark, and IHG. I'm a designer who ships code,
+                    which means the systems I design are the same ones I prototype, instrument,
+                    and hand off — no translation gap.
                 </p>
                 <p>
-                    I've worked corporate gigs, in the agency world, inside of startups, and alongside
-                    all of the above as a consultant. I bring a unique perspective that combines creative
-                    thinking with systematic engineering.
+                    What I'm best at: turning a fuzzy "we need an AI feature" into a platform —
+                    tokens, components, agents, and the workflows that make a small team move
+                    like a much bigger one.
                 </p>
 
                 <div class="skills">
-                    <span class="skill-tag">AI Product Design</span>
-                    <span class="skill-tag">Design Systems Architecture</span>
-                    <span class="skill-tag">Full-Stack Development</span>
+                    <span class="skill-tag">Platform Design</span>
+                    <span class="skill-tag">AI Systems Design</span>
+                    <span class="skill-tag">Design Infrastructure</span>
+                    <span class="skill-tag">Agent UX</span>
                     <span class="skill-tag">Design Tokens</span>
-                    <span class="skill-tag">Component Libraries</span>
-                    <span class="skill-tag">Figma Systems</span>
-                    <span class="skill-tag">React & Vue</span>
-                    <span class="skill-tag">Strategic Design</span>
-                    <span class="skill-tag">Prototyping</span>
-                    <span class="skill-tag">User Research</span>
+                    <span class="skill-tag">Pattern Libraries</span>
+                    <span class="skill-tag">Figma + MCP</span>
+                    <span class="skill-tag">React + TypeScript</span>
                 </div>
             </div>
         </div>
@@ -879,15 +841,15 @@
         <div class="container">
             <div class="section-header">
                 <h2>Let's Work Together</h2>
-                <p>Building the future of AI-powered design experiences</p>
+                <p>Open to Principal IC roles, design-leadership consulting, and AI/platform collaborations</p>
             </div>
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="https://linkedin.com/in/iambarnesy" target="_blank" class="cta-button" style="margin-right: 1rem; margin-bottom: 1rem;">LinkedIn</a>
-                <a href="https://github.com/barnesy" target="_blank" class="cta-button" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); margin-right: 1rem; margin-bottom: 1rem;">GitHub</a>
-                <a href="resume.html" target="_blank" class="cta-button" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); margin-bottom: 1rem;">Resume</a>
+            <div class="contact-actions">
+                <a href="https://linkedin.com/in/iambarnesy" target="_blank" class="cta-button">LinkedIn</a>
+                <a href="https://github.com/barnesy" target="_blank" class="cta-button cta-button--secondary">GitHub</a>
+                <a href="resume.html" target="_blank" class="cta-button cta-button--secondary">Resume</a>
             </div>
-            <div style="text-align: center; margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <button id="lightModeBtn" class="cta-button" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+            <div class="contact-actions contact-actions--theme">
+                <button id="lightModeBtn" class="cta-button cta-button--secondary cta-button--with-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -901,7 +863,7 @@
                     </svg>
                     Light Mode
                 </button>
-                <button id="darkModeBtn" class="cta-button" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <button id="darkModeBtn" class="cta-button cta-button--secondary cta-button--with-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
@@ -923,7 +885,7 @@
             </div>
             <p class="copyright">
                 &copy; 2025 Chris Barnes. Design Systems + AI Innovation.<br>
-                <a href="meta-case-study.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;">
+                <a href="meta-case-study.html" class="copyright-meta-link">
                     Built in collaboration with Claude Code →
                 </a>
             </p>

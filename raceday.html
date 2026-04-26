@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Day · UEFN | Chris Barnes — Principal Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #1a1816;
+            --bg-card: #252321;
+            --text-primary: #faf8f5;
+            --text-secondary: #b8b3ad;
+            --accent: #22c55e;
+            --border: #3a3632;
+
+            /* RaceDay-specific palette — matches in-game UI yellow */
+            --raceday-hero-bg: #0a0a0a;
+            --raceday-gold: #facc15;
+
+            --gutter: 1rem;
+            --section-padding-y: 4rem;
+            --section-padding-x: 1rem;
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #faf8f5;
+            --bg-card: #ffffff;
+            --text-primary: #1a1816;
+            --text-secondary: #6b6560;
+            --accent: #3b82f6;
+            --border: #e5e1dc;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover { opacity: 0.7; }
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.2s;
+        }
+        .theme-toggle:hover svg { stroke: var(--text-primary); }
+        .theme-icon {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            position: absolute;
+        }
+        .theme-icon.hidden {
+            opacity: 0;
+            transform: rotate(180deg);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem var(--gutter);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        nav .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        nav .back-link:hover { color: var(--text-primary); }
+
+        /* Hero */
+        .hero {
+            padding: 7rem var(--gutter) 5rem;
+            position: relative;
+        }
+
+        .hero--raceday {
+            background: var(--raceday-hero-bg);
+            color: #ffffff;
+        }
+
+        .hero--raceday .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        .hero-eyebrow {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--raceday-gold);
+            margin-bottom: 2rem;
+        }
+
+        .hero--raceday h1 {
+            color: #ffffff;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero--raceday .hero-subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+            max-width: 720px;
+            margin: 0 0 2.5rem 0;
+            line-height: 1.5;
+        }
+
+        .hero-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            margin: 0 0 2.5rem 0;
+        }
+
+        .hero--raceday .hero-stats {
+            display: flex;
+            gap: 4rem;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            max-width: none;
+            margin: 0;
+        }
+
+        .hero--raceday .hero-stat { text-align: left; }
+
+        .hero--raceday .hero-stat-number {
+            color: var(--raceday-gold);
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero--raceday .hero-stat-label {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        section {
+            padding: var(--section-padding-y) var(--section-padding-x);
+        }
+
+        /* Content */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .section-content p { margin-bottom: 1.5rem; }
+        .section-content strong { color: var(--text-primary); }
+
+        .section-content h3 {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2.5rem 0 0.75rem;
+        }
+
+        .section-content ul {
+            margin: 1rem 0 1.5rem 1.75rem;
+            line-height: 1.9;
+        }
+
+        .section-content ul li strong {
+            color: var(--text-primary);
+        }
+
+        /* Image / video / placeholder slots */
+        .case-study-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin: 2rem 0 1rem;
+            display: block;
+        }
+
+        .case-study-video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin: 2rem 0 1rem;
+            display: block;
+            background: var(--bg-card);
+        }
+
+        .image-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4rem var(--gutter);
+            text-align: center;
+            margin: 2rem 0 1rem;
+            color: var(--text-secondary);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0 0 2rem;
+            font-style: italic;
+        }
+
+        /* Quote block */
+        .quote-block {
+            background: var(--bg-card);
+            border-left: 4px solid var(--raceday-gold);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 4px;
+        }
+
+        .quote-block p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-style: italic;
+            margin: 0;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .cta-button:hover { opacity: 0.9; }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            padding: 3rem var(--gutter);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        footer a:hover { color: var(--text-primary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav .container { padding: 1.5rem var(--gutter); }
+            .hero {
+                padding: 6rem var(--gutter) 3.5rem;
+            }
+            .hero--raceday .hero-stats { gap: 2rem; }
+            section { padding: 3rem var(--gutter); }
+            .cta-section { padding: 2rem 1.5rem; }
+            .cta-buttons { flex-direction: column; }
+            .cta-button { width: 100%; }
+        }
+
+        /* Accessibility: skip link + focus indicators */
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.75rem 1rem;
+            background: var(--raceday-gold);
+            color: var(--raceday-hero-bg);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0 0 6px 0;
+            transform: translateY(-150%);
+            transition: transform 0.15s ease;
+            z-index: 1100;
+        }
+        .skip-link:focus {
+            transform: translateY(0);
+            outline: 2px solid var(--raceday-gold);
+            outline-offset: 2px;
+        }
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Chris Barnes</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html#work" class="back-link">← Back to Work</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero hero--raceday" id="main">
+        <div class="container">
+            <span class="hero-eyebrow">Race Day · UEFN</span>
+            <h1>On-foot racing in Fortnite, built with Claude</h1>
+            <p class="hero-subtitle">A real game in Unreal Editor for Fortnite — custom Verse logic, zone-based tracks, persistent per-mode leaderboards, NPC enemies, and a Claude Code workflow that ships features in phases.</p>
+            <hr class="hero-divider">
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">Phase 10</span>
+                    <p class="hero-stat-label">Per-mode Leaderboard</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">5</span>
+                    <p class="hero-stat-label">Progression zones</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">9</span>
+                    <p class="hero-stat-label">Verse-aware Claude skills</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">4-mode</span>
+                    <p class="hero-stat-label">Solo · Duos · Trios · Squads</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The intention -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">The intention</h2>
+            <div class="section-content">
+                <p>
+                    UEFN gets pitched as a builder for casual game modes. I'm using it to ship a real game — on-foot racing with a 30-second cinematic countdown, persistent leaderboards across solo and team modes, AI enemy racers, and a victory cinematic. Built entirely from <strong>custom Verse</strong> logic, not the official Rocket Racing devices.
+                </p>
+                <p>
+                    The thesis: a designer-engineer working with Claude can match what used to take a small studio. The build is phased — every phase ships as a playable, testable increment. Each phase ends with a smoke test passing, a CLAUDE.md doc updated, and the next phase scoped.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Where it is now -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Where it is now</h2>
+            <div class="section-content">
+                <p>
+                    Phases 0–8 are complete and shippable: project setup, basic race MVP, timing & scoring, checkpoints, multiplayer, countdown + speed boosts, persistent personal best, zone-based architecture, per-zone item progression with NPC allies. <strong>Phases 9–10 are in active testing</strong> — team support across duos/trios/squads, three hostile Brother Bill NPC racers with AI navigation, and per-mode persistent leaderboards.
+                </p>
+
+                <h3>The level</h3>
+                <p>
+                    Race Day starts at a control panel in the build hub. The sign overhead reads RACE DAY in lit-up letters. Players spawn in the lobby, ready up, and get pulled into the cinematic countdown.
+                </p>
+            </div>
+
+            <div class="image-block">Screenshot pending — Race Day hub with control panel and signage</div>
+            <p class="image-caption">The build hub — control panel, RACE DAY sign, lobby spawn area.</p>
+
+            <div class="section-content">
+                <h3>The track</h3>
+                <p>
+                    Five sequential progression zones (<code>Zone0Start → Zone4Finish</code>) plus optional bonus zones for boost pads. Built on <code>volume_device</code> so the same architecture supports on-foot now and vehicles later. Wrong-zone entry is rejected — you can't skip ahead.
+                </p>
+            </div>
+
+            <div class="image-block">Screenshot pending — Top-down view of the race track with zone volumes visible</div>
+            <p class="image-caption">Top-down view of the track. The translucent blue boxes are the five progression zones, each one a <code>volume_device</code> wired into the Verse race manager.</p>
+
+            <div class="section-content">
+                <h3>The flyover</h3>
+                <p>
+                    Every race opens with a 30-second countdown. The countdown plays a cinematic flyover of the track so players see what they're about to run before they run it.
+                </p>
+            </div>
+
+            <div>
+                <video controls preload="metadata" playsinline class="case-study-video">
+                    <source src="images/raceday/raceday-flyover.mp4" type="video/mp4">
+                    Your browser doesn't support embedded video. <a href="images/raceday/raceday-flyover.mp4">Download the flyover</a>.
+                </video>
+                <p class="image-caption">The 30-second countdown flyover — the track previewed before the gates drop.</p>
+            </div>
+
+            <div class="section-content">
+                <h3>The HUD</h3>
+                <p>
+                    Real-time race timer, placement indicator, segment progress (<code>Start → 1 → 2 → 3 → 4 → Finish</code>), and per-zone split times. Custom Verse-driven — every HUD element is a <code>hud_message_device</code> wired to game state via <code>@editable</code> refs.
+                </p>
+            </div>
+
+            <div class="image-block">Screenshot pending — In-game HUD blueprint (timer + segment progress)</div>
+            <p class="image-caption">In-game HUD — placement and timer at the top, segment progress along the side.</p>
+
+            <div class="section-content">
+                <h3>The win screen</h3>
+                <p>
+                    Race Complete modal with placement, finish time, and dual leaderboards: <strong>This Race</strong> vs <strong>All Time</strong> persistent. <code>TO LOBBY</code> exits, <code>READY UP</code> queues another race.
+                </p>
+            </div>
+
+            <div class="image-block">Screenshot pending — Win screen modal (Race Complete, placement, time, leaderboards)</div>
+            <p class="image-caption">Post-race modal — placement, time, dual leaderboards, and lobby/ready buttons.</p>
+        </div>
+    </section>
+
+    <!-- How Claude collaborates -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">How Claude collaborates</h2>
+            <div class="section-content">
+                <p>
+                    The interesting part isn't <em>that</em> I'm using Claude — it's how the workflow is shaped. The repo has a <code>.claude/skills/</code> directory with nine domain-specific skills I built for this project:
+                </p>
+                <ul>
+                    <li><strong>add-phase</strong> — plan and scaffold a new development phase</li>
+                    <li><strong>verse-api</strong> — UEFN device API and Verse language reference</li>
+                    <li><strong>verse-snippet</strong> — common Verse patterns (zone handlers, NPC nav, persistence, HUD)</li>
+                    <li><strong>verse-check</strong> — soft linter, run before compiling in UEFN</li>
+                    <li><strong>verse-debug</strong> — parse compile errors and runtime bugs from UEFN output</li>
+                    <li><strong>verse-concurrency</strong> — design async patterns with race / sync / rush / branch</li>
+                    <li><strong>verse-refactor</strong> — duplication and complexity analysis between phases</li>
+                    <li><strong>playtest-checklist</strong> — generate a manual playtest checklist for the current phase</li>
+                    <li><strong>update-claude-md</strong> — keep project docs in sync with the actual Verse code</li>
+                </ul>
+
+                <p>
+                    The <code>CLAUDE.md</code> is 220+ lines of living spec — phase status, device wiring, conventions, common imports, key device APIs, and a growing <em>Verse Gotchas Learned</em> section. It's institutional knowledge that compounds: every gotcha I hit gets documented so the next session starts smarter than the last.
+                </p>
+
+                <p>
+                    The workflow itself is a clean split. <strong>Claude writes the Verse files and explains what to do.</strong> I do all editor work — placing devices, wiring <code>@editable</code> refs, compiling with <code>Ctrl+Shift+B</code>, playtesting in Launch Session. UEFN project files are generated by the editor; Claude doesn't touch them. Per phase: Claude scaffolds the code and a playtest checklist, I run it, I report back with output logs and observations, Claude diagnoses and updates. Repeat until the phase passes its smoke test, then update CLAUDE.md and move on.
+                </p>
+            </div>
+
+            <div class="quote-block">
+                <p>"The custom Claude skills + the living CLAUDE.md spec turn each session into a checkpoint. Claude doesn't have to relearn Verse, the project, or what's broken — it picks up where the last session ended."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's next -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">What's next</h2>
+            <div class="section-content">
+                <p>
+                    <strong>Phase 10.5 — Production readiness.</strong> Named constants, failure logging, disconnect handling via <code>PlayerRemovedEvent</code>, code deduplication.
+                </p>
+                <p>
+                    <strong>Phase 11 — Victory sequence.</strong> Explosions, winner pedestal teleport, leaderboard review with orbit camera cinematic, "RACE OVER!" broadcast.
+                </p>
+                <p>
+                    <strong>Phase 12+.</strong> Vehicles (the volume_device architecture is already vehicle-ready), power-ups, wrong-way detection, and a public island launch.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+        <div class="container">
+            <div class="cta-section">
+                <h2>Building games this way?</h2>
+                <p>If you're shipping in UEFN, designing with AI, or curious about the workflow — let's talk.</p>
+                <div class="cta-buttons">
+                    <a href="index.html#contact" class="cta-button">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none; margin-right: 2rem;">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
+        </div>
+        <p><a href="index.html">← Back to Portfolio</a></p>
+        <p style="margin-top: 1rem; color: var(--text-secondary);">&copy; 2025 Chris Barnes</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CallRail Design System | Chris Barnes</title>
+    <title>CallRail Design System | Chris Barnes — Principal Designer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <nav>
         <div class="container">
             <a href="index.html" class="logo">Chris Barnes</a>
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div class="nav-actions">
                 <a href="index.html#work" class="back-link">← Back to Work</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
@@ -32,10 +33,26 @@
         </div>
     </nav>
 
-    <section class="project-hero" style="background: #1c4e8c;">
+    <section class="project-hero project-hero--callrail" id="main">
         <div class="container">
-            <h1>CallRail</h1>
-            <p class="lead">Leading design systems overhaul. Aligning multi-disciplinary teams around a modular component system that increased accessibility and consistency across the platform.</p>
+            <span class="hero-eyebrow">CallRail · Case Study</span>
+            <h1>Design System Overhaul</h1>
+            <p class="lead">Led the rebuild of CallRail's component system — aligning multi-disciplinary teams around a modular library that improved accessibility, consistency, and shipping velocity.</p>
+            <hr class="hero-divider">
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Role</span>
+                    <span class="hero-meta-value">Lead Designer</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Years</span>
+                    <span class="hero-meta-value">2018–2020</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Scope</span>
+                    <span class="hero-meta-value">Full Platform</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -56,11 +73,11 @@
             <h2>SEO + Accessibility</h2>
             <p>We had a minor conflict with the Demand Generation team that was producing pages outside of the hierarchy. We identified core needs for the system that drove decisions that honored the SEO goals, while producing a highly accessible system.</p>
 
-            <p>By identifying areas of overlap that increased Accessibility and SEO we were able to produce a system that fulfilled both teams KPIs. Below is the <a href="https://searchengineland.com/guide/what-is-seo" target="_blank" style="color: var(--accent); text-decoration: none;">SEO Table of Elements</a> where we outlined goals for the new design system.</p>
+            <p>By identifying areas of overlap that increased Accessibility and SEO we were able to produce a system that fulfilled both teams KPIs. Below is the <a href="https://searchengineland.com/guide/what-is-seo" target="_blank" class="text-link">SEO Table of Elements</a> where we outlined goals for the new design system.</p>
 
             <img src="images/callrail/callrail_seo_pte.png" alt="SEO Table of Elements" class="img-full">
 
-            <h2>Wholistic deep dive reviews</h2>
+            <h2>Holistic deep-dive reviews</h2>
             <p>I mapped existing content into new structures. I designed the information structure to make more sense categorically.</p>
 
             <img src="images/callrail/callrail-20.png" alt="Content Mapping" class="img-full">
@@ -85,12 +102,12 @@
     </section>
 
     <footer>
-        <div style="margin-bottom: 2rem;">
-            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none; margin-right: 2rem;">LinkedIn</a>
-            <a href="https://github.com/barnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
+        <div class="footer-social">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank">GitHub</a>
         </div>
         <p><a href="index.html#work">← Back to Work</a></p>
-        <p style="margin-top: 1rem;">&copy; 2025 Chris Barnes</p>
+        <p class="footer-copyright">&copy; 2025 Chris Barnes</p>
     </footer>
 
     <script>

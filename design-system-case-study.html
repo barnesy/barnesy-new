@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Powered Design System - Pattern Library | Chris Barnes</title>
+    <title>Platform Design w/ Claude | Chris Barnes — Principal Designer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -135,6 +135,91 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+        }
+
+        /* CDS-style hero — mirrors the Capital Design System Storybook header */
+        .hero--cds {
+            background: #493ff5;
+            color: white;
+            text-align: left;
+            padding: 7rem var(--gutter) 5rem;
+        }
+
+        .hero--cds .wide-container {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+        }
+
+        .hero-eyebrow {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 2rem;
+        }
+
+        .hero--cds h1 {
+            color: white;
+            font-size: clamp(2.75rem, 7vw, 5rem);
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero--cds .hero-subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+            max-width: 720px;
+            margin: 0 0 2.5rem 0;
+            line-height: 1.5;
+        }
+
+        .hero-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            margin: 0 0 2.5rem 0;
+        }
+
+        .hero--cds .hero-stats {
+            display: flex;
+            gap: 4rem;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            max-width: none;
+            margin: 0;
+        }
+
+        .hero--cds .hero-stat {
+            text-align: left;
+        }
+
+        .hero--cds .hero-stat-number {
+            color: white;
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero--cds .hero-stat-label {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        @media (max-width: 768px) {
+            .hero--cds {
+                padding: 6rem var(--gutter) 3.5rem;
+            }
+            .hero--cds .hero-stats {
+                gap: 2rem;
+            }
         }
 
         /* Design Token Animation */
@@ -332,6 +417,18 @@
             border: 1px solid var(--border);
             margin: 3rem 0;
             display: block;
+        }
+
+        /* Embedded video (matches image styling) */
+        .case-study-video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin: 3rem 0;
+            display: block;
+            background: var(--bg-card);
         }
 
         .case-study-image-container {
@@ -576,9 +673,37 @@
                 width: 100%;
             }
         }
+
+        /* Accessibility: skip link + focus indicators */
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.75rem 1rem;
+            background: var(--accent);
+            color: var(--bg-dark);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0 0 6px 0;
+            transform: translateY(-150%);
+            transition: transform 0.15s ease;
+            z-index: 1100;
+        }
+        .skip-link:focus {
+            transform: translateY(0);
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- Navigation -->
     <nav>
         <div class="container">
@@ -606,312 +731,219 @@
     </nav>
 
     <!-- Hero -->
-    <section class="hero">
-        <div class="token-animation" id="tokenAnimation">
-            <div class="page-label" id="pageLabel"></div>
-        </div>
-        <div class="hero-content">
-            <div style="background: none; padding: 3rem; border-radius: 8px; backdrop-filter: blur(10px);">
-                <span class="hero-badge">Case Study</span>
-                <h1>AI Powered Design System</h1>
-                <p class="subtitle">Building a Pattern Library for Generative UX</p>
-            </div>
-        </div>
-    </section>
-
-    <section style="background: var(--bg-card);">
+    <section class="hero hero--cds" id="main">
         <div class="wide-container">
-            <h2 class="section-title">The Challenge</h2>
+            <span class="hero-eyebrow">OpenGov · Capital Design System</span>
+            <h1>Platform Design w/ Claude</h1>
+            <p class="hero-subtitle">A design system became a development platform — and the platform now ships AI agents that production teams build with.</p>
+            <hr class="hero-divider">
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">36+</span>
+                    <p class="hero-stat-label">Components</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">17</span>
+                    <p class="hero-stat-label">Patterns</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">9</span>
+                    <p class="hero-stat-label">AI Components</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">WCAG AA</span>
+                    <p class="hero-stat-label">Accessibility</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Bet -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">The bet</h2>
             <div class="section-content">
                 <p>
-                    Leading the design system for a multi-product SaaS platform serving government organizations.
-                    The challenge: create a unified design language that scales across diverse products while enabling
-                    rapid development and maintaining consistency.
+                    OpenGov ships software to thousands of governments. The design system existed, but it was a reference artifact — useful, not load-bearing. I made a bet: build the system as a <strong>platform</strong> instead. Tokens, patterns, validation, and agent tooling — owned by one team, distributed through one source of truth, used by every product.
                 </p>
                 <p>
-                    The solution: a comprehensive design system with 100% pattern coverage, AI-powered workflows,
-                    and production-ready components that work seamlessly across the entire product suite.
+                    What follows is the arc that bet has taken so far, and where it's going.
                 </p>
             </div>
         </div>
     </section>
 
-     <!-- Core Layout Pattern -->
-     <section>
+    <!-- Phase 1 -->
+    <section>
         <div class="container">
-            <h2 class="section-title">The Foundation: Core Layout Pattern</h2>
+            <h2 class="section-title">Phase 1 — A pattern library, then an agent that designs against it</h2>
             <div class="section-content">
                 <p>
-                    Every screen in Agent Studio is built on a single, consistent layout pattern. This foundational
-                    pattern establishes the navigation, content hierarchy, and action patterns that repeat throughout
-                    the entire application.
+                    I rebuilt the design system on Material UI with versioned tokens and a Patterns Figma covering the full UI surface. Then I trained <strong>Seamstress</strong> — a Claude Code agent that understood the framework, codebase, and patterns well enough to generate complete screens from spec documents.
+                </p>
+                <p>
+                    80% of Agent Studio's UI was generated this way. The design system stopped being a reference and started being something the org composed against.
                 </p>
             </div>
 
             <div class="case-study-image-container">
-                <img src="images/design-system/layout-pattern.png"
-                     alt="Core Layout Pattern"
+                <img src="images/design-system/agent-studio-dashboard.png"
+                     alt="Agent Studio dashboard"
                      class="case-study-image">
-                <p class="image-caption">The core layout pattern that serves as the foundation for all Agent Studio screens</p>
+                <p class="image-caption">Agent Studio — the AI agent management surface, mostly generated by Seamstress against the design system</p>
+            </div>
+
+            <div class="case-study-image-container">
+                <img src="images/design-system/agent-studio-agent-detail.png"
+                     alt="Agent detail configuration"
+                     class="case-study-image">
+                <p class="image-caption">Detailed agent configuration — form patterns, tabs, content organization, all from the system</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 2 -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">Phase 2 — Storybook as the system of record</h2>
+            <div class="section-content">
+                <p>
+                    The next leap was moving the system out of Figma and into <strong>Storybook</strong>. I overhauled the component-library implementation across our distributed packages, brought consistency and information architecture to a sprawling system, and added <strong>layouts</strong> — so Storybook doesn't just document components, it documents how they compose into the pages teams ship.
+                </p>
+                <p>
+                    Storybook became the source of truth: where the system lives, where it's documented, where new patterns are proposed and reviewed. 36+ components, 17 patterns, 9 AI components — versioned, WCAG AA, with Foundations, Components, Patterns, Layouts, Forms, and AI Components all addressable from one shelf.
+                </p>
+            </div>
+
+            <div class="case-study-image-container">
+                <img src="images/design-system/cds-storybook.png"
+                     alt="Capital Design System Storybook landing — CDS 37"
+                     class="case-study-image">
+                <p class="image-caption">CDS 37 — the Storybook landing page. One source of truth for components, patterns, layouts, and AI components across every OpenGov product.</p>
             </div>
 
             <div class="section-content">
                 <p>
-                    <strong>The Workflow Evolution:</strong> This layout pattern enabled a progressive approach to
-                    AI-powered development:
+                    The most visible piece of the Layouts work is <strong>BaseLayout</strong> — the page-level scaffold every product surface composes against. App chrome, breadcrumbs, page header with primary actions, content region, all in one shippable layout primitive. Below: BaseLayout in production on the Budget Management workspace.
                 </p>
             </div>
 
-            <div class="process-steps">
-                <div class="process-step">
-                    <span class="step-number">1</span>
-                    <h3 class="step-title">Design the Foundation</h3>
-                    <p class="step-content">
-                        Created the core layout pattern and initial screens in Figma—the Agents list view and
-                        Agent edit/detail pages. These established the visual language, component usage, and
-                        interaction patterns for the entire system.
-                    </p>
-                </div>
+            <div class="case-study-image-container">
+                <img src="images/design-system/og-budget-management.png"
+                     alt="BaseLayout in production: Operating Budget FY26"
+                     class="case-study-image">
+                <p class="image-caption">BaseLayout in production — Operating Budget FY26. App nav, breadcrumbs, page header with Export and Add Entry actions, and the content region with the budget table, all from one CDS layout.</p>
+            </div>
 
-                <div class="process-step">
-                    <span class="step-number">2</span>
-                    <h3 class="step-title">Train the AI Agent</h3>
-                    <p class="step-content">
-                        Built these initial Figma designs in code manually, teaching the AI agent the patterns,
-                        component structure, and implementation details. The agent learned how to translate the
-                        design system into production-ready React code.
-                    </p>
-                </div>
+            <div class="case-study-image-container">
+                <video controls preload="metadata" playsinline class="case-study-video"
+                       poster="images/design-system/cds-storybook.png">
+                    <source src="images/design-system/storybook-upgrades.mp4" type="video/mp4">
+                    Your browser doesn't support embedded video. <a href="images/design-system/storybook-upgrades.mp4">Download the walkthrough</a>.
+                </video>
+                <p class="image-caption">Walkthrough — the Storybook overhaul and BaseLayout, built and refined with the new CDS Front-end agent.</p>
+            </div>
+        </div>
+    </section>
 
-                <div class="process-step">
-                    <span class="step-number">3</span>
-                    <h3 class="step-title">Generate from Specifications</h3>
-                    <p class="step-content">
-                        With the patterns established, prompted the trained AI agent to build the Dashboard and
-                        Knowledge Management pages directly from specification documents—no Figma designs required.
-                        The agent understood the layout pattern and design system well enough to generate complete,
-                        consistent screens from written requirements.
-                    </p>
-                </div>
+    <!-- Phase 3 -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Phase 3 — A validation agent for production code</h2>
+            <div class="section-content">
+                <p>
+                    With Storybook as the source of truth, I built the <strong>CDS Front-end agent</strong> — a Claude Code plugin that scores and fixes inconsistencies in any production repo. The skills validate against five rubrics: <strong>CDS Compliance</strong>, <strong>Accessibility</strong>, <strong>Responsiveness</strong>, <strong>Type Hierarchy</strong>, and <strong>Transitions</strong>. Each rubric breaks down into specific criteria with point-level scoring, so a failure isn't a binary verdict — it's an actionable line item.
+                </p>
+            </div>
+
+            <div class="case-study-image-container">
+                <img src="images/design-system/cds-scoring.png"
+                     alt="CDS Front-end agent scoring report — five rubrics with letter grades and per-criterion breakdowns"
+                     class="case-study-image">
+                <p class="image-caption">The agent's actual scoring report. Five rubrics, twenty criteria, letter grades on each. CDS Compliance and Type Hierarchy at A+; Accessibility, Responsiveness, and Transitions at A with specific deductions surfaced for review or auto-fix.</p>
+            </div>
+
+            <div class="section-content">
+                <p>
+                    The agent ships through Claude Code's plugin network. Teams install it once and every PR gets agentic enforcement against the system — automatic scoring, automatic fixes for violations the agent can resolve, surfaced flags for the ones that need a human.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 4: Government Artifacts -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">Phase 4 — Government Artifacts: an AI-first workspace</h2>
+            <div class="section-content">
+                <p>
+                    Government work happens in documents — RFPs, ITBs, permits, budget books, compliance reviews, staff reports. Each one has a known structure, known sections, known stakeholders. But the tools governments use to produce these documents don't understand any of that. They're text editors with file folders.
+                </p>
+                <p>
+                    I redesigned the experience around the artifact itself. Each common government workflow has an <strong>artifact definition</strong>: structured sections, status, validation rules, required attachments. The product knows what an Invitation to Bid is, what a Permit Application needs, what makes a Compliance Review complete.
+                </p>
+                <p>
+                    Then I made AI the primary interaction. <strong>OG Assist</strong> isn't a chat sidebar bolted onto a document editor — it's the workspace. Users draft, review, fill in remaining sections, surface what's missing, and get suggested next steps by talking to the agent. The artifact definition gives the agent the ground truth it needs to actually be useful.
+                </p>
+                <p>
+                    The novel piece: a unified workspace where every government workflow follows the same pattern (catalog → artifact → AI-guided completion), every artifact is modular and composable, and AI is a first-class citizen rather than a feature bolted onto an existing UI.
+                </p>
+            </div>
+
+            <div class="case-study-image-container">
+                <img src="images/design-system/og-artifacts-home.png"
+                     alt="Government Artifacts home — artifact catalog with Needs Attention, Recent Activity, and Create an Artifact sections"
+                     class="case-study-image">
+                <p class="image-caption">The workspace home — Needs Attention surfaces what's stuck, Recent Activity tracks the work in flight, and Create an Artifact exposes the full catalog of government workflows the system knows how to drive.</p>
+            </div>
+
+            <div class="case-study-image-container">
+                <img src="images/design-system/og-artifacts-itb.png"
+                     alt="Fleet Vehicle Purchase ITB workspace with embedded OG Assist sidebar"
+                     class="case-study-image">
+                <p class="image-caption">One artifact in detail — a Fleet Vehicle Purchase ITB. The structured sections live on the left; OG Assist on the right is the primary interaction surface, not a side feature. Suggested next steps and section-level actions come from the artifact definition.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 5: Seamstress for prototyping -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Phase 5 — Seamstress, rebuilt for prototyping</h2>
+            <div class="section-content">
+                <p>
+                    The original Seamstress agent was for designing inside Agent Studio. The new CDS Front-end agent took over its production responsibilities — so I refactored the <strong>seamstress-design</strong> repo into something different: a rapid-prototyping environment running on the same design system code that ships in production.
+                </p>
+                <p>
+                    Designers prompt new screens directly against the system. The agent generates, the system enforces, the prototype is one push from being a PR.
+                </p>
+            </div>
+
+            <div class="case-study-image-container">
+                <img src="images/design-system/prototypes-landing.png"
+                     alt="seamstress-design Prototypes landing page"
+                     class="case-study-image">
+                <p class="image-caption">The seamstress-design repo, now a prototyping platform on top of the production system. Worktree-aware, repo-status-aware, AI-component-generation built in.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Next -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">What's next — bypassing Figma entirely</h2>
+            <div class="section-content">
+                <p>
+                    The piece I'm working on now: distributing a <strong>Pencil file</strong> with the design system as a wireframing utility. Designers prompt designs from inside the repo and have them translate directly to production front-end code through the agent.
+                </p>
+                <p>
+                    No Figma round-trip. No translation gap. The design tool and the production code share the same source of truth.
+                </p>
             </div>
 
             <div class="quote-block">
                 <p>
-                    "From manual Figma-to-code translation to AI generating complete screens from specs—the design
-                    system enabled this evolution in our development workflow."
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Product Suite -->
-    <section style="background: var(--bg-card);">
-        <div class="wide-container">
-            <h2 class="section-title">The Challenge</h2>
-            <div class="section-content">
-                <p>
-                    Leading the design system for a multi-product SaaS platform serving government organizations.
-                    The challenge: create a unified design language that scales across diverse products while enabling
-                    rapid development and maintaining consistency.
-                </p>
-                <p>
-                    The solution: a comprehensive design system with 100% pattern coverage, AI-powered workflows,
-                    and production-ready components that work seamlessly across the entire product suite.
-                </p>
-            </div>
-            <div style="background: var(--hero-overlay); padding: 3rem; border-radius: 8px; backdrop-filter: blur(10px);"></div>
-            <h2 class="section-title">Design System in Action</h2>
-            <div class="section-content">
-                <p>
-                    Agent Studio demonstrates the design system's capabilities—a complete AI agent management
-                    platform built entirely with the pattern library, showcasing consistent patterns across
-                    complex workflows.
-                </p>
-            </div>
-
-            <!-- Agent Studio Screenshots -->
-            <div style="display: grid; gap: 2rem; margin-top: 3rem;">
-                <!-- Dashboard Overview -->
-                <div class="case-study-image-container">
-                    <img src="images/design-system/agent-studio-dashboard.png"
-                         alt="Agent Studio Dashboard"
-                         class="case-study-image">
-                    <p class="image-caption">Dashboard overview showcasing consistent card layouts, navigation, and data visualization patterns</p>
-                </div>
-
-                <!-- Assistants Management -->
-                <div class="case-study-image-container">
-                    <img src="images/design-system/agent-studio-assistants.png"
-                         alt="Assistants Management Interface"
-                         class="case-study-image">
-                    <p class="image-caption">Assistants management with unified list patterns and action menus</p>
-                </div>
-
-                <!-- Agent Detail View -->
-                <div class="case-study-image-container">
-                    <img src="images/design-system/agent-studio-agent-detail.png"
-                         alt="Agent Detail Configuration"
-                         class="case-study-image">
-                    <p class="image-caption">Detailed agent configuration demonstrating form patterns, tabs, and content organization</p>
-                </div>
-
-                <!-- Knowledge Management -->
-                <div class="case-study-image-container">
-                    <img src="images/design-system/agent-studio-knowledge-management.png"
-                         alt="Knowledge Base Management"
-                         class="case-study-image">
-                    <p class="image-caption">Knowledge management with consistent table patterns and filtering</p>
-                </div>
-
-                <!-- Knowledge Document Detail -->
-                <div class="case-study-image-container">
-                    <img src="images/design-system/agent-studio-knowledge-document.png"
-                         alt="Knowledge Document View"
-                         class="case-study-image">
-                    <p class="image-caption">Document detail view demonstrating content layout and action patterns</p>
-                </div>
-
-                <!-- Detailed Dashboard -->
-                <div class="case-study-image-container">
-                    <img src="images/design-system/agent-studio-dashboard-detailed.png"
-                         alt="Detailed Dashboard View"
-                         class="case-study-image">
-                    <p class="image-caption">Comprehensive dashboard view showing the full design system integration</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Features -->
-    <section>
-        <div class="wide-container">
-            <h2 class="section-title">Key Features</h2>
-
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <svg class="feature-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10"/>
-                        <circle cx="12" cy="12" r="6"/>
-                        <circle cx="12" cy="12" r="2"/>
-                    </svg>
-                    <h3>100% Pattern Coverage</h3>
-                    <p>
-                        Complete coverage of common UI patterns ensures designers and AI always have the right component.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <svg class="feature-icon" viewBox="0 0 24 24">
-                        <rect x="4" y="4" width="16" height="16" rx="2"/>
-                        <line x1="9" y1="9" x2="15" y2="9"/>
-                        <line x1="9" y1="15" x2="15" y2="15"/>
-                        <circle cx="9" cy="12" r="1" fill="var(--accent)"/>
-                        <circle cx="12" cy="12" r="1" fill="var(--accent)"/>
-                        <circle cx="15" cy="12" r="1" fill="var(--accent)"/>
-                    </svg>
-                    <h3>Gen UX Ready</h3>
-                    <p>
-                        Architected for AI-powered design generation with semantic naming and structured properties AI models can understand.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <svg class="feature-icon" viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="7" height="7"/>
-                        <rect x="14" y="3" width="7" height="7"/>
-                        <rect x="3" y="14" width="7" height="7"/>
-                        <rect x="14" y="14" width="7" height="7"/>
-                    </svg>
-                    <h3>Component Foundation</h3>
-                    <p>
-                        Built on established component libraries, ensuring compatibility with industry-standard patterns.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <svg class="feature-icon" viewBox="0 0 24 24">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                        <polyline points="2 17 12 22 22 17"/>
-                        <polyline points="2 12 12 17 22 12"/>
-                    </svg>
-                    <h3>Rapid Prototyping</h3>
-                    <p>
-                        Pattern-based approach builds complex interfaces in minutes with consistent quality.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <svg class="feature-icon" viewBox="0 0 24 24">
-                        <polyline points="23 4 23 10 17 10"/>
-                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-                    </svg>
-                    <h3>Design-Dev Sync</h3>
-                    <p>
-                        Single source of truth between design and code. No translation errors or inconsistencies.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Tech Stack -->
-    <section>
-        <div class="container">
-            <h2 class="section-title">Technology Stack</h2>
-
-            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">Design Foundation</h3>
-            <div class="tech-stack">
-                <span class="tech-tag">Figma</span>
-                <span class="tech-tag">Material UI</span>
-                <span class="tech-tag">Design Tokens</span>
-                <span class="tech-tag">Component Library</span>
-            </div>
-
-            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">Development</h3>
-            <div class="tech-stack">
-                <span class="tech-tag">React</span>
-                <span class="tech-tag">TypeScript</span>
-                <span class="tech-tag">Storybook</span>
-                <span class="tech-tag">Design System Documentation</span>
-            </div>
-
-            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text-secondary);">AI Integration</h3>
-            <div class="tech-stack">
-                <span class="tech-tag">AI-Powered Code Generation</span>
-                <span class="tech-tag">Pattern Recognition</span>
-                <span class="tech-tag">Automated Prototyping</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Results -->
-    <section style="background: var(--bg-card);">
-        <div class="container">
-            <h2 class="section-title">Impact & Results</h2>
-            <div class="section-content">
-                <p>
-                    <strong>Design Velocity:</strong> Pattern-based workflow with AI assistance dramatically reduced
-                    design and development time. Agent Studio's complete interface was built in a fraction of the time
-                    traditional methods would require.
-                </p>
-                <p>
-                    <strong>Consistent Experience:</strong> Unified design language across all views—from dashboards
-                    to detail pages to management interfaces—ensures users experience a cohesive product regardless
-                    of which feature they're using.
-                </p>
-                <p>
-                    <strong>Code Quality:</strong> Design tokens and component library generate consistent, accessible,
-                    production-ready code. Single source of truth eliminates translation errors and inconsistencies.
-                </p>
-                <p>
-                    <strong>Scalability:</strong> System successfully scales from simple list views to complex
-                    data-heavy interfaces like agent configuration and knowledge management workflows.
-                </p>
-                <p>
-                    <strong>AI-Powered Development:</strong> 80% of Agent Studio's designs were generated using
-                    AI workflows powered by the design system, proving the system enables true AI-driven
-                    product development.
+                    "A design system became a development platform — and the platform now ships AI agents that production teams build with."
                 </p>
             </div>
         </div>
@@ -921,11 +953,10 @@
     <section>
         <div class="container">
             <div class="cta-section">
-                <h2>Interested in AI-Powered Design Systems?</h2>
-                <p>Let's discuss how pattern libraries and automation can transform your design workflow</p>
+                <h2>Building at this intersection?</h2>
+                <p>If you're building AI products, design platforms, or the agent tooling between them — let's talk.</p>
                 <div class="cta-buttons">
-                    <a href="ai-collaboration.html" class="cta-button">See How I Work with AI</a>
-                    <a href="index.html#contact" class="cta-button secondary">Get in Touch</a>
+                    <a href="index.html#contact" class="cta-button">Get in Touch</a>
                 </div>
             </div>
         </div>

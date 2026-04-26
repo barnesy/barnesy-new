@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Built with AI: A Meta Case Study | Chris Barnes</title>
+    <title>Built with AI — A Meta Case Study | Chris Barnes — Principal Designer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -681,9 +681,37 @@
                 padding-left: 1.5rem;
             }
         }
+
+        /* Accessibility: skip link + focus indicators */
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.75rem 1rem;
+            background: var(--accent);
+            color: var(--bg-dark);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0 0 6px 0;
+            transform: translateY(-150%);
+            transition: transform 0.15s ease;
+            z-index: 1100;
+        }
+        .skip-link:focus {
+            transform: translateY(0);
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- Navigation -->
     <nav>
         <div class="container">
@@ -711,7 +739,7 @@
     </nav>
 
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" id="main">
         <div class="hero-content">
             <span class="hero-badge">Meta Case Study</span>
             <h1>Built with AI</h1>
@@ -1205,8 +1233,7 @@
                 <h2>Want to Work This Way?</h2>
                 <p>This portfolio demonstrates what's possible. Let's discuss what we could build together.</p>
                 <div class="cta-buttons">
-                    <a href="ai-collaboration.html" class="cta-button">See the Framework</a>
-                    <a href="index.html#contact" class="cta-button secondary">Get in Touch</a>
+                    <a href="index.html#contact" class="cta-button">Get in Touch</a>
                 </div>
             </div>
         </div>

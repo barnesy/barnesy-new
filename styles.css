@@ -13,6 +13,7 @@
     --text-secondary: #b8b3ad;
     --accent: #22c55e;
     --border: #3a3632;
+    --gutter: 1rem;
 }
 
 [data-theme="light"] {
@@ -149,16 +150,19 @@ nav .back-link:hover {
     gap: 1.5rem;
 }
 
-/* Project hero variants — colored hero with white text for contrast */
-.project-hero--callrail {
+/* Project hero variants — colored hero with white text for contrast.
+   Uses compound selector .project-hero.project-hero--callrail (specificity 0,2,0)
+   so it always wins over the generic .project-hero rules later in the file
+   regardless of source order. */
+.project-hero.project-hero--callrail {
     background: var(--callrail-brand, #1c4e8c);
     color: #ffffff;
     padding: 10rem var(--gutter) 8rem;
     margin-bottom: 0;
 }
 
-.project-hero--callrail h1,
-.project-hero--callrail .lead {
+.project-hero.project-hero--callrail h1,
+.project-hero.project-hero--callrail .lead {
     color: #ffffff;
 }
 
@@ -206,13 +210,13 @@ nav .back-link:hover {
 }
 
 /* Colored hero overrides — pure white text on the brand color */
-.project-hero--callrail .hero-eyebrow,
-.project-hero--callrail .hero-meta-label,
-.project-hero--callrail .hero-meta-value {
+.project-hero.project-hero--callrail .hero-eyebrow,
+.project-hero.project-hero--callrail .hero-meta-label,
+.project-hero.project-hero--callrail .hero-meta-value {
     color: #ffffff;
 }
 
-.project-hero--callrail .hero-divider {
+.project-hero.project-hero--callrail .hero-divider {
     border-top-color: rgba(255, 255, 255, 0.3);
 }
 

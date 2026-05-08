@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Industrial Data Labs — AI Product Design | Chris Barnes — Principal Designer</title>
     <link rel="stylesheet" href="styles.css">
+    <script id="data-theme-init">(function(){var t=localStorage.getItem('theme');if(t!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
@@ -94,7 +95,7 @@
         const sunIcon = document.getElementById('sunIcon');
         const html = document.documentElement;
 
-        const currentTheme = localStorage.getItem('theme') || 'dark';
+        const currentTheme = localStorage.getItem('theme') || 'light';
 
         if (currentTheme === 'light') {
             html.setAttribute('data-theme', 'light');

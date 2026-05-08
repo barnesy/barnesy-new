@@ -708,6 +708,7 @@
             border-radius: 3px;
         }
     </style>
+    <script id="data-theme-init">(function(){var t=localStorage.getItem('theme');if(t!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
@@ -1259,7 +1260,7 @@
         const html = document.documentElement;
 
         // Check for saved theme preference or default to dark
-        const currentTheme = localStorage.getItem('theme') || 'dark';
+        const currentTheme = localStorage.getItem('theme') || 'light';
 
         // Apply saved theme on load
         if (currentTheme === 'light') {

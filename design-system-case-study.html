@@ -2,96 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Rebuilding OpenGov's design system into a consolidated development platform. Unifying 37 Figma files and building AI prototyping agents.">
+    <meta name="author" content="Chris Barnes">
+    
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://barnesy.me/design-system-case-study.html">
+    <meta property="og:title" content="Platform Design w/ Claude | Chris Barnes — Principal Designer">
+    <meta property="og:description" content="Rebuilding OpenGov's design system into a consolidated development platform. Unifying 37 Figma files and building AI prototyping agents.">
+    <meta property="og:image" content="https://barnesy.me/images/design-system/agent-studio-dashboard.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Platform Design w/ Claude | Chris Barnes — Principal Designer">
+    <meta name="twitter:description" content="Rebuilding OpenGov's design system into a consolidated development platform. Unifying 37 Figma files and building AI prototyping agents.">
+    <meta name="twitter:image" content="https://barnesy.me/images/design-system/agent-studio-dashboard.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platform Design w/ Claude | Chris Barnes — Principal Designer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        
 
-        :root {
-            --bg-dark: #1a1816;
-            --bg-card: #252321;
-            --text-primary: #faf8f5;
-            --text-secondary: #b8b3ad;
-            --accent: #22c55e;
-            --border: #3a3632;
-            --hero-overlay: rgba(15, 15, 15, 0.85);
+        
 
-            /* Spacing */
-            --gutter: 1rem;
-            --section-padding-y: 4rem;
-            --section-padding-x: 1rem;
-        }
+        
 
-        [data-theme="light"] {
-            --bg-dark: #faf8f5;
-            --bg-card: #ffffff;
-            --text-primary: #1a1816;
-            --text-secondary: #6b6560;
-            --accent: #3b82f6;
-            --border: #e5e1dc;
-            --hero-overlay: rgba(255, 255, 255, 0.85);
-        }
+        
 
-        body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: -0.02em;
-        }
+        
 
         /* Theme Toggle */
-        .theme-toggle {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            opacity: 0.7;
-        }
-
-        .theme-toggle svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--text-secondary);
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: stroke 0.2s;
-        }
-
-        .theme-toggle:hover svg {
-            stroke: var(--text-primary);
-        }
-
-        .theme-icon {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            position: absolute;
-        }
-
-        .theme-icon.hidden {
-            opacity: 0;
-            transform: rotate(180deg);
-        }
+        
 
         /* Navigation */
         nav {
@@ -694,29 +639,146 @@
             outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
-        :focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 3px;
-            border-radius: 3px;
+        
+
+        @keyframes pulse-indicator {
+            0%, 100% { opacity: 0.4; box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4); }
+            50% { opacity: 1; box-shadow: 0 0 0 8px rgba(234, 179, 8, 0); }
         }
+
+        /* Password gate */
+        .password-gate {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .password-gate__form {
+            max-width: 400px;
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .password-gate__icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 50%;
+            color: #22c55e;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .password-gate__pulse {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 10px;
+            height: 10px;
+            background: #eab308;
+            border-radius: 50%;
+            border: 2px solid var(--bg-card);
+            animation: pulse-indicator 2s infinite;
+        }
+        .password-gate__title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+        .password-gate__desc {
+            color: var(--text-secondary);
+            margin: 0 0 1.75rem 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .password-gate__input {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .password-gate__input:focus { border-color: var(--accent); }
+        .password-gate__error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin: 0 0 0.75rem 0;
+            min-height: 1.25rem;
+            display: none;
+        }
+        .password-gate__submit {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            background: var(--accent);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        [data-theme="light"] .password-gate__submit { color: #ffffff; }
+        .password-gate__submit:hover { opacity: 0.9; }
+        .password-gate__footer {
+            margin: 1.5rem 0 0 0;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        .password-gate__back {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .password-gate__back:hover { color: var(--text-primary); }
     </style>
-    <script id="data-theme-init">(function(){var t=localStorage.getItem('theme');if(t!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
+    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- Password Gate -->
-    <div id="passwordGate" style="position: fixed; inset: 0; background: var(--bg-dark); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 2rem;">
-        <form id="passwordForm" style="max-width: 420px; width: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; box-sizing: border-box;">
-            <h2 style="font-family: 'DM Sans', sans-serif; font-size: 1.5rem; margin: 0 0 0.5rem 0; color: var(--text-primary); letter-spacing: -0.02em;">Protected Case Study</h2>
-            <p style="color: var(--text-secondary); margin: 0 0 1.5rem 0; font-size: 0.95rem;">Enter the password to view this case study.</p>
-            <input type="password" id="passwordInput" autocomplete="off" autofocus placeholder="Password"
-                   style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-dark); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 1rem; margin-bottom: 0.75rem; box-sizing: border-box; outline: none;">
-            <p id="passwordError" style="color: #ef4444; font-size: 0.875rem; margin: 0 0 0.75rem 0; min-height: 1.25rem; display: none;">Incorrect password. Please try again.</p>
-            <button type="submit"
-                    style="width: 100%; padding: 0.75rem 1rem; background: var(--accent); color: #0a0a0a; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer;">
-                Unlock
-            </button>
-            <p style="margin: 1.5rem 0 0 0; font-size: 0.85rem; text-align: center;">
-                <a href="index.html" style="color: var(--text-secondary); text-decoration: none;">← Back to Portfolio</a>
+    <div id="passwordGate" class="password-gate">
+        <div class="scroll-progress"></div>
+        <form id="passwordForm" class="password-gate__form">
+            <div class="password-gate__icon">
+                <span class="password-gate__pulse"></span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            <h2 class="password-gate__title">Protected Case Study</h2>
+            <p class="password-gate__desc">This case study contains proprietary systems design work. Enter password to unlock.</p>
+            <input type="password" id="passwordInput" autocomplete="off" autofocus placeholder="Enter Password" class="password-gate__input">
+            <p id="passwordError" class="password-gate__error">Incorrect password. Please try again.</p>
+            <button type="submit" class="password-gate__submit">Unlock Case Study</button>
+            <p class="password-gate__footer">
+                <a href="index.html" class="password-gate__back">← Back to Portfolio</a>
             </p>
         </form>
     </div>
@@ -735,6 +797,7 @@
 
     <!-- Navigation -->
     <nav>
+        <div class="scroll-progress"></div>
         <div class="container">
             <a href="index.html" class="logo">Chris Barnes</a>
             <div style="display: flex; align-items: center; gap: 1.5rem;">
@@ -1258,13 +1321,17 @@
         const html = document.documentElement;
 
         // Check for saved theme preference or default to dark
-        const currentTheme = localStorage.getItem('theme') || 'light';
+        const currentTheme = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
-        // Apply saved theme on load
-        if (currentTheme === 'light') {
+        if (currentTheme === 'light' || (!currentTheme && prefersLight)) {
             html.setAttribute('data-theme', 'light');
             moonIcon.classList.add('hidden');
             sunIcon.classList.remove('hidden');
+        } else {
+            html.removeAttribute('data-theme');
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
         }
 
         // Toggle theme on button click

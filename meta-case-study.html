@@ -2,61 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- SEO & Metadata -->
+    <meta name="description" content="A transparent case study documenting the collaboration process between human and AI (Claude Code) in building this portfolio.">
+    <meta name="author" content="Chris Barnes">
+    
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://barnesy.me/meta-case-study.html">
+    <meta property="og:title" content="Built with AI — A Meta Case Study | Chris Barnes — Principal Designer">
+    <meta property="og:description" content="A transparent case study documenting the collaboration process between human and AI (Claude Code) in building this portfolio.">
+    <meta property="og:image" content="https://barnesy.me/images/design-system/cds-scoring.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Built with AI — A Meta Case Study | Chris Barnes — Principal Designer">
+    <meta name="twitter:description" content="A transparent case study documenting the collaboration process between human and AI (Claude Code) in building this portfolio.">
+    <meta name="twitter:image" content="https://barnesy.me/images/design-system/cds-scoring.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Built with AI — A Meta Case Study | Chris Barnes — Principal Designer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        
 
-        :root {
-            --bg-dark: #1a1816;
-            --bg-card: #252321;
-            --text-primary: #faf8f5;
-            --text-secondary: #b8b3ad;
-            --accent: #22c55e;
-            --accent-blue: #3b82f6;
-            --accent-purple: #a855f7;
-            --accent-orange: #f97316;
-            --accent-pink: #ec4899;
-            --border: #3a3632;
-            --code-bg: #1e1e1e;
+        
 
-            --gutter: 1rem;
-            --section-padding-y: 4rem;
-        }
+        
 
-        [data-theme="light"] {
-            --bg-dark: #faf8f5;
-            --bg-card: #ffffff;
-            --text-primary: #1a1816;
-            --text-secondary: #6b6560;
-            --accent: #22c55e;
-            --accent-blue: #3b82f6;
-            --accent-purple: #a855f7;
-            --accent-orange: #f97316;
-            --accent-pink: #ec4899;
-            --border: #e5e1dc;
-            --code-bg: #f5f5f5;
-        }
+        
 
-        body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: -0.02em;
-        }
+        
 
         /* Navigation */
         nav {
@@ -101,45 +78,7 @@
         }
 
         /* Theme Toggle */
-        .theme-toggle {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            opacity: 0.7;
-        }
-
-        .theme-toggle svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--text-secondary);
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: stroke 0.2s;
-        }
-
-        .theme-toggle:hover svg {
-            stroke: var(--text-primary);
-        }
-
-        .theme-icon {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            position: absolute;
-        }
-
-        .theme-icon.hidden {
-            opacity: 0;
-            transform: rotate(180deg);
-        }
+        
 
         /* Container */
         .container {
@@ -702,19 +641,16 @@
             outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
-        :focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 3px;
-            border-radius: 3px;
-        }
+        
     </style>
-    <script id="data-theme-init">(function(){var t=localStorage.getItem('theme');if(t!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
+    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
     <!-- Navigation -->
     <nav>
+        <div class="scroll-progress"></div>
         <div class="container">
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-links">
@@ -1260,13 +1196,17 @@
         const html = document.documentElement;
 
         // Check for saved theme preference or default to dark
-        const currentTheme = localStorage.getItem('theme') || 'light';
+        const currentTheme = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
-        // Apply saved theme on load
-        if (currentTheme === 'light') {
+        if (currentTheme === 'light' || (!currentTheme && prefersLight)) {
             html.setAttribute('data-theme', 'light');
             moonIcon.classList.add('hidden');
             sunIcon.classList.remove('hidden');
+        } else {
+            html.removeAttribute('data-theme');
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
         }
 
         // Toggle theme on button click

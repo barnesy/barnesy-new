@@ -2,137 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
+    <meta name="author" content="Chris Barnes">
+    
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://barnesy.me/">
+    <meta property="og:title" content="Chris Barnes — Principal Designer · AI Systems & Platform Design">
+    <meta property="og:description" content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
+    <meta property="og:image" content="https://barnesy.me/images/design-system/agent-studio-dashboard.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Chris Barnes — Principal Designer · AI Systems & Platform Design">
+    <meta name="twitter:description" content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
+    <meta name="twitter:image" content="https://barnesy.me/images/design-system/agent-studio-dashboard.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chris Barnes — Principal Designer · AI Systems & Platform Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        
 
-        :root {
-            --bg-dark: #1a1816;
-            --bg-card: #252321;
-            --text-primary: #faf8f5;
-            --text-secondary: #b8b3ad;
-            --accent: #22c55e;
-            --border: #3a3632;
+        
 
-            /* Spacing */
-            --gutter: 1rem;
-            --section-padding-y: 6rem;
-            --section-padding-x: 1rem;
-        }
+        
 
-        [data-theme="light"] {
-            --bg-dark: #faf8f5;
-            --bg-card: #ffffff;
-            --text-primary: #1a1816;
-            --text-secondary: #6b6560;
-            --accent: #3b82f6;
-            --border: #e5e1dc;
-        }
+        
 
-        body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: -0.02em;
-        }
+        
 
         /* Theme Toggle */
-        .theme-toggle {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            opacity: 0.7;
-        }
-
-        .theme-toggle svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--text-secondary);
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: stroke 0.2s;
-        }
-
-        .theme-toggle:hover svg {
-            stroke: var(--text-primary);
-        }
-
-        .theme-icon {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            position: absolute;
-        }
-
-        .theme-icon.hidden {
-            opacity: 0;
-            transform: rotate(180deg);
-        }
+        
 
         /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--bg-dark);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
-        }
-
-        nav .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem var(--gutter);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        nav ul {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        nav a:hover {
-            color: var(--text-primary);
-        }
+        
 
         nav .resume-link {
             color: var(--accent);
@@ -392,41 +299,7 @@
         }
 
         /* Accessibility: skip link + focus indicators */
-        .skip-link {
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 0.75rem 1rem;
-            background: var(--accent);
-            color: var(--bg-dark);
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 0 0 6px 0;
-            transform: translateY(-150%);
-            transition: transform 0.15s ease;
-            z-index: 1000;
-        }
-
-        .skip-link:focus {
-            transform: translateY(0);
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        :focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 3px;
-            border-radius: 3px;
-        }
-
-        .cta-button:focus-visible,
-        .project-card:focus-visible,
-        .skill-tag:focus-visible,
-        .theme-toggle:focus-visible,
-        nav a:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 3px;
-        }
+        
 
         .featured-project h3 {
             font-size: 2rem;
@@ -512,6 +385,7 @@
         }
 
         .project-image--raceday   { background-color: #0a0a0a; background-image: url('images/raceday/raceday-hub.png'); background-position: center 35%; }
+        .project-image--strictly-spending { background-color: #0e1b14; background-image: url('images/strictly-spending/card.png'); background-position: center top; }
         .project-image--idl       { background-image: url('images/idl/idl-pipes.png'); }
         .project-image--callrail  { background-image: url('images/callrail/callrail-11.png'); }
         .project-image--lets-read { background-image: url('images/letsread/LR+Hero.jpg'); }
@@ -564,23 +438,77 @@
         }
 
         .about-content {
-            max-width: 800px;
+            max-width: 960px;
             margin: 0 auto;
+        }
+
+        .about-content .section-header {
             text-align: center;
         }
 
+        .about-layout {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
         .about-content p {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             line-height: 1.8;
         }
 
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-portrait {
+            margin: 0;
+        }
+
+        .about-portrait img {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            background: #000;
+        }
+
+        .about-portrait figcaption {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            font-style: italic;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 320px;
+        }
+
+        @media (max-width: 768px) {
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                justify-items: center;
+            }
+            .about-portrait img {
+                width: 240px;
+                height: 240px;
+            }
+            .about-text {
+                text-align: center;
+            }
+            .skills {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         .skills {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 0.75rem;
-            justify-content: center;
             margin-top: 3rem;
         }
 
@@ -592,43 +520,11 @@
             font-weight: 400;
             font-size: 0.9rem;
             color: var(--text-secondary);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--bg-card);
-            padding: 4rem var(--gutter) 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
             text-align: center;
         }
 
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .copyright {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
+        /* Footer */
+        
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -669,13 +565,14 @@
             }
         }
     </style>
-    <script id="data-theme-init">(function(){var t=localStorage.getItem('theme');if(t!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
+    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
     <!-- Navigation -->
     <nav>
+        <div class="scroll-progress"></div>
         <div class="container">
             <div class="logo">Chris Barnes</div>
             <ul>
@@ -768,6 +665,15 @@
             </div>
 
             <div class="project-grid">
+                <a href="strictly-spending.html" class="project-card">
+                    <div class="project-image project-image--strictly-spending"></div>
+                    <div class="project-content">
+                        <span class="project-tag project-tag--live">In Progress · Local-first</span>
+                        <h3>Strictly Spending</h3>
+                        <p>A personal data tool for household spending, pair-coded with Claude. Multi-bank CSV ingestion, rule-based categorization, recurring detection, per-category budgets, and a keyboard-driven Sort view. All local. All in the browser.</p>
+                    </div>
+                </a>
+
                 <a href="raceday.html" class="project-card">
                     <div class="project-image project-image--raceday"></div>
                     <div class="project-content">
@@ -818,23 +724,30 @@
                 <div class="section-header">
                     <h2>About Me</h2>
                 </div>
-                <p>
-                    I design the platforms behind AI products — pattern libraries, agent UX, and the
-                    design infrastructure other designers and engineers build on. Right now that means
-                    leading the design system and AI tooling at an enterprise SaaS platform; before that, similar work
-                    inside startups, agencies, and as a consultant.
-                </p>
-                <p>
-                    Atlanta-based. Past collaborators include Disney, Intel, Weather Channel,
-                    Southern Company Gas, Kimberly Clark, and IHG. I'm a designer who ships code,
-                    which means the systems I design are the same ones I prototype, instrument,
-                    and hand off — no translation gap.
-                </p>
-                <p>
-                    What I'm best at: turning a fuzzy "we need an AI feature" into a platform —
-                    tokens, components, agents, and the workflows that make a small team move
-                    like a much bigger one.
-                </p>
+                <div class="about-layout">
+                    <figure class="about-portrait">
+                        <img src="images/about/chris-barnes.jpg" alt="Portrait of Chris Barnes" loading="lazy" width="320" height="320">
+                        <figcaption>My son helped me take this with my telescope <br>(Maxwell Barnes)</figcaption>
+                    </figure>
+                    <div class="about-text">
+                        <p>
+                            I design the platforms behind AI products. That means pattern libraries,
+                            agent UX, and the design infrastructure other designers and engineers build on.
+                        </p>
+                        <p>
+                            Today I lead the design system and AI tooling at an enterprise SaaS platform.
+                            Before that, I did similar work at startups, agencies, and as a consultant.
+                            Past collaborators include Disney, Intel, Weather Channel, Southern Company Gas,
+                            Kimberly Clark, and IHG.
+                        </p>
+                        <p>
+                            I'm a designer who ships code, so the systems I design are the same ones I
+                            prototype and hand off. What I'm best at: turning a fuzzy "we need an AI feature"
+                            into a real platform of tokens, components, agents, and workflows.
+                        </p>
+                        <p>Based in Atlanta.</p>
+                    </div>
+                </div>
 
                 <div class="skills">
                     <span class="skill-tag">Platform Design</span>
@@ -1712,13 +1625,17 @@
         const html = document.documentElement;
 
         // Check for saved theme preference or default to dark
-        const currentTheme = localStorage.getItem('theme') || 'light';
+        const currentTheme = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
-        // Apply saved theme on load
-        if (currentTheme === 'light') {
+        if (currentTheme === 'light' || (!currentTheme && prefersLight)) {
             html.setAttribute('data-theme', 'light');
             moonIcon.classList.add('hidden');
             sunIcon.classList.remove('hidden');
+        } else {
+            html.removeAttribute('data-theme');
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
         }
 
         // Toggle theme on button click

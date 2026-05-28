@@ -14,6 +14,22 @@
     --accent: #22c55e;
     --border: #3a3632;
     --gutter: 1rem;
+    --section-padding-y: clamp(3rem, 6vw, 5rem);
+    --section-padding-x: 0;
+
+    /* Extra Case-Study and Project Specific Tokens */
+    --hero-overlay: rgba(15, 15, 15, 0.85);
+    --accent-blue: #3b82f6;
+    --accent-purple: #a855f7;
+    --accent-orange: #f97316;
+    --accent-pink: #ec4899;
+    --code-bg: #1e1e1e;
+    --raceday-hero-bg: #0a0a0a;
+    --raceday-gold: #facc15;
+
+    /* Strictly Spending — green for "money", deep slate hero */
+    --spending-hero-bg: #0e1b14;
+    --spending-green: #34d399;
 }
 
 [data-theme="light"] {
@@ -23,6 +39,8 @@
     --text-secondary: #6b6560;
     --accent: #3b82f6;
     --border: #e5e1dc;
+    --hero-overlay: rgba(255, 255, 255, 0.85);
+    --code-bg: #f5f5f5;
 }
 
 body {
@@ -113,9 +131,16 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
-    background: var(--bg-dark);
+    background: rgba(26, 24, 22, 0.85);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
     z-index: 1000;
     border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme="light"] nav {
+    background: rgba(250, 248, 245, 0.85);
 }
 
 nav .container {
@@ -148,6 +173,38 @@ nav .back-link:hover {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+}
+
+/* Homepage nav uses a <ul> for Work / About / Resume + theme toggle.
+   These rules match the canonical .nav-actions visual without requiring
+   the HTML to change. */
+nav ul {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+nav a:hover {
+    color: var(--text-primary);
+}
+
+nav .resume-link {
+    color: var(--accent);
+    font-weight: 600;
 }
 
 /* Project hero variants — colored hero with white text for contrast.
@@ -381,4 +438,23 @@ footer p {
     .image-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Reading Progress Bar (supported in modern browsers natively, degrades gracefully) */
+.scroll-progress {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--accent);
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    animation: scroll-indicator auto linear;
+    animation-timeline: scroll();
+    z-index: 1001;
+}
+
+@keyframes scroll-indicator {
+    to { transform: scaleX(1); }
 }

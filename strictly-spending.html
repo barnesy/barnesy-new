@@ -3,41 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <!-- SEO & Metadata -->
-    <meta name="description" content="A custom Verse-driven on-foot racing game built in Unreal Editor for Fortnite, demonstrating human-AI workflow engineering.">
+    <meta name="description" content="A personal data tool for spending, pair-coded with Claude. Multi-bank CSV ingestion, rule-based categorization, recurring detection, keyboard-driven triage. A local-first dashboard for discovering patterns in real household spending.">
     <meta name="author" content="Chris Barnes">
-    
+
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://barnesy.me/raceday.html">
-    <meta property="og:title" content="Race Day · UEFN | Chris Barnes — Principal Designer">
-    <meta property="og:description" content="A custom Verse-driven on-foot racing game built in Unreal Editor for Fortnite, demonstrating human-AI workflow engineering.">
-    <meta property="og:image" content="https://barnesy.me/images/raceday/raceday-hub.png">
-    
+    <meta property="og:url" content="https://barnesy.me/strictly-spending.html">
+    <meta property="og:title" content="Strictly Spending | Chris Barnes, Principal Designer">
+    <meta property="og:description" content="A personal data tool for spending, pair-coded with Claude. Local-first discovery dashboard with multi-bank CSV ingestion, recurring detection, and keyboard-driven triage.">
+    <meta property="og:image" content="https://barnesy.me/images/strictly-spending/hero.png">
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Race Day · UEFN | Chris Barnes — Principal Designer">
-    <meta name="twitter:description" content="A custom Verse-driven on-foot racing game built in Unreal Editor for Fortnite, demonstrating human-AI workflow engineering.">
-    <meta name="twitter:image" content="https://barnesy.me/images/raceday/raceday-hub.png">
+    <meta name="twitter:title" content="Strictly Spending | Chris Barnes, Principal Designer">
+    <meta name="twitter:description" content="A personal data tool for spending, pair-coded with Claude. Local-first discovery dashboard with multi-bank CSV ingestion, recurring detection, and keyboard-driven triage.">
+    <meta name="twitter:image" content="https://barnesy.me/images/strictly-spending/hero.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Race Day · UEFN | Chris Barnes — Principal Designer</title>
+    <title>Strictly Spending | Chris Barnes, Principal Designer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        
-
-        
-
-        
-
-        
-
-        
-
-        /* Theme Toggle */
-        
-
         /* Navigation */
         nav {
             position: fixed;
@@ -74,12 +61,12 @@
             position: relative;
         }
 
-        .hero--raceday {
-            background: var(--raceday-hero-bg);
+        .hero--spending {
+            background: var(--spending-hero-bg);
             color: #ffffff;
         }
 
-        .hero--raceday .container {
+        .hero--spending .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 var(--gutter);
@@ -91,11 +78,11 @@
             font-weight: 700;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--raceday-gold);
+            color: var(--spending-green);
             margin-bottom: 2rem;
         }
 
-        .hero--raceday h1 {
+        .hero--spending h1 {
             color: #ffffff;
             font-size: clamp(2.5rem, 6vw, 4rem);
             line-height: 1.05;
@@ -103,7 +90,7 @@
             font-weight: 700;
         }
 
-        .hero--raceday .hero-subtitle {
+        .hero--spending .hero-subtitle {
             color: rgba(255, 255, 255, 0.85);
             font-size: clamp(1.1rem, 1.8vw, 1.35rem);
             max-width: 720px;
@@ -117,7 +104,7 @@
             margin: 0 0 2.5rem 0;
         }
 
-        .hero--raceday .hero-stats {
+        .hero--spending .hero-stats {
             display: flex;
             gap: 4rem;
             justify-content: flex-start;
@@ -126,10 +113,10 @@
             margin: 0;
         }
 
-        .hero--raceday .hero-stat { text-align: left; }
+        .hero--spending .hero-stat { text-align: left; }
 
-        .hero--raceday .hero-stat-number {
-            color: var(--raceday-gold);
+        .hero--spending .hero-stat-number {
+            color: var(--spending-green);
             font-size: clamp(1.25rem, 2vw, 1.75rem);
             font-weight: 700;
             display: block;
@@ -137,7 +124,7 @@
             letter-spacing: -0.02em;
         }
 
-        .hero--raceday .hero-stat-label {
+        .hero--spending .hero-stat-label {
             color: rgba(255, 255, 255, 0.78);
             font-size: 0.75rem;
             font-weight: 600;
@@ -184,11 +171,9 @@
             line-height: 1.9;
         }
 
-        .section-content ul li strong {
-            color: var(--text-primary);
-        }
+        .section-content ul li strong { color: var(--text-primary); }
 
-        /* Image / video / placeholder slots */
+        /* Image slots */
         .case-study-image {
             width: 100%;
             max-width: 100%;
@@ -210,16 +195,6 @@
             background: var(--bg-card);
         }
 
-        .image-block {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 4rem var(--gutter);
-            text-align: center;
-            margin: 2rem 0 1rem;
-            color: var(--text-secondary);
-        }
-
         .image-caption {
             text-align: center;
             color: var(--text-secondary);
@@ -231,7 +206,7 @@
         /* Quote block */
         .quote-block {
             background: var(--bg-card);
-            border-left: 4px solid var(--raceday-gold);
+            border-left: 4px solid var(--spending-green);
             padding: 2rem;
             margin: 3rem 0;
             border-radius: 4px;
@@ -303,24 +278,22 @@
         /* Responsive */
         @media (max-width: 768px) {
             nav .container { padding: 1.5rem var(--gutter); }
-            .hero {
-                padding: 6rem var(--gutter) 3.5rem;
-            }
-            .hero--raceday .hero-stats { gap: 2rem; }
+            .hero { padding: 6rem var(--gutter) 3.5rem; }
+            .hero--spending .hero-stats { gap: 2rem; }
             section { padding: 3rem var(--gutter); }
             .cta-section { padding: 2rem 1.5rem; }
             .cta-buttons { flex-direction: column; }
             .cta-button { width: 100%; }
         }
 
-        /* Accessibility: skip link + focus indicators */
+        /* Accessibility */
         .skip-link {
             position: absolute;
             top: 0;
             left: 0;
             padding: 0.75rem 1rem;
-            background: var(--raceday-gold);
-            color: var(--raceday-hero-bg);
+            background: var(--spending-green);
+            color: var(--spending-hero-bg);
             font-weight: 600;
             text-decoration: none;
             border-radius: 0 0 6px 0;
@@ -330,10 +303,9 @@
         }
         .skip-link:focus {
             transform: translateY(0);
-            outline: 2px solid var(--raceday-gold);
+            outline: 2px solid var(--spending-green);
             outline-offset: 2px;
         }
-        
     </style>
     <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
 </head>
@@ -368,169 +340,185 @@
     </nav>
 
     <!-- Hero -->
-    <section class="hero hero--raceday" id="main">
+    <section class="hero hero--spending" id="main">
         <div class="container">
-            <span class="hero-eyebrow">Race Day · UEFN</span>
-            <h1>On-foot racing in Fortnite, built with Claude</h1>
-            <p class="hero-subtitle">A real game in Unreal Editor for Fortnite — custom Verse logic, zone-based tracks, persistent per-mode leaderboards, NPC enemies, and a Claude Code workflow that ships features in phases.</p>
+            <span class="hero-eyebrow">Strictly Spending · Pair-coded with Claude</span>
+            <h1>A personal data tool for spending, pair-coded with Claude</h1>
+            <p class="hero-subtitle">Multi-bank CSV ingestion, rule-based categorization, recurring detection, and keyboard-driven triage. A local-first dashboard for discovering patterns in real household spending. Designed for power, built in the browser, owned end-to-end.</p>
             <hr class="hero-divider">
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <span class="hero-stat-number">Phase 10</span>
-                    <p class="hero-stat-label">Per-mode Leaderboard</p>
+                    <a href="https://github.com/barnesy/strictly-spending" target="_blank" rel="noopener" style="text-decoration: none;">
+                        <span class="hero-stat-number">MIT</span>
+                        <p class="hero-stat-label">Open on GitHub →</p>
+                    </a>
                 </div>
                 <div class="hero-stat">
-                    <span class="hero-stat-number">5</span>
-                    <p class="hero-stat-label">Progression zones</p>
+                    <span class="hero-stat-number">Claude</span>
+                    <p class="hero-stat-label">Coded it with me</p>
                 </div>
                 <div class="hero-stat">
-                    <span class="hero-stat-number">9</span>
-                    <p class="hero-stat-label">Verse-aware Claude skills</p>
+                    <span class="hero-stat-number">Local</span>
+                    <p class="hero-stat-label">All data stays in the browser</p>
                 </div>
                 <div class="hero-stat">
-                    <span class="hero-stat-number">4-mode</span>
-                    <p class="hero-stat-label">Solo · Duos · Trios · Squads</p>
+                    <span class="hero-stat-number">4</span>
+                    <p class="hero-stat-label">Bank formats unified</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- The intention -->
+    <!-- Why I started -->
     <section style="background: var(--bg-card);">
         <div class="container">
-            <h2 class="section-title">The intention</h2>
+            <h2 class="section-title">Why I started</h2>
             <div class="section-content">
                 <p>
-                    UEFN gets pitched as a builder for casual game modes. I'm using it to ship a real game — on-foot racing with a 30-second cinematic countdown, persistent leaderboards across solo and team modes, AI enemy racers, and a victory cinematic. Built entirely from <strong>custom Verse</strong> logic, not the official Rocket Racing devices.
+                    Off-the-shelf budgeting apps want bank credentials, push their own category taxonomy, and treat your data as theirs. None of that fits a household that wants to actually explore its own finances: by category, by merchant, by month, with the analytical lens you choose.
                 </p>
                 <p>
-                    The thesis: a designer-engineer working with Claude can match what used to take a small studio. The build is phased — every phase ships as a playable, testable increment. Each phase ends with a smoke test passing, a CLAUDE.md doc updated, and the next phase scoped.
+                    I wanted a dashboard built around one question: <strong>where is the money going, and what's worth changing?</strong> Powerful, private, local. The data never leaves the laptop. The interface gets out of the way.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Where it is now -->
+    <!-- The build -->
     <section>
         <div class="container">
-            <h2 class="section-title">Where it is now</h2>
+            <h2 class="section-title">The build, briefly</h2>
             <div class="section-content">
                 <p>
-                    Phases 0–8 are complete and shippable: project setup, basic race MVP, timing & scoring, checkpoints, multiplayer, countdown + speed boosts, persistent personal best, zone-based architecture, per-zone item progression with NPC allies. <strong>Phases 9–10 are in active testing</strong> — team support across duos/trios/squads, three hostile Brother Bill NPC racers with AI navigation, and per-mode persistent leaderboards.
+                    Pair-coded with Claude. Vite, React, TypeScript. MUI for components. Dexie wrapping IndexedDB. Zustand for filter state. MUI X Charts for the visualization. No server. No cloud.
                 </p>
-
-                <h3>The level</h3>
                 <p>
-                    Race Day starts at a control panel in the build hub. The sign overhead reads RACE DAY in lit-up letters. Players spawn in the lobby, ready up, and get pulled into the cinematic countdown.
+                    Refresh the page and your data is still there. Open the app in a different browser and it's empty, because the data has never been anywhere else.
                 </p>
             </div>
 
-            <img src="images/raceday/raceday-hub.png"
-                 alt="Race Day hub with control panel, RACE DAY signage, and BrotherBill spawn"
-                 class="case-study-image">
-            <p class="image-caption">The build hub — control panel, RACE DAY sign, lobby spawn area, and a BrotherBill spectating.</p>
-
-            <div class="section-content">
-                <h3>The track</h3>
-                <p>
-                    Five sequential progression zones (<code>Zone0Start → Zone4Finish</code>) plus optional bonus zones for boost pads. Built on <code>volume_device</code> so the same architecture supports on-foot now and vehicles later. Wrong-zone entry is rejected — you can't skip ahead.
-                </p>
-            </div>
-
-            <img src="images/raceday/raceday-track-overview.png"
-                 alt="Top-down view of the race track with five progression zones rendered as translucent blue volumes"
-                 class="case-study-image">
-            <p class="image-caption">Top-down view of the track. The translucent blue boxes are the five progression zones, each one a <code>volume_device</code> wired into the Verse race manager.</p>
-
-            <div class="section-content">
-                <h3>The flyover</h3>
-                <p>
-                    Every race opens with a 30-second countdown. The countdown plays a cinematic flyover of the track so players see what they're about to run before they run it.
-                </p>
-            </div>
-
-            <div>
-                <video controls preload="metadata" playsinline class="case-study-video">
-                    <source src="images/raceday/raceday-flyover.mp4" type="video/mp4">
-                    Your browser doesn't support embedded video. <a href="images/raceday/raceday-flyover.mp4">Download the flyover</a>.
-                </video>
-                <p class="image-caption">The 30-second countdown flyover — the track previewed before the gates drop.</p>
-            </div>
-
-            <div class="section-content">
-                <h3>The HUD</h3>
-                <p>
-                    Real-time race timer, placement indicator, segment progress (<code>Start → 1 → 2 → 3 → 4 → Finish</code>), and per-zone split times. Custom Verse-driven — every HUD element is a <code>hud_message_device</code> wired to game state via <code>@editable</code> refs.
-                </p>
-            </div>
-
-            <img src="images/raceday/raceday-hud-blueprint.png"
-                 alt="In-game HUD blueprint in UEFN editor showing placement, timer, and segment progress"
-                 class="case-study-image">
-            <p class="image-caption">In-game HUD — placement and timer at the top (1st · 01:30), segment progress along the side (Start → 1 → 2 → 3 → 4 → Finish).</p>
-
-            <div class="section-content">
-                <h3>The win screen</h3>
-                <p>
-                    Race Complete modal with placement, finish time, and dual leaderboards: <strong>This Race</strong> vs <strong>All Time</strong> persistent. <code>TO LOBBY</code> exits, <code>READY UP</code> queues another race.
-                </p>
-            </div>
-
-            <img src="images/raceday/raceday-win-screen.png"
-                 alt="Win screen modal showing Race Complete, 1st place, finish time, and dual leaderboards"
-                 class="case-study-image">
-            <p class="image-caption">Post-race modal — placement, time, dual leaderboards (This Race vs. All Time), and TO LOBBY / READY UP actions.</p>
+            <video controls autoplay muted loop playsinline
+                   poster="images/strictly-spending/hero.png"
+                   class="case-study-video"
+                   aria-label="A 40-second walkthrough of the Strictly Spending dashboard. The filter and Top Merchants side panels collapse and re-expand, the chart cycles through grouping modes, a category tooltip is hovered, a recurring charge is toggled in the Forecast view, uncategorized merchants are triaged in the Sort view via keyboard, then the dashboard drills into a single month and filters down to just Groceries and Restaurants for a discovery view, before resetting to year-to-date.">
+                <source src="images/strictly-spending/demo.webm" type="video/webm">
+                <img src="images/strictly-spending/hero.png"
+                     alt="The Strictly Spending dashboard with three panels: filters, a stacked-bar chart, and a Top Merchants list"
+                     class="case-study-image">
+            </video>
+            <p class="image-caption">40 seconds of the actual app. Panel collapse, grouping toggles, category tooltip, Forecast, keyboard-driven Sort triage, drill into a month, isolate two categories for discovery, then back to year-to-date.</p>
         </div>
     </section>
 
-    <!-- How Claude collaborates -->
+    <!-- Three surprises -->
     <section style="background: var(--bg-card);">
         <div class="container">
-            <h2 class="section-title">How Claude collaborates</h2>
+            <h2 class="section-title">What I learned</h2>
+            <div class="section-content">
+                <h3>The chart was easy. Categorization was the whole product.</h3>
+                <p>
+                    I expected the chart to be the hard problem. It was the opposite. Different CSV exports tag categories their own way, or not at all. Getting one consistent taxonomy, then making it correctable in seconds, is what made the dashboard trustworthy.
+                </p>
+                <p>
+                    The first version made you fix transactions one at a time with a pencil icon, which is where motivation went to die. The second version is a dedicated triage view that groups every uncategorized transaction by merchant, sorts the queue by dollar impact (biggest first), suggests the most likely category, and lets you commit each decision with one keystroke. <strong>Enter</strong> accepts the suggestion, <strong>1–9</strong> pick from the grid, <strong>⌘Z</strong> undoes. Going from 700 uncategorized rows to zero takes about three minutes, and it feels good.
+                </p>
+            </div>
+
+            <img src="images/strictly-spending/sort.png"
+                 alt="The Sort view. A card for &quot;Demo Property Mgmt Rent&quot; shows 5 occurrences totaling $9,750 with a Monthly recurrence chip and three recent transactions. The suggested category Housing is highlighted on the right; below, a numbered grid of colored category buttons offers Housing (1), Groceries (2), Restaurants (3), Transportation (4), Auto Loan (5), Utilities (6), Subscriptions (7), Mortgage (8), Student Loans (9). The nav bar shows the Sort tab with a 45 badge. The progress bar reads &quot;8 merchants left, 0 sorted.&quot;"
+                 class="case-study-image">
+            <p class="image-caption">The Sort view. One decision categorizes every transaction from a merchant at once, and optionally saves a rule so future imports catch the same pattern.</p>
+
+            <div class="section-content">
+                <h3>The floor versus the discretionary.</h3>
+                <p>
+                    Once recurring charges (rent, utilities, subscriptions, the gym) are detected and pinned, the rest of the spend reads completely differently. You can finally separate the <em>floor</em> (what you owe) from the <em>discretionary</em> (what you choose). That distinction is the entire game.
+                </p>
+            </div>
+
+            <img src="images/strictly-spending/forecast.png"
+                 alt="The Forecast tab. It projects next month's spending at $4,750, broken into $2,802 recurring (rent, auto loan, utilities, insurance) and $1,948 in per-category budgets. Each line has a toggle switch."
+                 class="case-study-image">
+            <p class="image-caption">Forecast tab. Recurring charges separated from variable budgets, each line individually toggleable.</p>
+        </div>
+    </section>
+
+    <!-- What the AI was / wasn't good at -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">What Claude was good at, and what it wasn't</h2>
             <div class="section-content">
                 <p>
-                    The interesting part isn't <em>that</em> I'm using Claude — it's how the workflow is shaped. The repo has a <code>.claude/skills/</code> directory with nine domain-specific skills I built for this project:
+                    Strongest at sketching tradeoffs and writing the boring code fast. Weakest when it over-engineered (a three-tier abstraction when I wanted a 12-line function). The fix was on me: give more specific direction, push back, redo it.
                 </p>
-                <ul>
-                    <li><strong>add-phase</strong> — plan and scaffold a new development phase</li>
-                    <li><strong>verse-api</strong> — UEFN device API and Verse language reference</li>
-                    <li><strong>verse-snippet</strong> — common Verse patterns (zone handlers, NPC nav, persistence, HUD)</li>
-                    <li><strong>verse-check</strong> — soft linter, run before compiling in UEFN</li>
-                    <li><strong>verse-debug</strong> — parse compile errors and runtime bugs from UEFN output</li>
-                    <li><strong>verse-concurrency</strong> — design async patterns with race / sync / rush / branch</li>
-                    <li><strong>verse-refactor</strong> — duplication and complexity analysis between phases</li>
-                    <li><strong>playtest-checklist</strong> — generate a manual playtest checklist for the current phase</li>
-                    <li><strong>update-claude-md</strong> — keep project docs in sync with the actual Verse code</li>
-                </ul>
-
                 <p>
-                    The <code>CLAUDE.md</code> is 220+ lines of living spec — phase status, device wiring, conventions, common imports, key device APIs, and a growing <em>Verse Gotchas Learned</em> section. It's institutional knowledge that compounds: every gotcha I hit gets documented so the next session starts smarter than the last.
-                </p>
-
-                <p>
-                    The workflow itself is a clean split. <strong>Claude writes the Verse files and explains what to do.</strong> I do all editor work — placing devices, wiring <code>@editable</code> refs, compiling with <code>Ctrl+Shift+B</code>, playtesting in Launch Session. UEFN project files are generated by the editor; Claude doesn't touch them. Per phase: Claude scaffolds the code and a playtest checklist, I run it, I report back with output logs and observations, Claude diagnoses and updates. Repeat until the phase passes its smoke test, then update CLAUDE.md and move on.
+                    The working dynamic landed on <strong>I direct, Claude implements, I review</strong>. Plain, but it's what stuck.
                 </p>
             </div>
 
             <div class="quote-block">
-                <p>"The custom Claude skills + the living CLAUDE.md spec turn each session into a checkpoint. Claude doesn't have to relearn Verse, the project, or what's broken — it picks up where the last session ended."</p>
+                <p>"An afternoon of pair-coding produced what I'd been failing to build on my own."</p>
             </div>
         </div>
     </section>
 
-    <!-- What's next -->
+    <!-- What's in there today -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">What's in there</h2>
+            <div class="section-content">
+                <h3>Sort view: keyboard-first triage</h3>
+                <p>
+                    Uncategorized transactions group by merchant, sort by dollar impact, and surface one card at a time with a suggested category pre-selected. <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">Enter</kbd> accepts, <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">1</kbd>–<kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">9</kbd> override, <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">⌘Z</kbd> undoes. One decision categorizes every transaction from that merchant, and optionally saves a rule for future imports.
+                </p>
+
+                <h3>Watch folder + content-hash dedup</h3>
+                <p>
+                    Point the app at a folder. Drop in a CSV at the root, or in any subfolder up to five levels deep. The scanner reads it, hashes the content, and dedups against everything already imported. The same statement re-downloaded under a different name gets skipped.
+                </p>
+            </div>
+
+            <img src="images/strictly-spending/watch-folder.png"
+                 alt="The Settings page. It shows a Watch folder section with a Connect folder button, a Demo data section showing 217 demo transactions loaded, and a Demo mode toggle currently turned on."
+                 class="case-study-image">
+            <p class="image-caption">Settings: Watch folder, Demo data, and Demo mode.</p>
+
+            <div class="section-content">
+                <h3>Custom chart tooltip</h3>
+                <p>
+                    The default tooltip sorted categories by stack order, with no total. A custom renderer sorts them by dollar value and adds a Total row. Every hover answers "what dominated this month?" at a glance.
+                </p>
+            </div>
+
+            <img src="images/strictly-spending/tooltip.png"
+                 alt="A chart tooltip hovering over March's bar. It shows Housing $1,950, Travel $850, Shopping $537, Groceries $511, Auto Loan $389, and so on down to Entertainment $30, with a Total row reading $5,060."
+                 class="case-study-image">
+            <p class="image-caption">Categories ordered by dollar value, total at the bottom.</p>
+
+            <div class="section-content">
+                <h3>JSON backup and restore</h3>
+                <p>
+                    The data lives in IndexedDB. "Clear site data" would wipe it. One click exports the whole app state to a JSON file. Drop it back to restore.
+                </p>
+
+                <h3>Demo mode</h3>
+                <p>
+                    A runtime filter for synthetic data. I added it to screenshot the app without exposing real finances. It stayed in for screen-share calls and anyone who clones the repo.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closer -->
     <section>
         <div class="container">
-            <h2 class="section-title">What's next</h2>
+            <h2 class="section-title">Discovery, on my own terms</h2>
             <div class="section-content">
                 <p>
-                    <strong>Phase 10.5 — Production readiness.</strong> Named constants, failure logging, disconnect handling via <code>PlayerRemovedEvent</code>, code deduplication.
+                    The strapline at the top of every screen reads <em>"Where is the money actually going?"</em> This is the tool that answers it. Visually, locally, and shaped to how my household actually thinks about money.
                 </p>
                 <p>
-                    <strong>Phase 11 — Victory sequence.</strong> Explosions, winner pedestal teleport, leaderboard review with orbit camera cinematic, "RACE OVER!" broadcast.
-                </p>
-                <p>
-                    <strong>Phase 12+.</strong> Vehicles (the volume_device architecture is already vehicle-ready), power-ups, wrong-way detection, and a public island launch.
+                    Bank CSVs in. A stacked-bar visualization out. Recurring detected, budgets forecasted, uncategorized triaged in keystrokes. Designed and pair-coded with Claude across many sessions. The model does the typing. I do the directing.
                 </p>
             </div>
         </div>
@@ -540,10 +528,11 @@
     <section>
         <div class="container">
             <div class="cta-section">
-                <h2>Building games this way?</h2>
-                <p>If you're shipping in UEFN, designing with AI, or curious about the workflow — let's talk.</p>
+                <h2>Building this way?</h2>
+                <p>If you're shipping local-first tools, designing with AI as your engineering partner, or just curious about the workflow, let's talk. The code is on GitHub. MIT-licensed, no warranties, fork freely.</p>
                 <div class="cta-buttons">
-                    <a href="index.html#contact" class="cta-button">Get in Touch</a>
+                    <a href="https://github.com/barnesy/strictly-spending" target="_blank" rel="noopener" class="cta-button">View on GitHub</a>
+                    <a href="index.html#contact" class="cta-button" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);">Get in Touch</a>
                 </div>
             </div>
         </div>
@@ -556,7 +545,7 @@
             <a href="https://github.com/barnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
         </div>
         <p><a href="index.html">← Back to Portfolio</a></p>
-        <p style="margin-top: 1rem; color: var(--text-secondary);">&copy; 2025 Chris Barnes</p>
+        <p style="margin-top: 1rem; color: var(--text-secondary);">&copy; 2026 Chris Barnes</p>
     </footer>
 
     <script>

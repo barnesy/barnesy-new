@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# barnesy-new
-Portfolio + Resume
-=======
-# Barnesy.me - AI & Design Systems Redesign
+# barnesy.me — AI & Design Systems Redesign
 
 A modern, AI-focused redesign of barnesy.me showcasing Chris Barnes' expertise in design systems architecture and AI product design.
 
@@ -115,4 +111,3 @@ The redesign emphasizes:
 ---
 
 Built with modern web standards. No frameworks, just clean code.
->>>>>>> 1e5ff50 (Fix light mode theme for badges and hero overlay)

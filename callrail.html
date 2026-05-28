@@ -2,14 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Led the rebuild of CallRail's component system—aligning multi-disciplinary teams around a modular library that improved accessibility, consistency, and shipping velocity.">
+    <meta name="author" content="Chris Barnes">
+    
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://barnesy.me/callrail.html">
+    <meta property="og:title" content="CallRail Design System Overhaul | Chris Barnes — Principal Designer">
+    <meta property="og:description" content="Led the rebuild of CallRail's component system—aligning multi-disciplinary teams around a modular library that improved accessibility, consistency, and shipping velocity.">
+    <meta property="og:image" content="https://barnesy.me/images/callrail/callrail-11.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CallRail Design System Overhaul | Chris Barnes — Principal Designer">
+    <meta name="twitter:description" content="Led the rebuild of CallRail's component system—aligning multi-disciplinary teams around a modular library that improved accessibility, consistency, and shipping velocity.">
+    <meta name="twitter:image" content="https://barnesy.me/images/callrail/callrail-11.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CallRail Design System | Chris Barnes — Principal Designer</title>
     <link rel="stylesheet" href="styles.css">
-    <script id="data-theme-init">(function(){var t=localStorage.getItem('theme');if(t!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
+    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
     <nav>
+        <div class="scroll-progress"></div>
         <div class="container">
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-actions">
@@ -118,12 +135,17 @@
         const sunIcon = document.getElementById('sunIcon');
         const html = document.documentElement;
 
-        const currentTheme = localStorage.getItem('theme') || 'light';
+        const currentTheme = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
-        if (currentTheme === 'light') {
+        if (currentTheme === 'light' || (!currentTheme && prefersLight)) {
             html.setAttribute('data-theme', 'light');
             moonIcon.classList.add('hidden');
             sunIcon.classList.remove('hidden');
+        } else {
+            html.removeAttribute('data-theme');
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
         }
 
         themeToggle.addEventListener('click', () => {

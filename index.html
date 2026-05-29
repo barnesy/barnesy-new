@@ -9,17 +9,17 @@
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://barnesy.me/">
-    <meta property="og:title" content="Chris Barnes — Principal Designer · AI Systems & Platform Design">
+    <meta property="og:title" content="Chris Barnes · Principal Designer · AI Systems & Platform Design">
     <meta property="og:description" content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
     <meta property="og:image" content="https://barnesy.me/images/design-system/agent-studio-dashboard.png">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Chris Barnes — Principal Designer · AI Systems & Platform Design">
+    <meta name="twitter:title" content="Chris Barnes · Principal Designer · AI Systems & Platform Design">
     <meta name="twitter:description" content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
     <meta name="twitter:image" content="https://barnesy.me/images/design-system/agent-studio-dashboard.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chris Barnes — Principal Designer · AI Systems & Platform Design</title>
+    <title>Chris Barnes · Principal Designer · AI Systems & Platform Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
@@ -386,6 +386,7 @@
 
         .project-image--raceday   { background-color: #0a0a0a; background-image: url('images/raceday/raceday-hub.png'); background-position: center 35%; }
         .project-image--strictly-spending { background-color: #0e1b14; background-image: url('images/strictly-spending/card.png'); background-position: center top; }
+        .project-image--off-nominal { background-color: #0a0d12; background-image: url('images/off-nominal/hero.png'); background-position: center top; }
         .project-image--idl       { background-image: url('images/idl/idl-pipes.png'); }
         .project-image--callrail  { background-image: url('images/callrail/callrail-11.png'); }
         .project-image--lets-read { background-image: url('images/letsread/LR+Hero.jpg'); }
@@ -665,12 +666,21 @@
             </div>
 
             <div class="project-grid">
+                <a href="off-nominal.html" class="project-card">
+                    <div class="project-image project-image--off-nominal"></div>
+                    <div class="project-content">
+                        <span class="project-tag project-tag--live">Weekend Build · Civic Data</span>
+                        <h3>Off Nominal</h3>
+                        <p>A browser for the PURSUE files: 222 declassified UAP cases released by the US Department of War in May 2026. Swimlane timeline by agency, world map of incidents, side detail panel, all sharing one set of filters. No source PDFs hosted; every dot links back to its official .gov source.</p>
+                    </div>
+                </a>
+
                 <a href="strictly-spending.html" class="project-card">
                     <div class="project-image project-image--strictly-spending"></div>
                     <div class="project-content">
-                        <span class="project-tag project-tag--live">In Progress · Local-first</span>
+                        <span class="project-tag project-tag--live">Afternoon Build · Local-first</span>
                         <h3>Strictly Spending</h3>
-                        <p>A personal data tool for household spending, pair-coded with Claude. Multi-bank CSV ingestion, rule-based categorization, recurring detection, per-category budgets, and a keyboard-driven Sort view. All local. All in the browser.</p>
+                        <p>A local-first budgeting dashboard, pair-coded with Claude in an afternoon. The first time I actually knew where the money was going. Runs in the browser. Nothing leaves the laptop.</p>
                     </div>
                 </a>
 

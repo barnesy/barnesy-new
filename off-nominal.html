@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- SEO & Metadata -->
+    <meta name="description" content="222 declassified UAP files released by the US Department of War, made browsable in a weekend. A swimlane timeline + world map + side panel, all pulling from a single 297 KB CSV. No source PDFs hosted — every dot links back to the official .gov source.">
+    <meta name="author" content="Chris Barnes">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://barnesy.me/off-nominal.html">
+    <meta property="og:title" content="Off Nominal | Chris Barnes, Principal Designer">
+    <meta property="og:description" content="222 declassified UAP files made browsable in a weekend. Swimlane timeline by agency, world map of incidents, side detail panel — all sharing one set of filters.">
+    <meta property="og:image" content="https://barnesy.me/images/off-nominal/hero.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Off Nominal | Chris Barnes, Principal Designer">
+    <meta name="twitter:description" content="222 declassified UAP files made browsable in a weekend. Swimlane timeline + world map + side panel, all sharing one set of filters.">
+    <meta name="twitter:image" content="https://barnesy.me/images/off-nominal/hero.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Off Nominal | Chris Barnes, Principal Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem var(--gutter);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        nav .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        nav .back-link:hover { color: var(--text-primary); }
+
+        /* Hero */
+        .hero {
+            padding: 7rem var(--gutter) 5rem;
+            position: relative;
+        }
+
+        .hero--pursue {
+            background: var(--pursue-hero-bg);
+            color: #ffffff;
+        }
+
+        .hero--pursue .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        .hero-eyebrow {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--pursue-blue);
+            margin-bottom: 2rem;
+        }
+
+        .hero--pursue h1 {
+            color: #ffffff;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero--pursue .hero-subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+            max-width: 720px;
+            margin: 0 0 2rem 0;
+            line-height: 1.5;
+        }
+
+        .hero-launch {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--pursue-blue);
+            color: var(--pursue-hero-bg);
+            padding: 0.85rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 4px 20px rgba(122, 184, 255, 0.2);
+        }
+        .hero-launch:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 26px rgba(122, 184, 255, 0.3);
+        }
+        .hero-launch::after {
+            content: "↗";
+            font-size: 1.1em;
+            line-height: 1;
+        }
+
+        .hero-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            margin: 0 0 2.5rem 0;
+        }
+
+        .hero--pursue .hero-stats {
+            display: flex;
+            gap: 4rem;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            max-width: none;
+            margin: 0;
+        }
+
+        .hero--pursue .hero-stat { text-align: left; }
+
+        .hero--pursue .hero-stat-number {
+            color: var(--pursue-blue);
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero--pursue .hero-stat-label {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        section {
+            padding: var(--section-padding-y) var(--section-padding-x);
+        }
+
+        /* Content */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .section-content p { margin-bottom: 1.5rem; }
+        .section-content strong { color: var(--text-primary); }
+
+        .section-content h3 {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2.5rem 0 0.75rem;
+        }
+
+        .section-content ul {
+            margin: 1rem 0 1.5rem 1.75rem;
+            line-height: 1.9;
+        }
+
+        .section-content ul li strong { color: var(--text-primary); }
+
+        /* Image slots */
+        .case-study-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin: 2rem 0 1rem;
+            display: block;
+        }
+
+        .case-study-video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin: 2rem 0 1rem;
+            display: block;
+            background: var(--bg-card);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0 0 2rem;
+            font-style: italic;
+        }
+
+        /* Quote block */
+        .quote-block {
+            background: var(--bg-card);
+            border-left: 4px solid var(--pursue-blue);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 4px;
+        }
+
+        .quote-block p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-style: italic;
+            margin: 0;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .cta-button:hover { opacity: 0.9; }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            padding: 3rem var(--gutter);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        footer a:hover { color: var(--text-primary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav .container { padding: 1.5rem var(--gutter); }
+            .hero { padding: 6rem var(--gutter) 3.5rem; }
+            .hero--pursue .hero-stats { gap: 2rem; }
+            section { padding: 3rem var(--gutter); }
+            .cta-section { padding: 2rem 1.5rem; }
+            .cta-buttons { flex-direction: column; }
+            .cta-button { width: 100%; }
+        }
+
+        /* Accessibility */
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.75rem 1rem;
+            background: var(--pursue-blue);
+            color: var(--pursue-hero-bg);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0 0 6px 0;
+            transform: translateY(-150%);
+            transition: transform 0.15s ease;
+            z-index: 1100;
+        }
+        .skip-link:focus {
+            transform: translateY(0);
+            outline: 2px solid var(--pursue-blue);
+            outline-offset: 2px;
+        }
+    </style>
+    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="scroll-progress"></div>
+        <div class="container">
+            <a href="index.html" class="logo">Chris Barnes</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html#work" class="back-link">← Back to Work</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero hero--pursue" id="main">
+        <div class="container">
+            <span class="hero-eyebrow">Off Nominal · Pair-coded with Claude</span>
+            <h1>222 declassified UAP files, made browsable in a weekend</h1>
+            <p class="hero-subtitle">In May 2026 the US Department of War released the first two batches of unsealed UAP files under PURSUE. The official site is a paginated table. I wanted to see what 80 years of incidents look like across time and space — so I built one. <em>Off Nominal</em> is NASA's term for anything that doesn't behave as expected; the name fit.</p>
+            <a href="off-nominal/" target="_blank" rel="noopener" class="hero-launch">Open the live app</a>
+            <hr class="hero-divider">
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">222</span>
+                    <p class="hero-stat-label">Declassified files</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">7</span>
+                    <p class="hero-stat-label">Source agencies</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">1945 — 2026</span>
+                    <p class="hero-stat-label">Incident date range</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">0</span>
+                    <p class="hero-stat-label">Source PDFs hosted</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why I started -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">Why I started</h2>
+            <div class="section-content">
+                <p>
+                    The Department of War's <strong>PURSUE</strong> initiative (Presidential Unsealing and Reporting System for UAP Encounters) is a rolling declassification project. The first two drops — May 8 and May 22, 2026 — put 222 records online, contributed by DoW, the FBI, NASA, ODNI, DOE, the State Department, and the CIA.
+                </p>
+                <p>
+                    The official UX at <a href="https://www.war.gov/ufo/" target="_blank" rel="noopener" style="color: var(--accent);">war.gov/ufo</a> is a paginated table behind heavy bot protection. Useful if you know the exact file you want; almost useless if you're asking <strong>"where and when did this stuff actually happen?"</strong>
+                </p>
+                <p>
+                    That's the question I wanted to answer. A timeline of UAP incidents across 80 years, a globe of where they happened, a side panel for the case detail, and one set of filters that drives all three. Build it, browse it, link every dot back to the official .gov source. Host nothing of theirs.
+                </p>
+            </div>
+
+            <video controls autoplay muted loop playsinline
+                   poster="images/off-nominal/demo-poster.png"
+                   class="case-study-video"
+                   aria-label="A 12-second walkthrough of the Off Nominal app. Starting from the Both view showing the world map up top and the swimlane timeline below with all 222 cases visible. A cursor moves down to the blue zoom band above the timeline and slowly drags from roughly 1995 to 2024. The chart zooms to that range, the map updates to show only modern-era markers — the FBI Western US cluster disappears, the off-world badge vanishes, the CENTCOM Middle East cluster intensifies, and an Oct 1995 to Jun 2024 chip appears in the toolbar. The cursor moves to the biggest map marker and clicks; a popover lists the cases at that location. The cursor picks the first case and clicks; the detail panel slides in from the right showing the full record while the map and timeline stay live.">
+                <source src="images/off-nominal/demo.webm" type="video/webm">
+                <img src="images/off-nominal/hero.png"
+                     alt="The Off Nominal interface. World map up top with markers clustered in Western US and the Middle East, swimlane timeline below with one row per agency, colored dots positioned by incident date 1945-2026. Blue zoom band labeled DRAG HERE TO SET TIME RANGE sits above the timeline."
+                     class="case-study-image">
+            </video>
+            <p class="image-caption">12 seconds of the actual app. Brush a date range on the timeline. The map filters to the same period — the modern UAP wave is concentrated in CENTCOM and the Western US. Click a marker, pick a case, the detail panel slides in.</p>
+        </div>
+    </section>
+
+    <!-- The build -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">The build, briefly</h2>
+            <div class="section-content">
+                <p>
+                    Pair-coded with Claude across an evening and a morning. Vite, React, TypeScript, MUI. d3-scale for the timeline, d3-geo + TopoJSON for the map (no tile servers, no API keys — same "no external hosting" ethos as the rest). Playwright once, just to fetch the data.
+                </p>
+                <p>
+                    The single biggest surprise: the entire dataset is a <strong>297 KB CSV</strong> at <code style="font-size: 0.95em;">war.gov/Portals/1/Interactive/2026/UFO/uap-data.csv</code>. The "interactive table" on the official site is jQuery DataTables reading that file. No PDF parsing, no per-case scraping. One curl-equivalent and the whole corpus is on disk as structured rows.
+                </p>
+            </div>
+
+            <img src="images/off-nominal/detail-panel.png"
+                 alt="The same three-panel view with the side detail panel opened. The right side now shows the full case record: Central Intelligence Agency badge, Document and Redacted chips, the title CIA-UAP-D001 Intelligence Information Report USSR 1973, metadata rows for incident date 12/20/73, location USSR, release 5/22/26, and a multi-paragraph description of a 1973 sighting of an airborne luminous bright green unidentified object. A blue Open source PDF button anchors the bottom."
+                 class="case-study-image">
+            <p class="image-caption">Click any dot. The detail panel slides in, the map and timeline stay live. The Open source PDF button takes you to the official media.defense.gov file.</p>
+        </div>
+    </section>
+
+    <!-- What I learned -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">What I learned</h2>
+            <div class="section-content">
+                <h3>The legal/ethical posture matters more than the engineering.</h3>
+                <p>
+                    Federal works are public domain by statute (17 USC §105). PURSUE was released <em>for the public</em>; civic reuse is the explicit intent. But war.gov is Akamai-protected and blocks even <code>/robots.txt</code> from a plain curl. Getting through requires Playwright with a real-Chrome channel and a couple of stealth flags — which crosses from "polite scraper" into "actively evading their bot detection."
+                </p>
+                <p>
+                    Talked it through with the user, made the call: pull the one index CSV once, never re-host any source material, link every case back to <code>war.gov</code> or <code>media.defense.gov</code> by URL. The repo is about 5 KB of JSON and code. Anything you want to read, you read on the government's servers.
+                </p>
+            </div>
+
+            <div class="section-content">
+                <h3>One filter set, three views.</h3>
+                <p>
+                    The split layout — map up top, timeline bottom, detail panel right — works because the filters lift up. Agency chips, media-type chips, and the brush-to-zoom date range all live on the root component; both visualizations subscribe.
+                </p>
+                <p>
+                    The visible payoff: brush the timeline to <em>Dec 1989 – Aug 2023</em>, and the map's case count drops from 222 to 68, the off-world badge disappears (no Apollo-era moon cases in that range), the FBI lane goes empty (their bulk releases are 1950s), and the Middle-East CENTCOM cluster lights up. The modern "Navy Tic-Tac era" is visually obvious without having read a single PDF.
+                </p>
+            </div>
+
+            <img src="images/off-nominal/detail-panel.png"
+                 alt="The detail panel showing the CIA 1973 USSR Intelligence Information Report, with the description text describing an observed airborne luminous bright green unidentified object."
+                 class="case-study-image">
+            <p class="image-caption">The Source URLs go to media.defense.gov and dvidshub.net — the original government-hosted artifacts.</p>
+
+            <div class="section-content">
+                <h3>The brush hit-target was the only real UX problem.</h3>
+                <p>
+                    The first version made the entire chart area brush-receptive. Felt glitchy: hover a dot, accidentally start a drag, lose your place. The fix was a visible <em>zoom band</em> above the lanes — tinted, with grip handles on each side and an "↔ DRAG HERE TO SET TIME RANGE" label that adapts to width. The brush only fires from the band. Dot clicks always do what you expect.
+                </p>
+            </div>
+
+            <div class="quote-block">
+                <p>"A weekend of pair-coding turned a paginated government table into something you can actually browse."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's in there -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">What's in there</h2>
+            <div class="section-content">
+                <h3>Swimlane timeline by agency</h3>
+                <p>
+                    One lane per source agency, colored. Each case is a dot at its incident date. Hover for date + title; click for the detail panel. The brush band drives the zoom. Out-of-range dots clip cleanly; tick density adapts to the visible span. Lane labels show how many dots are plotted vs. how many cases that agency has total (about a third of the corpus is undated — file-numbered FBI bulk releases).
+                </p>
+
+                <h3>World map of incidents</h3>
+                <p>
+                    Equal Earth projection. d3-geo, world-atlas TopoJSON, ~107 KB. Each unique location string in the dataset (48 of them, hand-mapped to lat/lng once) becomes a marker — sized by case count, colored by the dominant agency at that point. Combatant Commands (CENTCOM, NORTHCOM, AFRICOM, EUCOM, INDOPACOM) plot at their area-of-responsibility centroid; that's where the modern CENTCOM cluster comes from. Off-world cases (Moon, Low Earth Orbit, Cislunar Space) are surfaced in a corner badge instead.
+                </p>
+
+                <h3>Coordinated filters</h3>
+                <p>
+                    Agency chips, media-type chips (Document, Video, Image, Audio), and a brush-to-zoom date range. Every filter drives both the timeline <em>and</em> the map. When the date brush is active, a dismissable chip shows up in the toolbar — visible from any view mode, including map-only, so you can clear it without going back to the timeline.
+                </p>
+
+                <h3>Side detail panel</h3>
+                <p>
+                    Not a modal drawer. A flex sibling: the chart shrinks, the panel slides in. Full case description, all metadata, an "Open source PDF" button to the official file, a "View on DVIDS" button when there's a video. Close it and both visualizations reclaim the space.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closer -->
+    <section style="background: var(--bg-card);">
+        <div class="container">
+            <h2 class="section-title">A browseable view of a public archive</h2>
+            <div class="section-content">
+                <p>
+                    PURSUE is going to keep releasing files. The official UX won't change much; it doesn't need to — a paginated table is fine for direct retrieval. But for everyone trying to read the shape of the disclosure, having a map and a timeline of the same data feels like the difference between a list of receipts and a dashboard.
+                </p>
+                <p>
+                    The project hosts nothing of theirs. Every dot is a link out. The whole thing is one CSV away from being current. If the DoW publishes Release 03, it's one <code>npm run fetch-csv</code> away.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+        <div class="container">
+            <div class="cta-section">
+                <h2>Try it yourself</h2>
+                <p>The live app runs right here on barnesy.me — no install, nothing to download. Drag the zoom band, click markers, pick cases. The original DoW release page is one click further if you want to read the source files in their official home.</p>
+                <div class="cta-buttons">
+                    <a href="off-nominal/" target="_blank" rel="noopener" class="cta-button">Open the live app ↗</a>
+                    <a href="https://www.war.gov/ufo/" target="_blank" rel="noopener" class="cta-button" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);">Open war.gov/ufo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none; margin-right: 2rem;">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
+        </div>
+        <p><a href="index.html">← Back to Portfolio</a></p>
+        <p style="margin-top: 1rem; color: var(--text-secondary);">&copy; 2026 Chris Barnes</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+        if (currentTheme === 'light' || (!currentTheme && prefersLight)) {
+            html.setAttribute('data-theme', 'light');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        } else {
+            html.removeAttribute('data-theme');
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

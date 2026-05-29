@@ -30,6 +30,10 @@
     /* Strictly Spending — green for "money", deep slate hero */
     --spending-hero-bg: #0e1b14;
     --spending-green: #34d399;
+
+    /* PURSUE Timeline — UAP/declassified-files theme */
+    --pursue-hero-bg: #0a0d12;
+    --pursue-blue: #7ab8ff;
 }
 
 [data-theme="light"] {

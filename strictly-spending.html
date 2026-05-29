@@ -195,6 +195,50 @@
             background: var(--bg-card);
         }
 
+        /* Live demo CTA below the video. */
+        .demo-cta {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2.5rem 0 1rem;
+            text-align: center;
+        }
+        .demo-cta-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--spending-green);
+            margin: 0 0 1rem;
+        }
+        .demo-cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.75rem;
+            background: var(--spending-green);
+            color: var(--spending-hero-bg);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .demo-cta-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(52, 211, 153, 0.25);
+        }
+        .demo-cta-icon { font-size: 0.85em; opacity: 0.85; }
+        .demo-cta-arrow { font-size: 1.1em; }
+        .demo-cta-note {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 1rem auto 0;
+            max-width: 480px;
+            line-height: 1.5;
+        }
+
         .image-caption {
             text-align: center;
             color: var(--text-secondary);
@@ -407,6 +451,16 @@
                      class="case-study-image">
             </video>
             <p class="image-caption">40 seconds of the actual app. Panel collapse, grouping toggles, category tooltip, Forecast, keyboard-driven Sort triage, drill into a month, isolate two categories for discovery, then back to year-to-date.</p>
+
+            <div class="demo-cta">
+                <p class="demo-cta-eyebrow">Or just try it</p>
+                <a href="strictly-spending-demo/" class="demo-cta-button">
+                    <span class="demo-cta-icon" aria-hidden="true">▶</span>
+                    <span>Launch the live demo</span>
+                    <span class="demo-cta-arrow" aria-hidden="true">→</span>
+                </a>
+                <p class="demo-cta-note">Loads in your browser with synthetic demo data preloaded. Nothing leaves your machine. Drop in your own CSVs to play, or clear the tab when you're done.</p>
+            </div>
         </div>
     </section>
 

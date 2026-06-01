@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> AETHER — Atmospheric Parallax</title>
+<style>
+  :root {
+    --fg: #eef2ff;
+    --muted: rgba(238, 242, 255, 0.6);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #05060f;
+    color: var(--fg);
+    overflow-x: hidden;
+  }
+
+  /* The fixed 3D canvas sits behind everything */
+  #scene {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    display: block;
+  }
+
+  /* Grain/vignette overlay for cinematic feel */
+  .grade {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 80% at 50% 30%, transparent 40%, rgba(2, 3, 12, 0.55) 100%);
+    mix-blend-mode: multiply;
+  }
+
+  /* Scroll content layer */
+  .content {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 clamp(24px, 8vw, 160px);
+    max-width: 900px;
+  }
+  section.right { margin-left: auto; align-items: flex-end; text-align: right; }
+  /* Hero copy is anchored to the lower-left; the headline is real 3D WebGL geometry up and to the right */
+  section.hero { justify-content: flex-end; padding-bottom: 16vh; }
+  section.hero .eyebrow { color: rgba(14, 24, 56, 0.72); }
+  /* the hero headline is rendered as real 3D geometry in WebGL; the HTML <h1> is unused */
+  section.hero h1 { display: none; }
+  /* copy now sits low over the dark foreground hill, so it reads light */
+  section.hero p.lede { color: rgba(232, 240, 255, 0.92); text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55); }
+  section.hero .pill {
+    color: #eef3ff; border-color: rgba(190, 205, 255, 0.32); background: rgba(20, 30, 60, 0.34);
+  }
+  section.hero .pill .dot { background: #9fb4ff; box-shadow: 0 0 14px #9fb4ff; }
+
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 22px;
+    font-weight: 500;
+  }
+  h1 {
+    font-size: clamp(48px, 10vw, 136px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    background: linear-gradient(180deg, #ffffff 0%, #aab6ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 80px rgba(120, 140, 255, 0.25);
+  }
+  h2 {
+    font-size: clamp(34px, 6vw, 78px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  p.lede {
+    font-size: clamp(16px, 2vw, 21px);
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 460px;
+    margin-top: 28px;
+  }
+  section.right p.lede { margin-left: auto; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 40px; padding: 14px 26px;
+    border: 1px solid rgba(170, 182, 255, 0.25);
+    border-radius: 100px;
+    font-size: 14px; letter-spacing: 0.04em;
+    color: var(--fg);
+    backdrop-filter: blur(8px);
+    background: rgba(120, 140, 255, 0.06);
+    width: fit-content;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #8fa0ff; box-shadow: 0 0 14px #8fa0ff; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+  /* Top nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 5;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px clamp(24px, 5vw, 64px);
+    pointer-events: none;
+  }
+  .brand { font-weight: 800; letter-spacing: 0.32em; font-size: 15px; }
+  .nav .links { display: flex; gap: 34px; font-size: 13px; color: var(--muted); letter-spacing: 0.08em; }
+
+  /* Scroll progress + hint */
+  .progress {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 26px; z-index: 5;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    color: var(--muted); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    pointer-events: none;
+  }
+  .track { width: 1px; height: 56px; background: rgba(255,255,255,0.15); position: relative; overflow: hidden; }
+  .track i { position: absolute; top: 0; left: 0; width: 100%; height: 30%; background: linear-gradient(180deg, transparent, #aab6ff); animation: fall 2.4s infinite ease-in-out; }
+  @keyframes fall { 0%{ transform: translateY(-100%);} 100%{ transform: translateY(330%);} }
+
+  .loader {
+    position: fixed; inset: 0; z-index: 20; background: #05060f;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 1s ease; flex-direction: column; gap: 24px;
+  }
+  .loader.hidden { opacity: 0; pointer-events: none; }
+  .loader .ring { width: 46px; height: 46px; border-radius: 50%; border: 2px solid rgba(170,182,255,0.2); border-top-color: #aab6ff; animation: spin 0.9s linear infinite; }
+  .loader span { letter-spacing: 0.4em; font-size: 12px; color: var(--muted); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+  <div class="loader" id="loader"><div class="ring"></div><span>LIGHTING THE ENGINES</span></div>
+
+  <canvas id="scene"></canvas>
+  <div class="grade"></div>
+
+  <nav class="nav">
+    <div class="brand">CHRIS BARNES</div>
+    <div class="links"><span>BRIDGE</span><span>PRINCIPLES</span><span>BUILD</span><span>SHIP</span></div>
+  </nav>
+
+  <div class="content">
+    <section class="hero">
+      <h1>Shoot for<br/>the Moon</h1>
+      <p class="lede">Set the far target—<br/>everything beneath it must<br/>earn the long ascent.</p>
+      <div class="pill"><span class="dot"></span> Rendered live in the browser · WebGL + Three.js</div>
+    </section>
+
+    <section class="right">
+      <div class="eyebrow">On the Way Up</div>
+      <h2>The Weight<br/>That Lifts</h2>
+      <p class="lede">Gravity's cold pull—<br/>the very weight that holds you<br/>is what you climb on.</p>
+    </section>
+
+    <section>
+      <div class="eyebrow">From Orbit</div>
+      <h2>The Long<br/>Way Around</h2>
+      <p class="lede">Not straight, but circling—<br/>let the moon's pull catch you, fall<br/>around what you sought.</p>
+    </section>
+
+    <section class="right">
+      <div class="eyebrow">What Carries Us</div>
+      <h2>Into<br/>the Light</h2>
+      <p class="lede">A light finds the hill—<br/>rise in it, carried beyond,<br/>past all you climbed for.</p>
+      <div class="pill" style="margin-left:auto"><span class="dot"></span> Let's build something → chris@barnesy.me</div>
+    </section>
+  </div>
+
+  <div class="progress">
+    <span>SCROLL</span>
+    <div class="track"><i></i></div>
+  </div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+
+const canvas = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0a1030, 0.0085);
+
+const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 2000);
+camera.position.set(0, 6, 60);
+
+// ---------- Sky gradient (big inverted sphere) ----------
+const skyGeo = new THREE.SphereGeometry(900, 32, 32);
+const skyMat = new THREE.ShaderMaterial({
+  side: THREE.BackSide,
+  uniforms: {
+    top:    { value: new THREE.Color(0x05060f) },
+    mid:    { value: new THREE.Color(0x231a4d) },
+    bottom: { value: new THREE.Color(0xff7a59) },
+    horizon:{ value: 0.0 }
+  },
+  vertexShader: `varying vec3 vPos; void main(){ vPos = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);} `,
+  fragmentShader: `
+    varying vec3 vPos;
+    uniform vec3 top; uniform vec3 mid; uniform vec3 bottom; uniform float horizon;
+    void main(){
+      float h = normalize(vPos).y;
+      float t = smoothstep(-0.15, 0.65, h + horizon);
+      vec3 lower = mix(bottom, mid, smoothstep(-0.25, 0.18, h + horizon));
+      vec3 col = mix(lower, top, smoothstep(0.18, 0.9, h + horizon));
+      gl_FragColor = vec4(col, 1.0);
+    }`
+});
+scene.add(new THREE.Mesh(skyGeo, skyMat));
+
+// Day -> dusk -> night palettes for the three sky bands (top / mid / bottom)
+const SKY = {
+  topDay:    new THREE.Color(0x3a86d6), topDusk:    new THREE.Color(0x2a2360), topNight:    new THREE.Color(0x05060f),
+  midDay:    new THREE.Color(0x8ec5f0), midDusk:    new THREE.Color(0x7a5a9c), midNight:    new THREE.Color(0x141233),
+  bottomDay: new THREE.Color(0xeaf4ff), bottomDusk: new THREE.Color(0xff9a52), bottomNight: new THREE.Color(0x241c3e),
+};
+const _c1 = new THREE.Color(), _c2 = new THREE.Color();
+// blend a day/dusk/night triple by progress s (0=day, 0.5=dusk, 1=night)
+function skyBlend(out, day, dusk, night, s) {
+  if (s < 0.5) out.lerpColors(day, dusk, s / 0.5);
+  else out.lerpColors(dusk, night, (s - 0.5) / 0.5);
+  return out;
+}
+
+// ---------- Shiny bold white 3D title: real extruded geometry, lit by the dawn sun ----------
+const titleGroup = new THREE.Group();
+titleGroup.position.set(-27, 20, 22);
+titleGroup.rotation.y = 0.09;
+scene.add(titleGroup);
+let titleReady = false;
+// Animated glitter: a seamless-looping MP4 of twinkling white sparkles drives the
+// EMISSIVE channel only, so they glow/twinkle over a white, shiny surface.
+const titleVideo = document.createElement('video');
+titleVideo.src = 'moontex.mp4';
+titleVideo.loop = true; titleVideo.muted = true; titleVideo.playsInline = true;
+titleVideo.autoplay = true; titleVideo.crossOrigin = 'anonymous';
+titleVideo.play().catch(() => {});
+const titleVideoTex = new THREE.VideoTexture(titleVideo);
+titleVideoTex.colorSpace = THREE.SRGBColorSpace;
+titleVideoTex.wrapS = titleVideoTex.wrapT = THREE.RepeatWrapping;
+titleVideoTex.repeat.set(0.085, 0.085);   // tile the sparkle field across the letters
+const titleMat = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff, roughness: 0.4, metalness: 0.0,    // white, soft-glossy "pillow" surface
+  // the texture's grey base self-illuminates the letters white; its brighter dots twinkle as glitter
+  emissiveMap: titleVideoTex, emissive: 0xffffff, emissiveIntensity: 1.35,
+  clearcoat: 1.0, clearcoatRoughness: 0.3,
+  transparent: true, opacity: 1,
+});
+// Dedicated lighting so the camera-facing faces read bright white & glossy
+// (the scene sun is behind the hills, leaving the title front in shadow).
+const TITLE_LAYER = 2;
+camera.layers.enable(TITLE_LAYER);
+const titleKey = new THREE.PointLight(0xffffff, 2.6, 150, 1.2);
+titleKey.position.set(14, 10, 44); titleKey.layers.set(TITLE_LAYER);
+titleGroup.add(titleKey);
+const titleFill = new THREE.PointLight(0xcfe0ff, 1.4, 170, 1.3);
+titleFill.position.set(-22, -2, 36); titleFill.layers.set(TITLE_LAYER);
+titleGroup.add(titleFill);
+// broad frontal fill so the rounded pillow faces read bright white head-on
+const titleFront = new THREE.PointLight(0xffffff, 1.6, 200, 1.0);
+titleFront.position.set(0, 4, 60); titleFront.layers.set(TITLE_LAYER);
+titleGroup.add(titleFront);
+// titleSpec doubles as a travelling "glint": it sweeps across the letters to
+// catch a bright moving highlight on the glossy clearcoat.
+const titleSpec = new THREE.PointLight(0xffffff, 3.4, 80, 2.0);
+titleSpec.position.set(2, 14, 16); titleSpec.layers.set(TITLE_LAYER);
+titleGroup.add(titleSpec);
+// Responsive layout: narrow viewports show less world width, so the title
+// scales down and re-centers to stay fully on-screen. We fit against the real
+// s=0 camera projection (which looks toward x=-10, not straight ahead).
+let titleBaseX = -27, titleBaseY = 20, titleTextW = 34;
+const TITLE_SCALE = 0.85;   // overall title size (15% smaller than the fitted baseline)
+const _fitCam = new THREE.PerspectiveCamera(60, 1, 0.1, 2000);
+const _fitV = new THREE.Vector3();
+function _ndcX(worldX) { return _fitV.set(worldX, 17, 22).project(_fitCam).x; }
+function layoutTitle() {
+  const aspect = innerWidth / innerHeight;
+  _fitCam.aspect = aspect;
+  _fitCam.position.set(0, 8, 60);
+  _fitCam.updateMatrixWorld(true);
+  _fitCam.lookAt(-10, 14, -90);
+  _fitCam.updateMatrixWorld(true);
+  _fitCam.updateProjectionMatrix();
+  const a0 = _ndcX(0), slope = (_ndcX(10) - a0) / 10;   // ndc-x per world unit at the title plane
+  const M = 0.86;                                       // keep text inside 86% of the screen width
+  const fit = Math.min(1, (2 * M) / (Math.abs(slope) * titleTextW));
+  if (aspect >= 1.5) {
+    titleGroup.scale.setScalar(TITLE_SCALE);
+    titleBaseX = -27; titleBaseY = 20;                  // desktop: left-anchored hero
+  } else {
+    const scale = fit * TITLE_SCALE;
+    titleGroup.scale.setScalar(scale);
+    const worldCenter = -a0 / slope;                    // world-x mapped to screen center
+    titleBaseX = worldCenter - (titleTextW * scale) / 2;
+    titleBaseY = 20 + (1 - scale) * 10;                 // lift up a touch as it shrinks
+  }
+}
+new FontLoader().load('https://unpkg.com/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json', (font) => {
+  // soft, rounded "space pillow" letters: shallow core + a big, smooth bevel
+  const opts = { font, size: 4.0, height: 0.5, curveSegments: 8, bevelEnabled: true, bevelThickness: 0.55, bevelSize: 0.42, bevelSegments: 8 };
+  let maxW = 0;
+  ['Shoot for', 'the Moon'].forEach((txt, i) => {
+    const geo = new TextGeometry(txt, opts);
+    geo.computeBoundingBox();
+    maxW = Math.max(maxW, geo.boundingBox.max.x - geo.boundingBox.min.x);
+    const mesh = new THREE.Mesh(geo, titleMat);
+    mesh.position.y = -i * 5.3;
+    mesh.layers.set(TITLE_LAYER);
+    titleGroup.add(mesh);
+  });
+  titleTextW = maxW;
+  layoutTitle();
+  titleReady = true;
+}, undefined, (e) => console.error('title font failed', e));
+
+// ---------- The Sun (glowing sprite) ----------
+function radialSprite(inner, outer, size) {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const g = c.getContext('2d');
+  const grd = g.createRadialGradient(128,128,0,128,128,128);
+  grd.addColorStop(0, inner); grd.addColorStop(0.4, outer); grd.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = grd; g.fillRect(0,0,256,256);
+  const tex = new THREE.CanvasTexture(c);
+  const mat = new THREE.SpriteMaterial({ map: tex, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true });
+  const s = new THREE.Sprite(mat); s.scale.set(size, size, 1); return s;
+}
+const sunGroup = new THREE.Group();
+const sunCore = radialSprite('rgba(255,250,235,1)', 'rgba(255,150,90,0.9)', 60);
+const sunHalo = radialSprite('rgba(255,180,120,0.5)', 'rgba(255,110,70,0.18)', 220);
+sunGroup.add(sunHalo, sunCore);
+sunGroup.position.set(-24, 14, -200);
+scene.add(sunGroup);
+
+const sunLight = new THREE.DirectionalLight(0xffd6a8, 2.2);
+sunLight.position.copy(sunGroup.position);
+scene.add(sunLight);
+scene.add(new THREE.HemisphereLight(0x9fb4ff, 0x1a1030, 0.55));
+scene.add(new THREE.AmbientLight(0x4455aa, 0.35));
+
+// ---------- The Moon (procedural cratered sphere) ----------
+function makeMoonTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 512;
+  const g = c.getContext('2d');
+  g.fillStyle = '#cfd3de'; g.fillRect(0, 0, 512, 512);
+  // darker "maria" patches
+  for (let i = 0; i < 14; i++) {
+    const x = Math.random() * 512, y = Math.random() * 512, r = 36 + Math.random() * 96;
+    const grd = g.createRadialGradient(x, y, 0, x, y, r);
+    grd.addColorStop(0, 'rgba(150,156,176,0.55)'); grd.addColorStop(1, 'rgba(150,156,176,0)');
+    g.fillStyle = grd; g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill();
+  }
+  // craters with a lit rim
+  for (let i = 0; i < 140; i++) {
+    const x = Math.random() * 512, y = Math.random() * 512, r = 2 + Math.random() * 17;
+    g.fillStyle = 'rgba(118,122,140,' + (0.25 + Math.random() * 0.4) + ')';
+    g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill();
+    g.fillStyle = 'rgba(248,250,255,' + (0.18 + Math.random() * 0.32) + ')';
+    g.beginPath(); g.arc(x - r * 0.22, y - r * 0.22, r * 0.72, 0, 6.2832); g.fill();
+  }
+  return new THREE.CanvasTexture(c);
+}
+const moonGroup = new THREE.Group();
+// Realistic gibbous moon: real LROC color + bump maps, lit by a fixed direction
+// (so the phase is independent of the scene's day/night lights), with crater relief
+// shaded along the terminator via a bump-perturbed normal.
+// Real 8K lunar imagery (downscaled): 16K diffuse + matching displacement, served locally
+const MOON_COLOR_URL = 'textures/moon_color.jpg';
+const MOON_BUMP_URL  = 'textures/moon_bump.jpg';
+const _texLoader = new THREE.TextureLoader();
+_texLoader.setCrossOrigin('anonymous');
+const _fallbackTex = makeMoonTexture();
+const moonColorTex = _texLoader.load(MOON_COLOR_URL, t => { t.colorSpace = THREE.SRGBColorSpace; moonMat.uniforms.map.value = t; });
+const moonBumpTex  = _texLoader.load(MOON_BUMP_URL, t => { moonMat.uniforms.bumpMap.value = t; });
+const moonMat = new THREE.ShaderMaterial({
+  transparent: true,
+  extensions: { derivatives: true },
+  uniforms: {
+    map:       { value: _fallbackTex },
+    bumpMap:   { value: _fallbackTex },
+    lightDir:  { value: new THREE.Vector3(-0.14, 0.09, 0.98).normalize() }, // fuller gibbous, terminator toward the right limb
+    brightness:{ value: 1.3 },
+    bumpScale: { value: 1.3 },                                              // flatter crater relief
+    tint:      { value: new THREE.Color(1.04, 0.99, 0.93) },               // subtle warm-grey like the photo
+    opacity:   { value: 0 },
+  },
+  vertexShader: `
+    varying vec3 vWN; varying vec3 vWP; varying vec2 vUv;
+    void main(){
+      vUv = uv;
+      vec4 wp = modelMatrix * vec4(position, 1.0);
+      vWP = wp.xyz;
+      vWN = normalize(mat3(modelMatrix) * normal);
+      gl_Position = projectionMatrix * viewMatrix * wp;
+    }
+  `,
+  fragmentShader: `
+    uniform sampler2D map; uniform sampler2D bumpMap;
+    uniform vec3 lightDir; uniform float brightness; uniform float bumpScale; uniform float opacity; uniform vec3 tint;
+    varying vec3 vWN; varying vec3 vWP; varying vec2 vUv;
+    // three.js-style bump perturbation from a height map
+    vec3 perturbNormal(vec3 p, vec3 n, vec2 uv){
+      vec2 dx = dFdx(uv); vec2 dy = dFdy(uv);
+      float Hll = bumpScale * texture2D(bumpMap, uv).x;
+      float dBx = bumpScale * texture2D(bumpMap, uv + dx).x - Hll;
+      float dBy = bumpScale * texture2D(bumpMap, uv + dy).x - Hll;
+      vec3 sx = dFdx(p); vec3 sy = dFdy(p);
+      vec3 R1 = cross(sy, n); vec3 R2 = cross(n, sx);
+      float det = dot(sx, R1);
+      vec3 grad = sign(det) * (dBx * R1 + dBy * R2);
+      return normalize(abs(det) * n - grad);
+    }
+    void main(){
+      vec3 albedo = texture2D(map, vUv).rgb;
+      albedo = mix(vec3(0.55), albedo, 0.78);            // flatten the albedo (less maria/highland contrast)
+      vec3 N = perturbNormal(vWP, normalize(vWN), vUv);
+      float ndl = dot(N, normalize(lightDir));
+      float lit = smoothstep(-0.30, 0.30, ndl);          // softer terminator = less harsh contrast
+      float shade = 0.48 + brightness * lit;              // higher floor keeps the dark side soft + lower contrast
+      vec3 col = albedo * shade * tint;
+      gl_FragColor = vec4(col, opacity);
+    }
+  `,
+});
+const moon = new THREE.Mesh(new THREE.SphereGeometry(16, 96, 96), moonMat);
+moonGroup.add(moon);
+// final resting orientation: the familiar Earth-facing near side turned toward the camera
+const MOON_FACE = -Math.PI / 2; // texture is near-side-centered; -90° turns that face to the camera
+const MOON_SPIN = 0.5;          // a slight turn during the rise that settles onto MOON_FACE
+// The moon sits at a mid depth (good for the landing finale); the tall ridges
+// that used to frame it are lowered so it rises against open sky, not wedged
+// between hill layers.
+const MOON_BASE = 0.9;          // base scale
+const MOON_GROW = 0.28;         // grows gently across the scroll
+const moonHalo = radialSprite('rgba(214,228,255,0.5)', 'rgba(150,180,255,0.12)', 92);
+moonHalo.position.z = -3;
+moonGroup.add(moonHalo);
+moonGroup.position.set(-42, 70, -185);
+scene.add(moonGroup);
+const moonLight = new THREE.DirectionalLight(0xbcd0ff, 0.0);
+moonLight.position.copy(moonGroup.position);
+scene.add(moonLight);
+
+// ---------- Launch hill + pad ----------
+const UP = new THREE.Vector3(0, 1, 0);
+const _v = new THREE.Vector3();
+const _v2 = new THREE.Vector3();
+const _tmp = new THREE.Vector3();
+const _p0 = new THREE.Vector3();
+const _p1 = new THREE.Vector3();
+const launchHill = new THREE.Mesh(
+  new THREE.SphereGeometry(22, 36, 22, 0, Math.PI * 2, 0, Math.PI / 2),
+  new THREE.MeshStandardMaterial({ color: 0x0a0a1a, roughness: 1, metalness: 0 })
+);
+launchHill.scale.set(1, 0.55, 1);
+launchHill.position.set(11, -16, 14);
+scene.add(launchHill);
+const PAD_TOP = -16 + 22 * 0.55; // top of the hill dome
+const pad = new THREE.Mesh(new THREE.CylinderGeometry(4.4, 5.4, 0.8, 28), new THREE.MeshStandardMaterial({ color: 0x2a3040, metalness: 0.85, roughness: 0.4 }));
+pad.position.set(11, PAD_TOP, 14); scene.add(pad);
+const padRing = new THREE.Mesh(new THREE.TorusGeometry(4.0, 0.16, 10, 44), new THREE.MeshStandardMaterial({ color: 0x35e8ff, emissive: 0x35e8ff, emissiveIntensity: 1.5, metalness: 0.3, roughness: 0.3 }));
+padRing.position.set(11, PAD_TOP + 0.5, 14); padRing.rotation.x = Math.PI / 2; scene.add(padRing);
+
+// ---------- The Rocket (sleek sci-fi model) ----------
+const rocket = new THREE.Group();
+const hullMat  = new THREE.MeshStandardMaterial({ color: 0xdfe7f3, metalness: 0.25, roughness: 0.5, emissive: 0x223044, emissiveIntensity: 0.25 });
+const panelMat = new THREE.MeshStandardMaterial({ color: 0x474f60, metalness: 0.35, roughness: 0.55 });
+const glowMat  = new THREE.MeshStandardMaterial({ color: 0x9bf3ff, emissive: 0x35e8ff, emissiveIntensity: 1.8, metalness: 0.2, roughness: 0.3 });
+const finMat   = new THREE.MeshStandardMaterial({ color: 0x3a4253, metalness: 0.35, roughness: 0.5, side: THREE.DoubleSide });
+const hull = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 1.0, 5.4, 28), hullMat); rocket.add(hull);
+const engineMod = new THREE.Mesh(new THREE.CylinderGeometry(1.0, 1.25, 1.6, 28), panelMat); engineMod.position.y = -3.3; rocket.add(engineMod);
+const nose = new THREE.Mesh(new THREE.ConeGeometry(0.85, 3.6, 28), panelMat); nose.position.y = 4.5; rocket.add(nose);
+const tip = new THREE.Mesh(new THREE.SphereGeometry(0.16, 12, 12), glowMat); tip.position.y = 6.4; rocket.add(tip);
+[2.4, 0.4, -1.6].forEach(y => {
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.92, 0.07, 8, 32), glowMat);
+  ring.position.y = y; ring.rotation.x = Math.PI / 2; rocket.add(ring);
+});
+const cockpit = new THREE.Mesh(new THREE.CapsuleGeometry(0.32, 1.0, 6, 12), glowMat);
+cockpit.position.set(0, 1.5, 0.78); cockpit.scale.z = 0.45; rocket.add(cockpit);
+// swept fins
+const finGeo = new THREE.BufferGeometry();
+finGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+  0, 0, 0,   0, 3.4, 0,   2.0, -1.4, 0,
+]), 3));
+finGeo.computeVertexNormals();
+for (let i = 0; i < 3; i++) {
+  const finRoot = new THREE.Group();
+  finRoot.rotation.y = i * (Math.PI * 2 / 3);
+  const fin = new THREE.Mesh(finGeo, finMat); fin.position.y = -3.4; finRoot.add(fin);
+  rocket.add(finRoot);
+}
+// engine cluster (3 nozzles + central glowing thruster)
+for (let i = 0; i < 3; i++) {
+  const a = i * (Math.PI * 2 / 3);
+  const noz = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.42, 0.9, 14), panelMat);
+  noz.position.set(Math.cos(a) * 0.52, -4.3, Math.sin(a) * 0.52); rocket.add(noz);
+}
+const thruster = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.72, 0.6, 20), glowMat);
+thruster.position.y = -4.0; rocket.add(thruster);
+// fire + plasma flame (additive). Anchored so the wide base sits exactly at the
+// thruster exit plane (~y = -4.6) and the plume tapers straight down the rocket axis.
+const EXIT = -4.6;
+const flame = new THREE.Mesh(new THREE.ConeGeometry(0.82, 4.6, 20), new THREE.MeshBasicMaterial({ color: 0xff9a3c, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+flame.position.y = EXIT - 2.3; flame.rotation.x = Math.PI; rocket.add(flame);
+const flameCore = new THREE.Mesh(new THREE.ConeGeometry(0.46, 3.2, 20), new THREE.MeshBasicMaterial({ color: 0xbdeeff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+flameCore.position.y = EXIT - 1.6; flameCore.rotation.x = Math.PI; rocket.add(flameCore);
+const engineGlow = radialSprite('rgba(200,238,255,0.95)', 'rgba(255,150,70,0.45)', 8);
+engineGlow.position.y = EXIT - 0.2; rocket.add(engineGlow);
+const engineLight = new THREE.PointLight(0xffb070, 0, 45); engineLight.position.y = EXIT - 1; rocket.add(engineLight);
+rocket.userData = { flame, flameCore, engineGlow, engineLight };
+scene.add(rocket);
+
+// ---- Toy rocket model (OBJ) + 4K PBR maps — swapped in for the procedural body ----
+const _rtl = new THREE.TextureLoader();
+const toyColor  = _rtl.load('textures/rocket_color.jpg');  toyColor.colorSpace = THREE.SRGBColorSpace;
+const toyRough  = _rtl.load('textures/rocket_rough.jpg');
+const toyMetal  = _rtl.load('textures/rocket_metal.jpg');
+const toyNormal = _rtl.load('textures/rocket_normal.jpg');
+toyColor.anisotropy = toyNormal.anisotropy = renderer.capabilities.getMaxAnisotropy();
+const toyMat = new THREE.MeshStandardMaterial({
+  map: toyColor, roughnessMap: toyRough, metalnessMap: toyMetal, normalMap: toyNormal,
+  metalness: 0.3, roughness: 0.9, // low metalness so the painted albedo reads (no env map in scene)
+});
+new OBJLoader().load('models/toy_rocket.obj', (obj) => {
+  obj.traverse(o => { if (o.isMesh) { o.material = toyMat; o.castShadow = true; o.receiveShadow = true; } });
+  obj.scale.setScalar(3.5);
+  obj.position.y = EXIT;        // seat the engine/base at the flame exit plane
+  obj.rotation.y = Math.PI;     // turn the porthole toward the camera
+  // remove the procedural body meshes, keep the engine flame/glow/light
+  const keep = new Set([flame, flameCore, engineGlow, engineLight]);
+  for (let i = rocket.children.length - 1; i >= 0; i--) {
+    if (!keep.has(rocket.children[i])) rocket.remove(rocket.children[i]);
+  }
+  rocket.add(obj);
+}, undefined, (e) => console.error('toy rocket OBJ failed', e));
+
+// Rocket flight path: launch pad -> up to the moon, parameter u in [0,1]
+const LAUNCH = new THREE.Vector3(11, PAD_TOP + 5.1, 14); // base seated on the pad, booster just clearing the deck
+// Orbit-around-the-moon parameters (the rocket loops the moon at the end)
+const ORBIT_EX = new THREE.Vector3(1, 0, 0.5).normalize();
+const ORBIT_EY = new THREE.Vector3(0, 1, 0.25).normalize();
+const ORBIT_A0 = -1.1;
+const ORBIT_TURNS = 1;               // exactly one lap around the moon
+const ORBIT_ARRIVE = 0.78;           // transit ends, the loop begins
+const ORBIT_END = 0.90;              // one lap done, descent/landing begins
+const ORBIT_SCALE = 0.6;             // already smaller by the time it reaches the distant moon
+const LAND_SCALE = 0.28;             // tiny lander resting on the surface
+const LAND_NORMAL = new THREE.Vector3(0.4, 0.62, 0.68).normalize(); // touchdown spot (upper-near face)
+// the UFO follows the rocket and sets down nearby on the same near face
+const UFO_LAND_NORMAL = new THREE.Vector3(-0.34, 0.5, 0.8).normalize();
+const UFO_LAND_SCALE = 0.24;
+function orbitRadius() { return 16 * moonGroup.scale.x * 1.5; }
+// spherical interpolation between two unit directions — keeps a path on the sphere (outside the moon)
+function slerpDir(a, b, tt, out) {
+  const d = THREE.MathUtils.clamp(a.dot(b), -1, 1);
+  const om = Math.acos(d);
+  if (om < 1e-3) return out.copy(b);
+  const so = Math.sin(om);
+  const wa = Math.sin((1 - tt) * om) / so, wb = Math.sin(tt * om) / so;
+  return out.set(a.x * wa + b.x * wb, a.y * wa + b.y * wb, a.z * wa + b.z * wb).normalize();
+}
+function orbitPosInto(ang, R, out) {
+  const c = Math.cos(ang), s = Math.sin(ang);
+  out.set(
+    moonGroup.position.x + c * R * ORBIT_EX.x + s * R * ORBIT_EY.x,
+    moonGroup.position.y + c * R * ORBIT_EX.y + s * R * ORBIT_EY.y,
+    moonGroup.position.z + c * R * ORBIT_EX.z + s * R * ORBIT_EY.z
+  );
+  return out;
+}
+// transit aims exactly at the orbit's entry point so the loop joins seamlessly
+const APEX = orbitPosInto(ORBIT_A0, 16 * (MOON_BASE + ORBIT_ARRIVE * MOON_GROW) * 1.5, new THREE.Vector3());
+// Cubic Bézier approach: launches up off the pad, then curves in so it arrives
+// *tangent* to the orbit (no straight-in stop) and clears the foreground hill.
+const _orbT = new THREE.Vector3(
+  -Math.sin(ORBIT_A0) * ORBIT_EX.x + Math.cos(ORBIT_A0) * ORBIT_EY.x,
+  -Math.sin(ORBIT_A0) * ORBIT_EX.y + Math.cos(ORBIT_A0) * ORBIT_EY.y,
+  -Math.sin(ORBIT_A0) * ORBIT_EX.z + Math.cos(ORBIT_A0) * ORBIT_EY.z
+).normalize();
+const _bP1 = new THREE.Vector3(LAUNCH.x, LAUNCH.y + 56, LAUNCH.z);           // straight up off the pad (vertical launch)
+const _bP2 = APEX.clone().addScaledVector(_orbT, -46);                       // bend in tangent to the orbit
+function rocketPathInto(u, out) {
+  u = Math.min(1, Math.max(0, u));
+  const v = 1 - u;
+  out.set(0, 0, 0)
+    .addScaledVector(LAUNCH, v * v * v)
+    .addScaledVector(_bP1, 3 * v * v * u)
+    .addScaledVector(_bP2, 3 * v * u * u)
+    .addScaledVector(APEX, u * u * u);
+  return out;
+}
+
+// Smoke / exhaust trail puffs that lag behind the rocket along its path
+const smokeTex = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const g = c.getContext('2d');
+  const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grd.addColorStop(0, 'rgba(255,255,255,0.9)');
+  grd.addColorStop(0.4, 'rgba(220,226,242,0.4)');
+  grd.addColorStop(1, 'rgba(220,226,242,0)');
+  g.fillStyle = grd; g.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
+})();
+const trail = [];
+for (let i = 0; i < 34; i++) {
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: smokeTex, color: 0xd6def2, transparent: true, depthWrite: false, opacity: 0 }));
+  trail.push(sp);
+  scene.add(sp);
+}
+
+// Launch smoke plumes — billowy cauliflower clouds that pool at idle, then erupt
+const groundSmoke = [];
+for (let i = 0; i < 42; i++) {
+  const warm = Math.random() < 0.28;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: smokeTex, color: warm ? 0xffcf9a : 0xd0d6e4, transparent: true, depthWrite: false, opacity: 0 }));
+  sp.userData = {
+    ang: Math.random() * Math.PI * 2,
+    r0: 0.4 + Math.random() * 2.5,
+    spread: 3 + Math.random() * 9,
+    up: Math.random() * 2.5,
+    rise: 2 + Math.random() * 5,
+    s0: 2.5 + Math.random() * 3.5,
+    grow: 4 + Math.random() * 6,
+    op: 0.26 + Math.random() * 0.32,
+    side: 0.45 + Math.random() * 0.55,
+    spin: (Math.random() - 0.5) * 0.7,
+    wob: Math.random() * 6.28,
+    warm,
+  };
+  groundSmoke.push(sp); scene.add(sp);
+}
+// Launch fireball at the engine — drawn over the smoke so the fire reads clearly
+const launchFire = radialSprite('rgba(255,180,90,0.95)', 'rgba(255,90,30,0.5)', 22);
+launchFire.renderOrder = 6; scene.add(launchFire);
+const launchFireCore = radialSprite('rgba(255,248,225,1)', 'rgba(255,170,70,0.6)', 11);
+launchFireCore.renderOrder = 7; scene.add(launchFireCore);
+
+// ---------- Mountain ridge layers (parallax) ----------
+// Background hills are real 3D heightfields (like the foreground hill), so the sun/sky
+// light them with true 3D form instead of flat 2D cardboard shading.
+function makeHillLayer(depthZ, peak, color, freq, seed) {
+  const W = 1600, DEPTH = 260, SX = 240, SZ = 22;
+  const geo = new THREE.PlaneGeometry(W, DEPTH, SX, SZ);
+  geo.rotateX(-Math.PI / 2);
+  const p = geo.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), z = p.getZ(i);
+    const worldZ = z + depthZ;
+    // gentle, balanced rolling ridgeline (two low frequencies — smooth, not lumpy)
+    const r = Math.sin(x * freq + seed) * 0.62 + Math.sin(x * freq * 0.48 + seed * 1.4) * 0.38;
+    const ridge = 0.5 + r * 0.42;                                 // ~0.08..0.92, smooth
+    const zf = Math.exp(-Math.pow(z / 115, 2));                   // crest at mid-depth
+    const frontCut = Math.min(1, Math.max(0, (-24 - worldZ) / 45)); // flatten anything ahead of z=-24 (behind the foreground)
+    p.setY(i, peak * ridge * zf * frontCut);
+  }
+  geo.computeVertexNormals();
+  const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness: 1, metalness: 0 }));
+  m.position.set(0, -16, depthZ);
+  return m;
+}
+const ridges = [];
+// tall layers sit BEHIND the moon (z < -185, moon occludes them); the layers in FRONT
+// of the moon are kept low so the moon never protrudes from a hill.
+const ridgeDefs = [
+  { z: -330, peak: 46, c: 0x2a2750, f: 0.011, s: 0.0 },   // far horizon — kept low so the moon rises against open sky
+  { z: -250, peak: 36, c: 0x221f44, f: 0.014, s: 2.1 },   // behind moon — low, doesn't frame it
+  { z: -150, peak: 40, c: 0x1a1736, f: 0.017, s: 4.0 },   // in front of moon — low
+  { z: -100, peak: 32, c: 0x13112a, f: 0.020, s: 5.5 },   // front — low
+  { z: -56,  peak: 26, c: 0x0c0b1f, f: 0.024, s: 1.2 },   // nearest — low
+];
+ridgeDefs.forEach((d, i) => {
+  const r = makeHillLayer(d.z, d.peak, d.c, d.f, d.s);
+  r.userData.baseY = r.position.y;
+  r.userData.factor = (i + 1) * 0.4;
+  scene.add(r); ridges.push(r);
+});
+
+// ---------- Foreground hill with a known crest (the climb) ----------
+const HILL_Z = -14, HILL_CX = 16, HILL_W = 52, HILL_BASE = -7, HILL_RISE = 27;
+function crestY(x) { return HILL_BASE + HILL_RISE * Math.exp(-Math.pow((x - HILL_CX) / HILL_W, 2)); }
+// 3D heightfield hill: rises from the foreground up to the crest at z=-13 (where the
+// animals walk) and falls off behind — a real surface the tractor beam can pool light on.
+const HILL_RIDGE_Z = -13;
+function hillHeight(x, z) {
+  const ridge = crestY(x);
+  // drop off steeply toward the camera so the mound stays behind the launch hill (a clear gap),
+  // and roll off gently behind so distant hills read.
+  const wz = z > HILL_RIDGE_Z ? 16 : 60;
+  const dz = Math.exp(-Math.pow((z - HILL_RIDGE_Z) / wz, 2)); // 1 at the ridge, falls off in depth
+  let h = -46 + (ridge + 46) * dz;                           // deep base, rising to the crest
+  // organic shoreline: wobble the front (water-facing) slope so the coast bays in and out;
+  // fades to zero at the crest so the animals' footing is unaffected.
+  if (z > HILL_RIDGE_Z) {
+    const front = Math.min(1, (z - HILL_RIDGE_Z) / 24);
+    const coast = Math.sin(x * 0.038 + 1.1) * 9.0 + Math.sin(x * 0.105 - 0.6) * 4.5 + Math.sin(x * 0.24 + 2.4) * 2.2;
+    h += coast * front;
+  }
+  return h;
+}
+const hillGeo = new THREE.PlaneGeometry(560, 230, 240, 110);
+hillGeo.rotateX(-Math.PI / 2);
+{
+  const hp = hillGeo.attributes.position;
+  for (let i = 0; i < hp.count; i++) hp.setY(i, hillHeight(hp.getX(i), hp.getZ(i)));
+  hillGeo.computeVertexNormals();
+}
+const hill = new THREE.Mesh(hillGeo, new THREE.MeshStandardMaterial({ color: 0x0c0c1a, roughness: 1, metalness: 0 }));
+hill.receiveShadow = true;
+scene.add(hill); // lit by the same sun/moon/sky as the rest of the scene
+
+// ---------- Calm reflective sea: the launch hill + foreground hill rise from it as islands ----------
+const WATER_Y = -9.5;
+const waterMat = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false,
+  uniforms: {
+    uTime:     { value: 0 },
+    uCam:      { value: new THREE.Vector3() },
+    uGlintDir: { value: new THREE.Vector3(0, 0.4, 1).normalize() },
+    uSky:      { value: new THREE.Color(0x8ec5f0) },   // horizon reflection
+    uDeep:     { value: new THREE.Color(0x0b1733) },   // deep-water base
+    uGlint:    { value: new THREE.Color(0xffe6b8) },   // sun/moon sparkle
+    uOpacity:  { value: 0.9 },
+  },
+  vertexShader: `
+    varying vec3 vWorld;
+    void main(){ vec4 wp = modelMatrix * vec4(position, 1.0); vWorld = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }
+  `,
+  fragmentShader: `
+    precision highp float;
+    varying vec3 vWorld;
+    uniform float uTime; uniform vec3 uCam, uGlintDir, uSky, uDeep, uGlint; uniform float uOpacity;
+    void main(){
+      vec3 V = normalize(uCam - vWorld);
+      float n = sin(vWorld.x * 0.05 + uTime * 0.8) + sin(vWorld.z * 0.07 - uTime * 0.6)
+              + 0.6 * sin((vWorld.x + vWorld.z) * 0.028 + uTime);
+      vec3 N = normalize(vec3(n * 0.05, 1.0, n * 0.045));
+      float fres = pow(1.0 - max(dot(V, vec3(0.0, 1.0, 0.0)), 0.0), 4.0);
+      vec3 refl = mix(uDeep, uSky, fres);
+      vec3 H = normalize(V + uGlintDir);
+      float ndh = max(dot(N, H), 0.0);
+      float spec = pow(ndh, 90.0) + pow(ndh, 20.0) * 0.18;   // tight glint + soft glitter path
+      vec3 col = refl + uGlint * spec;
+      // confine the sea to the front channel: full ahead of the animal hill, gone behind it
+      float zfade = smoothstep(-46.0, -16.0, vWorld.z);
+      gl_FragColor = vec4(col, mix(0.5, 0.92, fres) * uOpacity * zfade);
+    }
+  `,
+});
+const water = new THREE.Mesh(new THREE.PlaneGeometry(2800, 2800), waterMat);
+water.rotation.x = -Math.PI / 2;
+water.position.set(0, WATER_Y, -120);
+scene.add(water);
+const WATER_SKY_DAY = new THREE.Color(0x9fd0f6), WATER_SKY_NIGHT = new THREE.Color(0x2a3358);
+const WATER_DEEP_DAY = new THREE.Color(0x12376b), WATER_DEEP_NIGHT = new THREE.Color(0x070d20);
+const WATER_GLINT_DAY = new THREE.Color(0xffe6b8), WATER_GLINT_NIGHT = new THREE.Color(0xbcd0ff);
+
+// ---------- Procedural animals that climb the hill ----------
+const animalMat = new THREE.MeshStandardMaterial({ color: 0x15152e, roughness: 1, metalness: 0, flatShading: true });
+function legPivot(x, z, len) {
+  const pivot = new THREE.Group();
+  pivot.position.set(x, len, z);
+  const leg = new THREE.Mesh(new THREE.BoxGeometry(0.32, len, 0.32), animalMat);
+  leg.position.y = -len / 2;
+  pivot.add(leg);
+  return pivot;
+}
+function makeAnimal(type) {
+  const g = new THREE.Group();
+  const legs = [];
+  let bL = 3, bH = 1.2, bW = 1.1, legLen = 1.5;
+  if (type === 'bear') { bL = 3.4; bH = 1.7; bW = 1.5; legLen = 1.3; }
+  if (type === 'rabbit') { bL = 1.4; bH = 1.0; bW = 0.9; legLen = 0.8; }
+  if (type === 'wolf') { bL = 3.0; bH = 1.1; bW = 1.0; legLen = 1.4; }
+  const body = new THREE.Mesh(new THREE.BoxGeometry(bL, bH, bW), animalMat);
+  body.position.y = legLen + bH / 2;
+  g.add(body);
+  const lx = bL * 0.34, lz = bW * 0.32;
+  [[lx, lz], [lx, -lz], [-lx, lz], [-lx, -lz]].forEach(([x, z]) => {
+    const p = legPivot(x, z, legLen); g.add(p); legs.push(p);
+  });
+  const headY = legLen + bH;
+  if (type === 'deer') {
+    const neck = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1.8, 0.6), animalMat);
+    neck.position.set(bL * 0.5, headY + 0.4, 0); neck.rotation.z = -0.5; g.add(neck);
+    const head = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.6, 0.55), animalMat);
+    head.position.set(bL * 0.5 + 0.9, headY + 1.2, 0); g.add(head);
+    // antlers
+    [-0.2, 0.2].forEach(zz => {
+      const a1 = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.9, 0.12), animalMat);
+      a1.position.set(bL * 0.5 + 0.9, headY + 1.9, zz); a1.rotation.z = 0.3 * Math.sign(zz || 1); g.add(a1);
+      const a2 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.55, 0.1), animalMat);
+      a2.position.set(bL * 0.5 + 1.25, headY + 2.25, zz); a2.rotation.z = 0.7; g.add(a2);
+    });
+    const tail = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.7, 0.2), animalMat);
+    tail.position.set(-bL * 0.5, headY - 0.2, 0); tail.rotation.z = 0.6; g.add(tail);
+  } else if (type === 'bear') {
+    const hump = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.8, bW * 0.9), animalMat);
+    hump.position.set(bL * 0.2, headY + 0.2, 0); g.add(hump);
+    const head = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.1, 1.1), animalMat);
+    head.position.set(bL * 0.55, headY - 0.2, 0); g.add(head);
+    const snout = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.5, 0.6), animalMat);
+    snout.position.set(bL * 0.55 + 0.7, headY - 0.4, 0); g.add(snout);
+    [-0.45, 0.45].forEach(zz => { const ear = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.2), animalMat); ear.position.set(bL * 0.5, headY + 0.5, zz); g.add(ear); });
+  } else if (type === 'rabbit') {
+    const head = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.8, 0.8), animalMat);
+    head.position.set(bL * 0.55, headY + 0.1, 0); g.add(head);
+    [-0.22, 0.22].forEach(zz => { const ear = new THREE.Mesh(new THREE.BoxGeometry(0.22, 1.4, 0.18), animalMat); ear.position.set(bL * 0.55, headY + 1.0, zz); ear.rotation.z = -0.12 * Math.sign(zz || 1); g.add(ear); });
+    const tail = new THREE.Mesh(new THREE.SphereGeometry(0.3, 10, 10), animalMat); tail.position.set(-bL * 0.5, legLen + bH * 0.6, 0); g.add(tail);
+  } else { // wolf
+    const head = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.8, 0.8), animalMat);
+    head.position.set(bL * 0.55, headY - 0.1, 0); g.add(head);
+    const snout = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.4, 0.45), animalMat);
+    snout.position.set(bL * 0.55 + 0.7, headY - 0.3, 0); g.add(snout);
+    [-0.28, 0.28].forEach(zz => { const ear = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.5, 0.12), animalMat); ear.position.set(bL * 0.5, headY + 0.45, zz); g.add(ear); });
+    const tail = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.35, 0.35), animalMat); tail.position.set(-bL * 0.55, headY - 0.2, 0); tail.rotation.z = 0.5; g.add(tail);
+  }
+  g.userData.legs = legs;
+  return g;
+}
+const animals = [];
+const animalDefs = [
+  { type: 'deer',   startX: -78, scale: 1.0, speed: 1.0, delay: 0.00, facing:  1 },
+  { type: 'bear',   startX: -50, scale: 1.25, speed: 0.8, delay: 0.06, facing:  1 },
+  { type: 'rabbit', startX: -26, scale: 0.7, speed: 1.7, delay: 0.00, facing:  1, hop: true },
+  { type: 'wolf',   startX:  64, scale: 0.9, speed: 1.1, delay: 0.10, facing: -1 },
+  { type: 'rabbit', startX: -98, scale: 0.6, speed: 1.8, delay: 0.03, facing:  1, hop: true },
+  { type: 'deer',   startX:  92, scale: 0.85, speed: 1.0, delay: 0.14, facing: -1 },
+];
+animalDefs.forEach((d, i) => {
+  const a = makeAnimal(d.type);
+  a.scale.setScalar(d.scale);
+  a.rotation.y = d.facing < 0 ? Math.PI : 0;
+  a.traverse(o => { if (o.isMesh) o.castShadow = true; });
+  a.userData.def = d;
+  a.userData.summitOffset = (i - 2.5) * 4.5;
+  animals.push(a);
+  scene.add(a);
+});
+const ABDUCTEE = animals[2]; // the central rabbit gets taken by the UFO
+// the abductee gets its own material so it can glow when caught in the beam (others stay silhouettes)
+const abMat = animalMat.clone();
+ABDUCTEE.traverse(o => { if (o.isMesh) o.material = abMat; });
+// a light that rides up with the rabbit, lighting its camera-facing side as it rises
+const abLight = new THREE.PointLight(0xc6ffe4, 0, 26);
+scene.add(abLight);
+
+// ---------- The UFO (saucer + dome + rim lights + tractor beam) ----------
+const ufo = new THREE.Group();
+const saucer = new THREE.Mesh(new THREE.SphereGeometry(4, 28, 18), new THREE.MeshStandardMaterial({ color: 0x70788a, metalness: 0.92, roughness: 0.22 }));
+saucer.scale.set(1, 0.3, 1);
+ufo.add(saucer);
+const underbelly = new THREE.Mesh(new THREE.ConeGeometry(3.4, 1.6, 28), new THREE.MeshStandardMaterial({ color: 0x3a4150, metalness: 0.85, roughness: 0.35 }));
+underbelly.position.y = -0.9; underbelly.rotation.x = Math.PI;
+ufo.add(underbelly);
+const dome = new THREE.Mesh(new THREE.SphereGeometry(2, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0xa6ecff, emissive: 0x2ab6ff, emissiveIntensity: 0.7, metalness: 0.2, roughness: 0.08, transparent: true, opacity: 0.85 }));
+dome.position.y = 0.6;
+ufo.add(dome);
+const rimLights = [];
+for (let i = 0; i < 12; i++) {
+  const a = (i / 12) * Math.PI * 2;
+  const b = new THREE.Mesh(new THREE.SphereGeometry(0.36, 10, 10), new THREE.MeshBasicMaterial({ color: 0x66ffd0 }));
+  b.position.set(Math.cos(a) * 3.7, -0.25, Math.sin(a) * 3.7);
+  ufo.add(b); rimLights.push(b);
+}
+const ufoLight = new THREE.PointLight(0x6effc8, 0, 70);
+ufoLight.position.y = -1; ufo.add(ufoLight);
+// fresnel "laser" beam: translucent green body with bright glowing edges (the outline)
+const BEAM_TOP = -1.3, BEAM_BOT = -34; // top sits in the saucer's belly hole, bottom into the hill
+const beamMat = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
+  uniforms: { uOpacity: { value: 0 }, uCore: { value: new THREE.Color(0x27c483) }, uEdge: { value: new THREE.Color(0xcdfff0) } },
+  vertexShader: `
+    varying vec3 vN; varying vec3 vV;
+    void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }
+  `,
+  fragmentShader: `
+    uniform float uOpacity; uniform vec3 uCore; uniform vec3 uEdge;
+    varying vec3 vN; varying vec3 vV;
+    void main(){
+      float fres = 1.0 - abs(dot(normalize(vN), normalize(vV)));
+      float edge = pow(fres, 3.2);                          // soft body
+      float rim  = smoothstep(0.78, 0.97, fres);            // crisp laser outline at the silhouette
+      vec3 col = mix(uCore, uEdge, max(edge, rim));
+      float a = (0.12 + edge * 0.7 + rim * 0.9) * uOpacity; // translucent body, hot rim
+      gl_FragColor = vec4(col, a);
+    }
+  `,
+});
+const beam = new THREE.Mesh(new THREE.CylinderGeometry(1.05, 4.4, BEAM_TOP - BEAM_BOT, 44, 1, true), beamMat);
+beam.position.y = (BEAM_TOP + BEAM_BOT) / 2;
+ufo.add(beam);
+// greenish particles streaming up the beam (volumetric body)
+const BP_COUNT = 180;
+const bpGeo = new THREE.BufferGeometry();
+const bpPos = new Float32Array(BP_COUNT * 3);
+const bpInfo = [];
+for (let i = 0; i < BP_COUNT; i++) bpInfo.push({ ang: Math.random() * Math.PI * 2, rad: Math.pow(Math.random(), 0.55), y: Math.random(), sp: 0.4 + Math.random() * 0.9 });
+bpGeo.setAttribute('position', new THREE.BufferAttribute(bpPos, 3));
+const beamParticles = new THREE.Points(bpGeo, new THREE.PointsMaterial({ map: smokeTex, color: 0x84ffb0, size: 1.5, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
+ufo.add(beamParticles);
+// pulsing light filling the hole in the saucer's belly (the source)
+const beamSource = radialSprite('rgba(240,255,250,1)', 'rgba(120,255,185,0.75)', 6);
+beamSource.position.y = BEAM_TOP + 0.2; beamSource.renderOrder = 6; ufo.add(beamSource);
+// light that lands where the beam hits the hill — illuminates the ground + nearby animals
+const beamLight = new THREE.PointLight(0x9bffe0, 0, 34);
+scene.add(beamLight);
+// spotlight tractor beam: cones light from the saucer onto the hill and casts animal shadows
+const beamSpot = new THREE.SpotLight(0xb6ffe8, 0, 90, Math.PI / 8, 0.6, 1.1);
+beamSpot.castShadow = true;
+beamSpot.shadow.mapSize.set(1024, 1024);
+beamSpot.shadow.camera.near = 2;
+beamSpot.shadow.camera.far = 90;
+beamSpot.shadow.bias = -0.0008;
+scene.add(beamSpot);
+scene.add(beamSpot.target);
+// soft glowing pool where the beam meets the hill
+const beamContact = new THREE.Mesh(
+  new THREE.PlaneGeometry(20, 20),
+  new THREE.MeshBasicMaterial({ map: smokeTex, color: 0x8affdc, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false })
+);
+beamContact.rotation.x = -Math.PI / 2;
+scene.add(beamContact);
+// crisp laser outline where the beam lands — a band draped on the hill exactly where the
+// cone surface meets the terrain, so it hugs the slope and connects to the beam's base
+const BRING_SEG = 96;
+const bringGeo = new THREE.BufferGeometry();
+const bringPos = new Float32Array((BRING_SEG + 1) * 2 * 3);
+const bringIdx = [];
+for (let i = 0; i < BRING_SEG; i++) {
+  const a = i * 2, b = (i + 1) * 2;
+  bringIdx.push(a, a + 1, b, b, a + 1, b + 1);
+}
+bringGeo.setAttribute('position', new THREE.BufferAttribute(bringPos, 3));
+bringGeo.setIndex(bringIdx);
+const beamRing = new THREE.Mesh(
+  bringGeo,
+  new THREE.MeshBasicMaterial({ color: 0xc4ffe6, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, depthWrite: false })
+);
+beamRing.frustumCulled = false;
+scene.add(beamRing);
+ufo.userData = { rimLights, ufoLight, beam, beamLight, beamSpot, beamContact };
+ufo.visible = false;
+scene.add(ufo);
+
+// ---- Low-poly UFO model (OBJ) + textures — swapped in for the procedural saucer ----
+const _ul = new THREE.TextureLoader();
+const ufoDiff  = _ul.load('textures/ufo_diffuse.jpg');  ufoDiff.colorSpace  = THREE.SRGBColorSpace;
+const ufoDiff2 = _ul.load('textures/ufo_diffuse2.jpg'); ufoDiff2.colorSpace = THREE.SRGBColorSpace;
+const ufoGlow  = _ul.load('textures/ufo_glow.jpg');     ufoGlow.colorSpace  = THREE.SRGBColorSpace;
+const ufoGlow2 = _ul.load('textures/ufo_glow2.jpg');    ufoGlow2.colorSpace = THREE.SRGBColorSpace;
+const ufoNorm  = _ul.load('textures/ufo_normal.jpg');
+const ufoMat1 = new THREE.MeshStandardMaterial({ map: ufoDiff,  emissive: 0xffffff, emissiveMap: ufoGlow,  emissiveIntensity: 1.7, normalMap: ufoNorm, metalness: 0.4, roughness: 0.5 });
+const ufoMat2 = new THREE.MeshStandardMaterial({ map: ufoDiff2, emissive: 0xffffff, emissiveMap: ufoGlow2, emissiveIntensity: 1.7, metalness: 0.4, roughness: 0.5 });
+new OBJLoader().load('models/ufo.obj', (obj) => {
+  const pick = (m) => (m && m.name === 'UFO_texture2') ? ufoMat2 : ufoMat1;
+  obj.traverse(o => {
+    if (o.isMesh) {
+      o.material = Array.isArray(o.material) ? o.material.map(pick) : pick(o.material);
+      o.castShadow = false; o.receiveShadow = false;
+    }
+  });
+  obj.scale.setScalar(0.12);
+  obj.position.y = -2.4;        // center the saucer on the group origin (beam emits from underneath)
+  const removeSet = new Set([saucer, underbelly, dome, ...rimLights]); // drop the procedural body; keep the beam FX
+  for (let i = ufo.children.length - 1; i >= 0; i--) {
+    if (removeSet.has(ufo.children[i])) ufo.remove(ufo.children[i]);
+  }
+  ufo.userData.rimLights = []; // the model carries its own glowing lights now
+  ufo.add(obj);
+}, undefined, (e) => console.error('UFO OBJ failed', e));
+
+// small helpers for the sequence
+const lerpN = (a, b, e) => a + (b - a) * e;
+const smooth01 = (k) => { k = Math.min(1, Math.max(0, k)); return k * k * (3 - 2 * k); };
+
+// ---------- Floating cloud / fog sprites ----------
+const cloudGroup = new THREE.Group();
+const cloudTex = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const g = c.getContext('2d');
+  const grd = g.createRadialGradient(128,128,0,128,128,128);
+  grd.addColorStop(0, 'rgba(200,205,255,0.55)');
+  grd.addColorStop(0.5, 'rgba(150,160,230,0.18)');
+  grd.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = grd; g.fillRect(0,0,256,256);
+  return new THREE.CanvasTexture(c);
+})();
+for (let i = 0; i < 28; i++) {
+  const mat = new THREE.SpriteMaterial({ map: cloudTex, transparent: true, depthWrite: false, opacity: 0.5, blending: THREE.AdditiveBlending });
+  const s = new THREE.Sprite(mat);
+  const scl = 60 + Math.random() * 120;
+  s.scale.set(scl, scl * 0.55, 1);
+  s.position.set((Math.random() - 0.5) * 500, -8 + Math.random() * 30, -40 - Math.random() * 200);
+  s.userData.drift = 0.2 + Math.random() * 0.6;
+  cloudGroup.add(s);
+}
+scene.add(cloudGroup);
+
+// ---------- Starfield ----------
+const starCount = 2200;
+const starGeo = new THREE.BufferGeometry();
+const sp = new Float32Array(starCount * 3);
+const sc = new Float32Array(starCount * 3);
+for (let i = 0; i < starCount; i++) {
+  const r = 400 + Math.random() * 500;
+  const th = Math.random() * Math.PI * 2;
+  const ph = Math.acos(2 * Math.random() - 1);
+  sp[i*3]   = r * Math.sin(ph) * Math.cos(th);
+  sp[i*3+1] = Math.abs(r * Math.cos(ph)) * 0.8 + 30;
+  sp[i*3+2] = -Math.abs(r * Math.sin(ph) * Math.sin(th)) - 300; // always behind the hills
+  const tint = 0.7 + Math.random() * 0.3;
+  sc[i*3] = tint; sc[i*3+1] = tint; sc[i*3+2] = 1.0;
+}
+starGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+starGeo.setAttribute('color', new THREE.BufferAttribute(sc, 3));
+const starMat = new THREE.PointsMaterial({ size: 2.2, sizeAttenuation: false, vertexColors: true, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+const stars = new THREE.Points(starGeo, starMat);
+scene.add(stars);
+
+
+// ---------- Animated 3D models: a flock of birds ----------
+// Each bird is a small built-from-geometry model (body + two wings) whose wings
+// flap via per-frame rotation — procedural skeletal-style animation.
+// blocky, box-built birds in the same voxel style as the ground animals
+const birdMat = new THREE.MeshStandardMaterial({ color: 0x15152e, roughness: 1, metalness: 0, flatShading: true });
+function makeBird() {
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.8, 0.8), birdMat); // torso along +x (flight direction)
+  g.add(body);
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.7), birdMat);
+  head.position.set(1.25, 0.32, 0); g.add(head);
+  const beak = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.26, 0.26), birdMat);
+  beak.position.set(1.85, 0.3, 0); g.add(beak);
+  const tail = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.18, 0.7), birdMat);
+  tail.position.set(-1.45, 0.18, 0); tail.rotation.z = 0.22; g.add(tail);
+  // wings: swept box blades that pivot from the shoulders and flap
+  const mkWing = (side) => {
+    const pivot = new THREE.Group();
+    pivot.position.set(0, 0.22, 0);
+    const inner = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.16, 1.5), birdMat);
+    inner.position.set(-0.1, 0, side * 1.0);
+    const outer = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.14, 1.5), birdMat);
+    outer.position.set(-0.4, 0, side * 2.35); // swept-back tip
+    pivot.add(inner, outer);
+    return pivot;
+  };
+  const wl = mkWing(1), wr = mkWing(-1);
+  g.add(wl, wr);
+  g.userData = { wl, wr };
+  return g;
+}
+const birds = [];
+const flock = new THREE.Group();
+for (let i = 0; i < 22; i++) {
+  const b = makeBird();
+  const sc = 0.7 + Math.random() * 0.8;
+  b.scale.setScalar(sc);
+  b.userData.x0 = Math.random() * 360;
+  b.userData.y0 = 14 + Math.random() * 26;
+  b.userData.z0 = -50 - Math.random() * 120;
+  b.userData.speed = 14 + Math.random() * 10;
+  b.userData.phase = Math.random() * Math.PI * 2;
+  birds.push(b);
+  flock.add(b);
+}
+scene.add(flock);
+
+// ---------- Scroll handling ----------
+let scrollT = 0;       // 0..1 eased
+let targetT = 0;
+function computeScroll() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  targetT = max > 0 ? window.scrollY / max : 0;
+}
+window.addEventListener('scroll', computeScroll, { passive: true });
+computeScroll();
+scrollT = targetT; // start already settled at the restored scroll position
+
+// pointer for subtle camera sway
+let px = 0, py = 0, tpx = 0, tpy = 0;
+window.addEventListener('mousemove', e => {
+  if (moonDragging) return;
+  tpx = (e.clientX / innerWidth - 0.5);
+  tpy = (e.clientY / innerHeight - 0.5);
+});
+
+// ---- Drag the moon to spin it ----
+let moonDragging = false, moonLastX = 0, moonLastY = 0;
+let moonUserRotX = 0, moonUserRotY = 0, moonVelX = 0, moonVelY = 0;
+const _ray = new THREE.Raycaster();
+const _ndc = new THREE.Vector2();
+function pointerHitsMoon(e) {
+  if (moon.material.uniforms.opacity.value < 0.06) return false; // only when the moon is actually up
+  _ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  _ray.setFromCamera(_ndc, camera);
+  return _ray.intersectObject(moon, false).length > 0;
+}
+window.addEventListener('pointerdown', e => {
+  if (!pointerHitsMoon(e)) return;
+  moonDragging = true; moonLastX = e.clientX; moonLastY = e.clientY; moonVelX = moonVelY = 0;
+  document.body.style.cursor = 'grabbing';
+});
+window.addEventListener('pointermove', e => {
+  if (!moonDragging) {
+    document.body.style.cursor = pointerHitsMoon(e) ? 'grab' : '';
+    return;
+  }
+  const dx = e.clientX - moonLastX, dy = e.clientY - moonLastY;
+  moonLastX = e.clientX; moonLastY = e.clientY;
+  moonUserRotY += dx * 0.011; moonUserRotX += dy * 0.011;
+  moonVelY = dx * 0.011; moonVelX = dy * 0.011;
+  e.preventDefault();
+}, { passive: false });
+window.addEventListener('pointerup', () => { if (moonDragging) { moonDragging = false; document.body.style.cursor = ''; } });
+
+const clock = new THREE.Clock();
+let firstFrame = true;
+
+// Update the entire scene for a given scroll progress s and time t.
+function updateScene(s, t, dt) {
+  // Camera drifts gently and rises, tilting up so the glowing sky fills the frame
+  // while the mountains stay a silhouette band along the bottom. Parallax comes
+  // from the layers themselves (below), not from flying into them.
+  camera.position.z = 60 - s * 26;
+  camera.position.y = 8 + s * 10 + py * 4;
+  camera.position.x = Math.sin(s * Math.PI) * 8 + px * 8;
+  const lookX = (-10 * (1 - s)) + px * 4;
+  const lookY = 14 + s * 10 + py * 3;
+  camera.lookAt(lookX, lookY, camera.position.z - 150);
+
+  // Sky: bright midday blue -> warm dusk -> starlit night, blended across scroll
+  skyMat.uniforms.horizon.value = 0.16 - s * 0.30;
+  skyBlend(skyMat.uniforms.top.value, SKY.topDay, SKY.topDusk, SKY.topNight, s);
+  skyBlend(skyMat.uniforms.mid.value, SKY.midDay, SKY.midDusk, SKY.midNight, s);
+  skyBlend(skyMat.uniforms.bottom.value, SKY.bottomDay, SKY.bottomDusk, SKY.bottomNight, s);
+
+  // Atmospheric haze matches the sky and clears as night falls
+  scene.fog.color.copy(skyMat.uniforms.mid.value);
+  scene.fog.density = 0.006 - s * 0.0036;
+
+  // The sun: high & bright at midday, sinking to the horizon and setting into night
+  const sunSet = Math.min(1, s * 1.3);
+  sunGroup.position.set(38 + s * 8, 62 - sunSet * 82, -150);
+  sunGroup.scale.setScalar(1.15 - s * 0.4);
+  sunCore.material.opacity = Math.max(0, 1 - sunSet * 1.1);
+  sunHalo.material.opacity = Math.max(0, (0.7 - sunSet * 0.65) + Math.sin(t * 0.8) * 0.03);
+  sunLight.intensity = 2.4 * (1 - s * 0.85);
+  sunLight.color.setHSL(0.13 - s * 0.05, 0.55, 0.6);
+  sunLight.position.copy(sunGroup.position);
+
+  // Reflective sea: tints with the sky, glints toward the sun (then the moon), sinks away as we climb
+  waterMat.uniforms.uTime.value = t;
+  waterMat.uniforms.uCam.value.copy(camera.position);
+  const wN = Math.min(1, s * 1.4);
+  waterMat.uniforms.uSky.value.lerpColors(WATER_SKY_DAY, WATER_SKY_NIGHT, wN);
+  waterMat.uniforms.uDeep.value.lerpColors(WATER_DEEP_DAY, WATER_DEEP_NIGHT, wN);
+  const moonUp = Math.min(1, Math.max(0, (s - 0.45) / 0.22));   // glint passes from sun to moon as it rises
+  _v2.copy(sunGroup.position).lerp(moonGroup.position, moonUp).normalize();
+  waterMat.uniforms.uGlintDir.value.copy(_v2);
+  waterMat.uniforms.uGlint.value.lerpColors(WATER_GLINT_DAY, WATER_GLINT_NIGHT, moonUp);
+  water.position.y = WATER_Y - s * 10;                          // the sea drops away as the rocket climbs
+  waterMat.uniforms.uOpacity.value = Math.max(0, 1 - s * 1.7);  // gone by the time we reach the sky
+
+  // 3D title: a hero statement that lifts away and fades as the launch begins
+  if (titleReady) {
+    const zip = Math.min(1, s * 9);              // 0 -> 1 quickly as the scroll begins
+    titleGroup.position.x = titleBaseX;
+    titleGroup.position.y = titleBaseY;
+    titleGroup.position.z = 22 + zip * zip * 72;   // accelerates toward the camera (z=60) and flies past at full opacity
+    titleMat.opacity = 1;
+    titleGroup.visible = zip < 0.999;
+    // travelling glint: a bright specular hotspot sweeps across the letters,
+    // catching the glossy clearcoat like light on polished metal
+    const cyc = (t * 0.16) % 1;                          // one pass every ~6s
+    const pass = Math.min(1, cyc / 0.5);                 // sweep over the first half, rest in the second
+    titleSpec.position.x = -8 + pass * (titleTextW + 16);
+    const glow = Math.max(0, Math.sin(pass * Math.PI));  // bright mid-sweep, dark at both ends (no reset pop)
+    titleSpec.intensity = 0.4 + Math.pow(glow, 0.7) * 5.4; // sharp, bright travelling hotspot
+  }
+
+  // Ridges parallax: nearer layers slide further as you scroll, and sink gently,
+  // so the world feels like it's descending past you.
+  ridges.forEach((r, i) => {
+    const f = r.userData.factor;
+    r.position.x = s * f * 18 + px * f * 4;            // slide on scroll only (no idle jitter)
+    r.position.y = r.userData.baseY - s * f * 10;
+  });
+
+  // Sea of cloud drifts and rises gently to swallow the lower world
+  cloudGroup.children.forEach(c => {
+    c.position.x += c.userData.drift * dt * 6;
+    if (c.position.x > 280) c.position.x = -280;
+  });
+  cloudGroup.position.y = -2 + s * 6;
+
+  // Stars emerge only once the sky darkens toward night
+  starMat.opacity = Math.min(1, Math.max(0, (s - 0.5) / 0.4)) * 0.95;
+  stars.rotation.y = t * 0.005;
+
+  // Flock of birds: flap wings + glide across the sky on a looping path
+  const SPAN = 360;
+  for (let i = 0; i < birds.length; i++) {
+    const b = birds[i], u = b.userData;
+    const flap = Math.sin(t * 7 + u.phase) * 0.7 + 0.12;
+    u.wl.rotation.x = -flap;
+    u.wr.rotation.x = flap;
+    b.position.x = (((u.x0 + t * u.speed) % SPAN) + SPAN) % SPAN - SPAN / 2;
+    b.position.y = u.y0 + Math.sin(t * 0.5 + u.phase) * 2.2 - s * 6;
+    b.position.z = u.z0;
+    b.rotation.z = Math.sin(t * 0.5 + u.phase) * 0.12; // gentle banking
+  }
+
+  // Moon: hidden by daylight, then rises SOLID from behind the hills.
+  const night = Math.max(0, Math.min(1, (s - 0.45) / 0.5));
+  // opacity tracks the start of the rise (not the slow night ramp) so the moon
+  // is already full-opacity while still low behind the hills — a real moonrise,
+  // not a see-through fade-in.
+  moon.material.uniforms.opacity.value = 1; // always solid; the hills hide it until it rises
+  moonHalo.material.opacity = night * 0.55;
+  // grows gently, then a final-approach swell as the rocket + UFO arrive to land
+  moonGroup.scale.setScalar(MOON_BASE + s * MOON_GROW + Math.max(0, (s - 0.86) / 0.14) * 0.62);
+  moonLight.intensity = night * 0.9;
+  moonLight.position.copy(moonGroup.position); // light comes from where the moon actually is
+  // Moonrise: climb from behind the hills up to the resting height (done before the orbit)
+  const rise0 = Math.min(1, Math.max(0, (s - 0.42) / 0.32));
+  const rise = rise0 * rise0 * (3 - 2 * rise0);
+  moonGroup.position.y = 70 - (1 - rise) * 84; // starts well below the ridgeline so terrain hides it pre-rise
+  // slight turn as it climbs, easing to rest on the Earth-facing near side
+  // user can click-drag the moon to spin it; momentum coasts and decays after release
+  if (!moonDragging) { moonUserRotY += moonVelY; moonUserRotX += moonVelX; moonVelY *= 0.93; moonVelX *= 0.93; }
+  moonUserRotX = Math.max(-1.1, Math.min(1.1, moonUserRotX));   // limit the tilt so it never flips awkwardly
+  moon.rotation.y = MOON_FACE + (1 - rise) * MOON_SPIN + moonUserRotY;
+  moon.rotation.x = (1 - rise) * 0.05 + moonUserRotX;   // tiny nod that settles out by the time it rests
+
+  // Rocket: pad -> ignite -> arc to the moon -> one orbit -> land (tiny) on the surface
+  let fp, mode = 'transit', orbitAng = 0, lp = 0;
+  if (s <= ORBIT_ARRIVE) {
+    fp = Math.max(0, (s - 0.06) / (ORBIT_ARRIVE - 0.06)); // holds on pad, curves to the moon
+    rocketPathInto(fp, rocket.position);
+    // nose points along the flight path (velocity) so it banks through the curve
+    const ahead = Math.min(1, fp + 0.02), behind = Math.max(0, ahead - 0.04);
+    rocketPathInto(ahead, _v); rocketPathInto(behind, _v2);
+    _v.sub(_v2).normalize();
+    rocket.quaternion.setFromUnitVectors(UP, _v);
+    // roll program: roll to the left as it clears the pad, settling back as it climbs
+    const rollP = Math.min(1, fp / 0.42);
+    rocket.rotateY(-(rollP * rollP * (3 - 2 * rollP)) * Math.PI * 2);
+    rocket.scale.setScalar(1 - fp * (1 - ORBIT_SCALE));  // shrinks as it heads to the distant moon
+  } else if (s <= ORBIT_END) {
+    fp = 1; mode = 'orbit';
+    orbitAng = ORBIT_A0 + ((s - ORBIT_ARRIVE) / (ORBIT_END - ORBIT_ARRIVE)) * ORBIT_TURNS * Math.PI * 2;
+    orbitPosInto(orbitAng, orbitRadius(), rocket.position);
+    _v.set(
+      -Math.sin(orbitAng) * ORBIT_EX.x + Math.cos(orbitAng) * ORBIT_EY.x,
+      -Math.sin(orbitAng) * ORBIT_EX.y + Math.cos(orbitAng) * ORBIT_EY.y,
+      -Math.sin(orbitAng) * ORBIT_EX.z + Math.cos(orbitAng) * ORBIT_EY.z
+    ).normalize();
+    rocket.quaternion.setFromUnitVectors(UP, _v);
+    rocket.scale.setScalar(ORBIT_SCALE);
+  } else {
+    fp = 1; mode = 'land';
+    const lp0 = (s - ORBIT_END) / (1 - ORBIT_END);
+    lp = lp0 * lp0 * (3 - 2 * lp0);                     // ease the descent
+    const endAng = ORBIT_A0 + ORBIT_TURNS * Math.PI * 2; // where the lap finished
+    orbitAng = endAng;
+    const sc = ORBIT_SCALE - lp * (ORBIT_SCALE - LAND_SCALE); // keeps shrinking down to the surface
+    rocket.scale.setScalar(sc);
+    const moonR = 16 * moonGroup.scale.x;
+    const rOrbit = orbitRadius();
+    // sweep the descent DIRECTION around the moon (great-circle) while lowering the radius,
+    // so the rocket arcs over the limb to the landing spot instead of cutting through the body
+    orbitPosInto(endAng, rOrbit, _v);                    // orbit-end world position
+    _v.sub(moonGroup.position).normalize();              // dirStart (from the moon's centre)
+    slerpDir(_v, LAND_NORMAL, lp, _tmp);                 // current descent direction
+    const radius = rOrbit + (moonR + 4.4 * sc - rOrbit) * lp;
+    rocket.position.copy(moonGroup.position).addScaledVector(_tmp, radius);
+    // orientation: orbital tangent easing to standing upright (radial) on the surface
+    _v2.set(
+      -Math.sin(endAng) * ORBIT_EX.x + Math.cos(endAng) * ORBIT_EY.x,
+      -Math.sin(endAng) * ORBIT_EX.y + Math.cos(endAng) * ORBIT_EY.y,
+      -Math.sin(endAng) * ORBIT_EX.z + Math.cos(endAng) * ORBIT_EY.z
+    ).normalize();
+    _v2.lerp(_tmp, lp).normalize();                      // _tmp ends at LAND_NORMAL → upright on the surface
+    rocket.quaternion.setFromUnitVectors(UP, _v2);
+  }
+  // engines: idle-warming on the pad, full ignition at liftoff, easing as it climbs
+  const launch = Math.min(1, s / 0.06);             // 0 at idle -> 1 at liftoff
+  const ignite = 0.4 + launch * 0.6;                // 0.4 idle glow, 1.0 launch
+  const flick = 0.78 + Math.sin(t * 28) * 0.14 + Math.sin(t * 53) * 0.06; // engine flicker
+  const thrust = ignite * flick * (0.55 + (1 - fp) * 0.85);
+  rocket.userData.flame.scale.set(1 + (1 - fp) * 0.25, thrust * 1.7, 1 + (1 - fp) * 0.25);
+  rocket.userData.flameCore.scale.set(0.9 + flick * 0.15, thrust * 1.5, 0.9 + flick * 0.15);
+  const engineCut = 1 - lp * 0.92;                       // engines throttle down as it lands
+  rocket.userData.flame.material.opacity = 0.92 * ignite * engineCut;
+  rocket.userData.flameCore.material.opacity = 0.95 * ignite * engineCut;
+  rocket.userData.engineGlow.material.opacity = 0.85 * ignite * flick * engineCut;
+  rocket.userData.engineGlow.scale.setScalar((8 + (1 - fp) * 3) * (0.85 + flick * 0.2));
+  rocket.userData.engineLight.intensity = ignite * (5 + (1 - fp) * 12) * engineCut;
+
+  // Fire + billowy smoke: pools at idle, erupts at launch, churns, then dissipates
+  const smokeLife = Math.max(0, 1 - Math.max(0, s - 0.12) / 0.34); // full to s=0.12, gone by 0.46
+  const erupt = 0.4 + launch * 0.6;
+  const grow = Math.min(1, 0.12 + s * 3.0);
+  // bright fireball at the engine — strongest on the pad, fades once it lifts off
+  const padFire = ignite * Math.max(0, 1 - fp * 2.4) * (0.72 + flick * 0.28);
+  const fy = PAD_TOP + 1.0 + fp * 5;
+  launchFire.position.set(LAUNCH.x, fy, LAUNCH.z);
+  launchFire.scale.setScalar((6.5 + grow * 4) * (0.9 + flick * 0.2));
+  launchFire.material.opacity = padFire * 0.85;
+  launchFireCore.position.set(LAUNCH.x, fy + 0.3, LAUNCH.z);
+  launchFireCore.scale.setScalar((3.4 + grow * 2.2) * (0.9 + flick * 0.25));
+  launchFireCore.material.opacity = padFire;
+  for (let i = 0; i < groundSmoke.length; i++) {
+    const sp = groundSmoke[i], u = sp.userData;
+    const churn = Math.sin(t * 0.7 + u.wob) * 1.2;
+    const r = u.r0 + grow * u.spread * erupt + churn;
+    sp.position.set(
+      LAUNCH.x + Math.cos(u.ang) * r,
+      PAD_TOP + u.up + grow * u.rise + Math.sin(t * 0.9 + u.wob) * 0.7,
+      LAUNCH.z + Math.sin(u.ang) * r * u.side
+    );
+    sp.scale.setScalar((u.s0 + grow * u.grow) * (0.7 + erupt * 0.5));
+    sp.material.rotation = t * u.spin + u.ang;
+    sp.material.opacity = smokeLife * u.op * (0.45 + erupt * 0.55);
+  }
+
+  // Exhaust trail: follows the transit path, then trails the rocket around its orbit
+  for (let i = 0; i < trail.length; i++) {
+    const sp = trail[i];
+    if (mode !== 'transit') {
+      orbitPosInto(orbitAng - (i + 1) * 0.06, orbitRadius(), sp.position);
+      const fade = 1 - i / trail.length;
+      sp.scale.setScalar(1.5 + i * 0.45);
+      sp.material.opacity = 0.16 * fade * (1 - lp); // dissipates as it lands
+    } else {
+      const u = fp - (i + 1) * 0.022;
+      if (u <= 0.001) { sp.material.opacity = 0; continue; }
+      rocketPathInto(u, sp.position);
+      const fade = 1 - i / trail.length;
+      sp.scale.setScalar(2.0 + i * 1.0); // disperses (grows) with age
+      sp.material.opacity = 0.34 * fade * (0.5 + (1 - fp) * 0.5);
+    }
+  }
+
+  // Animals climb the hill toward the summit as you scroll
+  for (let i = 0; i < animals.length; i++) {
+    const a = animals[i], d = a.userData.def;
+    const cp = Math.min(1, Math.max(0, (s - d.delay) / (0.72 - d.delay)));
+    const e = cp * cp * (3 - 2 * cp);
+    const x = d.startX + (HILL_CX + a.userData.summitOffset - d.startX) * e;
+    const moving = (cp > 0.002 && cp < 0.998) ? 1 : 0.12;
+    let yBob = Math.abs(Math.sin(t * 6 * d.speed)) * 0.16 * moving;
+    if (d.hop) yBob = Math.max(0, Math.sin(t * 7 * d.speed)) * 1.1 * moving;
+    a.position.set(x, crestY(x) - 0.15 + yBob, -13); // feet on the 3D crest surface
+    const slope = (crestY(x + 2) - crestY(x - 2)) / 4;
+    a.rotation.z = Math.atan(slope) * d.facing; // lean with the slope (nose uphill)
+    for (let li = 0; li < a.userData.legs.length; li++) {
+      a.userData.legs[li].rotation.z = Math.sin(t * 7 * d.speed + (li % 2) * Math.PI) * 0.5 * moving;
+    }
+  }
+
+  // UFO abduction: flies in at night, beams up the rabbit, flies away
+  const ab = ABDUCTEE;
+  const abX = HILL_CX + ab.userData.summitOffset;
+  const hoverY = crestY(abX) + 21;
+  let lift = 0, beamOn = 0, ufoLand = 0, ufoScale = 1;
+  if (s < 0.6) {
+    ufo.visible = false;
+    ab.visible = true; ab.scale.setScalar(ab.userData.def.scale);
+    beamLight.intensity = 0; beamSpot.intensity = 0; beamContact.material.opacity = 0; beamRing.material.opacity = 0;
+    beamSpot.visible = false;
+    beamParticles.material.opacity = 0; beamSource.material.opacity = 0; beamMat.uniforms.uOpacity.value = 0;
+  } else {
+    ufo.visible = true;
+    if (s < 0.74) {                    // fly in from off-screen
+      const e = smooth01((s - 0.6) / 0.14);
+      ufo.position.set(lerpN(130, abX, e), lerpN(76, hoverY, e), lerpN(-44, -13, e));
+    } else if (s < 0.88) {             // hover + tractor beam
+      ufo.position.set(abX, hoverY + Math.sin(t * 1.5) * 0.6, -13);
+      const k = (s - 0.74) / 0.14;
+      beamOn = Math.sin(Math.min(1, k) * Math.PI);
+      lift = Math.min(1, k * 1.25);
+    } else {                           // carry the prize to the moon and set down beside the rocket
+      ufoLand = smooth01((s - 0.88) / 0.12);
+      const moonR = 16 * moonGroup.scale.x;
+      _tmp.copy(moonGroup.position).addScaledVector(UFO_LAND_NORMAL, moonR + 1.6 * UFO_LAND_SCALE); // touchdown
+      _p0.set(abX, hoverY, -13);                                       // lift-off point
+      _p1.set(abX - 70, hoverY - 30, -34);                             // swoop down and to the left (stays on-screen, no high arc)
+      const iu = 1 - ufoLand;
+      ufo.position.set(
+        iu * iu * _p0.x + 2 * iu * ufoLand * _p1.x + ufoLand * ufoLand * _tmp.x,
+        iu * iu * _p0.y + 2 * iu * ufoLand * _p1.y + ufoLand * ufoLand * _tmp.y,
+        iu * iu * _p0.z + 2 * iu * ufoLand * _p1.z + ufoLand * ufoLand * _tmp.z
+      );
+      ufoScale = ufoLand < 0.62
+        ? lerpN(1, 0.6, smooth01(ufoLand / 0.62))                       // settle to cruise size during the roll
+        : lerpN(0.6, UFO_LAND_SCALE, smooth01((ufoLand - 0.62) / 0.38)); // final shrink onto the surface
+    }
+    // spin while travelling, pull a barrel roll mid-descent, then tilt to rest flat on the surface
+    _v.copy(UP).lerp(UFO_LAND_NORMAL, ufoLand * ufoLand).normalize();
+    ufo.quaternion.setFromUnitVectors(UP, _v);
+    ufo.rotateY(t * 0.7);
+    const roll = smooth01(Math.min(1, Math.max(0, (ufoLand - 0.12) / 0.42))) * Math.PI * 2; // barrel roll just after it grabs the animal, level well before touchdown
+    ufo.rotateX(roll);
+    ufo.scale.setScalar(ufoScale);
+    const pulse = 0.55 + Math.sin(t * 7.5) * 0.45;   // stronger, brighter pulse in the hole
+    beamMat.uniforms.uOpacity.value = beamOn;
+    ufo.userData.ufoLight.intensity = (8 + beamOn * 34) * (0.5 + pulse * 0.7);
+    // the beam strikes the hill — point light fills the contact, spotlight cones the
+    // tractor beam onto the slope and casts the animals' shadows
+    beamLight.position.set(abX, crestY(abX) + 2.5, -12.5);
+    beamLight.intensity = beamOn * 14;
+    beamSpot.position.copy(ufo.position);
+    beamSpot.target.position.set(abX, crestY(abX) - 2, -13);
+    beamSpot.intensity = beamOn * 340;
+    beamSpot.visible = beamOn > 0.01;  // only render its shadow map while the beam is on
+    beamContact.position.set(abX, crestY(abX) + 0.4, -13);
+    beamContact.material.opacity = beamOn * 0.6;
+    beamContact.scale.setScalar(0.7 + beamOn * 0.5);
+    // laser outline: trace where the beam cone actually meets the hill and drape the band on the terrain
+    {
+      const cx = abX, cz = -13, topY = ufo.position.y - 1.3;   // cone apex height (world)
+      for (let i = 0; i <= BRING_SEG; i++) {
+        const th = (i / BRING_SEG) * Math.PI * 2, ct = Math.cos(th), st = Math.sin(th);
+        let y = crestY(abX), r = 3.1;
+        for (let k = 0; k < 4; k++) {                          // solve cone-radius ∩ hill-height
+          r = 1.5 + 2.7 * Math.min(1, Math.max(0, (topY - y) / 32.7));
+          y = hillHeight(cx + r * ct, cz + r * st);
+        }
+        const ri = Math.max(0.2, r - 0.34), ro = r + 0.34;
+        const xi = cx + ri * ct, zi = cz + ri * st, xo = cx + ro * ct, zo = cz + ro * st;
+        const o = i * 6;
+        bringPos[o]     = xi; bringPos[o + 1] = hillHeight(xi, zi) + 0.12; bringPos[o + 2] = zi;
+        bringPos[o + 3] = xo; bringPos[o + 4] = hillHeight(xo, zo) + 0.12; bringPos[o + 5] = zo;
+      }
+      bringGeo.attributes.position.needsUpdate = true;
+      beamRing.material.opacity = beamOn * (0.4 + pulse * 0.6);
+    }
+    // pulsing source filling the saucer's belly hole + green particles streaming up the beam
+    beamSource.material.opacity = beamOn * (0.55 + pulse * 0.45);
+    beamSource.scale.setScalar(4.6 + pulse * 3.4);
+    beamParticles.material.opacity = beamOn * 0.95;
+    for (let i = 0; i < BP_COUNT; i++) {
+      const p = bpInfo[i];
+      p.y += dt * p.sp * 0.45; if (p.y > 1) p.y -= 1;          // suction upward toward the hole
+      const yy = BEAM_BOT + (BEAM_TOP - BEAM_BOT) * p.y;       // bottom (ground) → top (hole)
+      const rr = (4.4 + (1.05 - 4.4) * p.y) * p.rad;          // wide at the ground, narrow into the hole
+      const a = p.ang + t * 0.6;                                // swirl
+      bpPos[i * 3] = Math.cos(a) * rr; bpPos[i * 3 + 1] = yy; bpPos[i * 3 + 2] = Math.sin(a) * rr;
+    }
+    bpGeo.attributes.position.needsUpdate = true;
+    for (let i = 0; i < ufo.userData.rimLights.length; i++) {
+      ufo.userData.rimLights[i].material.color.setHSL((t * 0.15 + i / 12) % 1, 0.85, 0.6);
+    }
+    if (lift > 0) {                    // levitate the rabbit up into the beam
+      const restY = crestY(abX) - 0.15;
+      ab.position.set(abX, restY + (hoverY - restY) * lift, -13);
+      ab.scale.setScalar(ab.userData.def.scale * (1 - lift * 0.85));
+      ab.rotation.set(0, ab.rotation.y, t * 3);
+      // energize it: glow green from within + a light riding up on the camera side
+      abMat.emissive.setHex(0x53ffa6);
+      abMat.emissiveIntensity = lift * (1.5 + pulse * 0.5);
+      abLight.position.set(abX + 2, ab.position.y + 2, -8.5);
+      abLight.intensity = lift * 30 * (0.8 + pulse * 0.2);
+    } else {
+      ab.scale.setScalar(ab.userData.def.scale);
+      abMat.emissiveIntensity = 0;
+      abLight.intensity = 0;
+    }
+    ab.visible = s < 0.88;             // drawn fully inside; gone the instant the saucer departs for the moon
+  }
+
+  window.__dbg = { s: +s.toFixed(3), cx:+camera.position.x.toFixed(1), cy:+camera.position.y.toFixed(1), cz:+camera.position.z.toFixed(1) };
+}
+
+function step() {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  const t = clock.elapsedTime;
+
+  scrollT += (targetT - scrollT) * 0.06;
+  px += (tpx - px) * 0.05;
+  py += (tpy - py) * 0.05;
+
+  updateScene(scrollT, t, dt);
+  renderer.render(scene, camera);
+
+  if (firstFrame) {
+    firstFrame = false;
+    setTimeout(() => document.getElementById('loader').classList.add('hidden'), 400);
+  }
+}
+
+function frame() { step(); requestAnimationFrame(frame); }
+frame();
+// Fallback driver: keeps the canvas painting even when requestAnimationFrame
+// is throttled (e.g. headless/preview tabs), so the scene never freezes.
+setInterval(step, 100);
+
+// Verification hook: deterministically render a given scroll progress (0..1)
+// regardless of rAF throttling in headless preview environments.
+window.__renderAt = (p, time = 2.0) => {
+  scrollT = targetT = p;
+  px = py = 0;
+  updateScene(p, time, 0.016);
+  renderer.render(scene, camera);
+  return window.__dbg;
+};
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  if (titleReady) layoutTitle();
+  computeScroll();
+});
+</script>
+</body>
+</html>

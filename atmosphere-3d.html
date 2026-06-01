@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="An afternoon seeing how far I could push real-time 3D in the browser with Claude. It turned into Shoot for the Moon — a single-file, scroll-driven WebGL journey from a morning rocket launch to a moonlit landing.">
+    <meta name="author" content="Chris Barnes">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://barnesy.me/atmosphere-3d.html">
+    <meta property="og:title" content="Shoot for the Moon — an afternoon in 3D web | Chris Barnes">
+    <meta property="og:description" content="How far can you push real-time 3D in a browser in one afternoon? A single-file Three.js scene where the scrollbar is the whole story. Pair-coded with Claude.">
+    <meta property="og:image" content="https://barnesy.me/images/atmosphere/hero.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shoot for the Moon — an afternoon in 3D web | Chris Barnes">
+    <meta name="twitter:description" content="One afternoon, one HTML file, Three.js, and Claude. The scrollbar is the whole story — launch to a moonlit landing and back.">
+    <meta name="twitter:image" content="https://barnesy.me/images/atmosphere/hero.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoot for the Moon — an afternoon in 3D web | Chris Barnes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: color-mix(in srgb, var(--bg-dark) 88%, transparent);
+            backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid var(--border);
+        }
+        nav .container {
+            max-width: 1200px; margin: 0 auto;
+            padding: 1.25rem var(--gutter);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        nav .logo { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
+        nav .back-link { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+        nav .back-link:hover { color: var(--text-primary); }
+        .theme-toggle { background: none; border: none; cursor: pointer; padding: 0.25rem; color: var(--text-secondary); display: flex; }
+        .theme-toggle:hover { color: var(--text-primary); }
+        .theme-icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .theme-icon.hidden { display: none; }
+
+        .hero {
+            padding: 8rem var(--gutter) 3.5rem;
+            background: var(--bg-dark);
+        }
+        .hero .container { max-width: 860px; margin: 0 auto; }
+        .hero-eyebrow {
+            display: inline-block; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--pursue-blue, #7ab8ff); margin-bottom: 1.25rem;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 5.2vw, 3.6rem); font-weight: 700;
+            line-height: 1.06; letter-spacing: -0.02em; margin: 0 0 1.5rem;
+        }
+        .hero-subtitle {
+            font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.6;
+            color: var(--text-secondary); max-width: 700px; margin-bottom: 2rem;
+        }
+        .hero-launch, .block a.hero-launch {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--accent); color: #ffffff; font-weight: 600;
+            text-decoration: none; padding: 0.85rem 1.6rem; border-radius: 100px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .hero-launch:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(34,197,94,0.25); }
+
+        .shot { margin: 0 auto; max-width: 1100px; padding: 0 var(--gutter); }
+        .shot img {
+            width: 100%; height: auto; display: block; border-radius: 14px;
+            border: 1px solid var(--border); box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+        }
+        .shot-caption { color: var(--text-secondary); font-size: 0.92rem; text-align: center; margin: 0.9rem auto 0; max-width: 760px; }
+        .lead-shot { margin-top: -1rem; margin-bottom: 3.5rem; }
+
+        section.block { padding: var(--section-padding-y) var(--gutter); }
+        section.block.alt { background: var(--bg-card); }
+        .block .container { max-width: 760px; margin: 0 auto; }
+        .block h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.01em; margin: 0 0 1.25rem; }
+        .block p { color: var(--text-secondary); line-height: 1.75; margin: 0 0 1.1rem; font-size: 1.05rem; }
+        .block strong { color: var(--text-primary); font-weight: 600; }
+        .block a { color: var(--accent); }
+
+        .specs { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+        .spec { font-size: 0.85rem; color: var(--text-secondary); border: 1px solid var(--border); border-radius: 100px; padding: 0.4rem 0.9rem; }
+
+        .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 1100px; margin: 0 auto; padding: 0 var(--gutter); }
+        .gallery figure { margin: 0; }
+        .gallery img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid var(--border); }
+        .gallery figcaption { color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.6rem; }
+        @media (max-width: 680px) { .gallery { grid-template-columns: 1fr; } }
+
+        footer { padding: 3.5rem var(--gutter); text-align: center; border-top: 1px solid var(--border); }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text-primary); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Chris Barnes</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html#work" class="back-link">← Back to Work</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <span class="hero-eyebrow">Creative coding · WebGL · Built in an afternoon with Claude</span>
+            <h1>How far can you push 3D on the web in one afternoon?</h1>
+            <p class="hero-subtitle">That was the whole experiment. I sat down with Claude to see how much I could wring out of real-time 3D in a plain browser tab — and it turned into <strong>Shoot for the Moon</strong>: one continuous, scroll-driven shot from a morning rocket launch to a moonlit landing. No video, no game engine, no build step. A single HTML file, Three.js, and a lot of fast back-and-forth.</p>
+            <a href="atmosphere-3d/" target="_blank" rel="noopener" class="hero-launch">Open the live demo →</a>
+        </div>
+    </section>
+
+    <div class="shot lead-shot">
+        <a href="atmosphere-3d/" target="_blank" rel="noopener">
+            <img src="images/atmosphere/hero.png" alt="Opening frame: a bright morning sky over rolling hills, a glossy white extruded 3D headline reading 'Shoot for the Moon', the sun low on the right, and a small toy rocket glowing on a launch pad in the foreground.">
+        </a>
+        <p class="shot-caption">Where it starts. The headline is real extruded 3D geometry — soft, rounded, glitter-flecked — sitting in the same scene as the rocket.</p>
+    </div>
+
+    <section class="block">
+        <div class="container">
+            <h2>The experiment</h2>
+            <p>I didn't start with a storyboard. I started with a question: <strong>how much real-time 3D can you get out of a browser in an afternoon</strong> if you treat Claude as a pair, not a code vending machine? One self-imposed rule — keep it to a <strong>single HTML file</strong>, no build step, so the whole thing stays legible and loads instantly.</p>
+            <p>The other rule was about <strong>control</strong>: no buttons, no UI. The scrollbar would be the only input. That constraint did something nice — it forced every idea to become a moment on a single timeline. Launch, orbit, dusk, moonrise, landing: each one is just a position on the page. Scroll down and time moves forward; scroll up and the rocket flies home.</p>
+        </div>
+    </section>
+
+    <div class="gallery">
+        <figure>
+            <img src="images/atmosphere/moonrise.png" alt="A large, detailed moon rising solid from behind a dark hill against a deep purple twilight sky, with small box-built animals silhouetted along the ridge.">
+            <figcaption>Midway down: the moon rises solid from behind the ridgeline as the sky turns to night.</figcaption>
+        </figure>
+        <figure>
+            <img src="images/atmosphere/landing.png" alt="Night scene: a large glowing moon high in a starfield, with the tiny rocket and UFO at rest on its surface.">
+            <figcaption>The bottom of the page: both craft come to rest on the near side of the moon.</figcaption>
+        </figure>
+    </div>
+
+    <section class="block alt">
+        <div class="container">
+            <h2>How it's built</h2>
+            <p>Three.js, one HTML file, no build step. The sky gradient, the gibbous moon, the UFO's tractor beam, and the reflective sea are each a small custom <strong>GLSL shader</strong>. The rocket and saucer are OBJ models; everything else — hills, animals, birds — is built from boxes and displaced planes so it stays light.</p>
+            <p>The headline is <strong>real 3D type</strong>: extruded geometry with soft, rounded "space-pillow" bevels, lit on its own render layer so it stays bright white, with a seamless-looping glitter video driving its emissive channel so it twinkles. It zooms past the camera to get out of the way the moment you start scrolling.</p>
+            <p>The fussy parts were the ones you don't notice — and where most of the afternoon actually went. Making the rocket descend along a <strong>great-circle arc</strong> so it never clips through the moon. Draping the beam's "laser" ring exactly where the light cone meets the hillside. Refitting the title against the live camera projection so it never clips on a phone. The seams were the work.</p>
+            <p>Pair-coded with Claude, end to end. <a href="https://github.com/barnesy/atmosphere-3d" target="_blank" rel="noopener">Source on GitHub →</a></p>
+            <div class="specs">
+                <span class="spec">Three.js</span>
+                <span class="spec">WebGL / GLSL</span>
+                <span class="spec">TextGeometry</span>
+                <span class="spec">VideoTexture</span>
+                <span class="spec">Single HTML file</span>
+                <span class="spec">No build step</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="block">
+        <div class="container">
+            <h2>What I took away</h2>
+            <p>Mostly: the ceiling is higher than I expected, and the bottleneck isn't the rendering anymore — it's taste and iteration speed. With Claude handling the math and the boilerplate, an afternoon was enough to chase a hundred small "what if we…" ideas, keep the ten that landed, and throw the rest away. That loop — try it, look at it, adjust — is the whole game now, and it's gotten <em>fast</em>.</p>
+        </div>
+    </section>
+
+    <section class="block" style="text-align:center;">
+        <div class="container">
+            <a href="atmosphere-3d/" target="_blank" rel="noopener" class="hero-launch">Open the live demo →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <a href="https://linkedin.com/in/iambarnesy" target="_blank" style="margin-right: 2rem;">LinkedIn</a>
+            <a href="https://github.com/barnesy" target="_blank">GitHub</a>
+        </div>
+        <p><a href="index.html">← Back to Portfolio</a></p>
+        <p style="margin-top: 1rem; color: var(--text-secondary);">&copy; 2026 Chris Barnes</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const moonIcon = document.getElementById('moonIcon');
+        const sunIcon = document.getElementById('sunIcon');
+        const html = document.documentElement;
+        const currentTheme = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (currentTheme === 'light' || (!currentTheme && prefersLight)) {
+            html.setAttribute('data-theme', 'light'); moonIcon.classList.add('hidden'); sunIcon.classList.remove('hidden');
+        } else {
+            html.removeAttribute('data-theme'); moonIcon.classList.remove('hidden'); sunIcon.classList.add('hidden');
+        }
+        themeToggle.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'light') {
+                html.removeAttribute('data-theme'); localStorage.setItem('theme', 'dark'); moonIcon.classList.remove('hidden'); sunIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light'); localStorage.setItem('theme', 'light'); moonIcon.classList.add('hidden'); sunIcon.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

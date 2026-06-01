@@ -3,16 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Off Nominal — 222 declassified UAP cases</title>
-    <meta name="description" content="Off Nominal is a browser for the PURSUE files: 222 declassified UAP cases released by the US Department of War. Each case links to its official source." />
+    <title>Off Nominal — a correlation engine for 2,737 declassified anomaly records</title>
+    <meta name="description" content="Off Nominal cross-references 2,737 declassified records — UAP cases, nuclear tests and incidents, physics milestones, and CIA Stargate files — on a timeline, world map, and entity network, with a statistical honesty layer (Monte Carlo p-values + an adversarial skeptic) that flags which correlations are real and which are coincidence. Every record links to its official source." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <style>
       html, body, #root { height: 100%; margin: 0; }
       body { background: #0a0d12; color: #e6ecf2; font-family: Inter, system-ui, sans-serif; }
+
+      /* Resize handle hover/drag affordance — bright grip dot on hover so it's
+         discoverable, full-width tinted background while actively dragging. */
+      .off-nominal-resize-handle { transition: background 0.15s; }
+      .off-nominal-resize-handle:hover { background: rgba(207, 227, 255, 0.08) !important; }
+      .off-nominal-resize-handle:hover > div { background: rgba(207, 227, 255, 0.6) !important; }
+      .off-nominal-resize-handle[data-resize-handle-active] { background: rgba(207, 227, 255, 0.18) !important; }
+      .off-nominal-resize-handle[data-resize-handle-active] > div { background: #cfe3ff !important; }
+
+      /* Accessible focus ring — replaces the default browser outline with the
+         brand cyan so it matches the rest of the UI without being invisible. */
+      :focus-visible {
+        outline: 2px solid #cfe3ff;
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+
+      /* Hide focus ring on mouse clicks (only show for keyboard nav). */
+      :focus:not(:focus-visible) { outline: none; }
+
+      /* ── Investigation Brief: print-to-PDF ────────────────────────────────
+         When printing, hide the whole app EXCEPT the brief body, drop it to a
+         clean white page with selectable vector text, and keep our accent
+         colors (print engines strip backgrounds without color-adjust). */
+      @media print {
+        body { background: #fff !important; color: #111 !important; }
+        /* hide everything, then reveal only the brief print root */
+        body * { visibility: hidden !important; }
+        #brief-print-root, #brief-print-root * { visibility: visible !important; }
+        #brief-print-root {
+          position: absolute !important;
+          left: 0; top: 0; width: 100%;
+          max-height: none !important; overflow: visible !important;
+          color: #111 !important;
+          padding: 0 !important;
+        }
+        /* MUI dark dialog chrome → invisible/white for print */
+        .MuiDialog-paper, .MuiBackdrop-root { background: #fff !important; box-shadow: none !important; border: none !important; }
+        .brief-toolbar, .MuiSnackbar-root { display: none !important; }
+        /* recolor text that was light-on-dark to dark-on-white */
+        #brief-print-root .MuiTypography-root { color: #1a1a1a !important; }
+        /* keep colored accents legible on white */
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        #brief-print-root * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        .brief-section { break-inside: avoid; }
+        .brief-row { break-inside: avoid; }
+        @page { margin: 1.6cm; }
+      }
     </style>
-    <script type="module" crossorigin src="./assets/index-BJvnZAOk.js"></script>
+    <script type="module" crossorigin src="./assets/index-7bVBTWnZ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CIGW-MKW.css">
   </head>
   <body>
     <div id="root"></div>

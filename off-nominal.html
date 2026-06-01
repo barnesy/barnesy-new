@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <!-- SEO & Metadata -->
-    <meta name="description" content="What started as a weekend UAP browser became a correlation engine for 2,737 declassified records — UAP cases, nuclear tests and incidents, physics milestones, and CIA Stargate files. Timeline, world map, and entity network, with a statistical honesty layer that flags which correlations are real and which are coincidence.">
+    <meta name="description" content="A dataviz rabbit hole: plot 80 years of declassified UFO sightings on a timeline, then drop every nuclear test on top to see if the famous 'UFOs love atom bombs' pattern is real. 2,737 records across seven datasets, and a little Monte Carlo machine to keep me honest. Spoiler: it's mostly a coincidence — but a beautiful one.">
     <meta name="author" content="Chris Barnes">
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://barnesy.me/off-nominal.html">
     <meta property="og:title" content="Off Nominal | Chris Barnes, Principal Designer">
-    <meta property="og:description" content="A weekend UAP browser that grew into a 2,737-record cross-dataset correlation engine — with a Monte Carlo + adversarial-skeptic honesty layer that says which connections are real and which are coincidence.">
+    <meta property="og:description" content="I plotted 80 years of UFO sightings next to every nuclear test to see if the conspiracy holds up. A dataviz rabbit hole across 2,737 records — with a Monte Carlo machine that gently ruins the fun.">
     <meta property="og:image" content="https://barnesy.me/images/off-nominal/hero.png">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Off Nominal | Chris Barnes, Principal Designer">
-    <meta name="twitter:description" content="A weekend UAP browser that grew into a 2,737-record correlation engine — with a statistical honesty layer that flags coincidence vs. signal.">
+    <meta name="twitter:description" content="I plotted 80 years of UFO sightings next to every nuclear test to see if the conspiracy holds up. A dataviz rabbit hole — with a stats machine that gently ruins the fun.">
     <meta name="twitter:image" content="https://barnesy.me/images/off-nominal/hero.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Off Nominal | Chris Barnes, Principal Designer</title>
@@ -367,27 +367,27 @@
     <!-- Hero -->
     <section class="hero hero--pursue" id="main">
         <div class="container">
-            <span class="hero-eyebrow">Off Nominal · Pair-coded with Claude</span>
-            <h1>A weekend UAP browser that grew into a correlation engine</h1>
-            <p class="hero-subtitle">It started as 222 declassified UAP files made browsable over a weekend. Then I kept pulling the thread — adding nuclear tests, reactor incidents, physics milestones, and the CIA's Stargate archive until it held <strong>2,737 records</strong>. The hard part wasn't connecting them. It was building the honesty layer that tells you when a connection is <em>real</em> and when you're just seeing faces in the clouds. <em>Off Nominal</em> is NASA's term for anything that doesn't behave as expected; the name fit.</p>
+            <span class="hero-eyebrow">Off Nominal · A dataviz rabbit hole</span>
+            <h1>Do UFOs really love nuclear bombs? I plotted it to find out.</h1>
+            <p class="hero-subtitle">It started innocently: 222 declassified UFO files, dropped onto a timeline and a map over a weekend. Then I had the obvious thought — "what if I plotted every nuclear test on top?" — and could not stop. Reactor meltdowns, physics milestones, the CIA's psychic-spy program… <strong>2,737 records</strong> later, I had to build a little statistics machine just to stop myself from connecting dots that aren't there. <em>Off Nominal</em> is NASA-speak for "this isn't behaving as expected." Felt about right.</p>
             <a href="off-nominal/" target="_blank" rel="noopener" class="hero-launch">Open the live app</a>
             <hr class="hero-divider">
             <div class="hero-stats">
                 <div class="hero-stat">
                     <span class="hero-stat-number">2,737</span>
-                    <p class="hero-stat-label">Declassified records</p>
+                    <p class="hero-stat-label">Dots plotted</p>
                 </div>
                 <div class="hero-stat">
                     <span class="hero-stat-number">7</span>
-                    <p class="hero-stat-label">Cross-referenced datasets</p>
+                    <p class="hero-stat-label">Datasets I couldn't stop adding</p>
                 </div>
                 <div class="hero-stat">
                     <span class="hero-stat-number">1896 — 2026</span>
-                    <p class="hero-stat-label">Date range</p>
+                    <p class="hero-stat-label">130 years of weird</p>
                 </div>
                 <div class="hero-stat">
-                    <span class="hero-stat-number">0</span>
-                    <p class="hero-stat-label">Servers · paid APIs · LLMs at runtime</p>
+                    <span class="hero-stat-number">2 of 180</span>
+                    <p class="hero-stat-label">UFO–nuke "links" that survived the math</p>
                 </div>
             </div>
         </div>
@@ -396,19 +396,16 @@
     <!-- Why I started -->
     <section style="background: var(--bg-card);">
         <div class="container">
-            <h2 class="section-title">Why I started</h2>
+            <h2 class="section-title">It started as a table I couldn't read</h2>
             <div class="section-content">
                 <p>
-                    The Department of War's <strong>PURSUE</strong> initiative (Presidential Unsealing and Reporting System for UAP Encounters) is a rolling declassification project. The first two drops — May 8 and May 22, 2026 — put 222 records online, contributed by DoW, the FBI, NASA, ODNI, DOE, the State Department, and the CIA.
+                    In May 2026 the Department of War actually started unsealing its UFO files (real program, real acronym: <strong>PURSUE</strong>). The first drops put 222 records online — from the DoW, FBI, NASA, the CIA, and friends. The catch: the official site is a paginated table. Great if you already know the file you want. Useless for the only question I actually had, which was <strong>"okay, but where and when did this stuff <em>happen?</em>"</strong>
                 </p>
                 <p>
-                    The official UX at <a href="https://www.war.gov/ufo/" target="_blank" rel="noopener" style="color: var(--accent);">war.gov/ufo</a> is a paginated table behind heavy bot protection. Useful if you know the exact file you want; almost useless if you're asking <strong>"where and when did this stuff actually happen?"</strong>
+                    So I built the thing I wanted: a timeline of 80 years of sightings, a globe of where they landed, and a side panel for the juicy details — all driven by one set of filters. A weekend of pair-coding with Claude and I had a browsable UFO map. Cute. Done. I should have stopped there.
                 </p>
                 <p>
-                    That's the question I wanted to answer. A timeline of UAP incidents across 80 years, a globe of where they happened, a side panel for the case detail, and one set of filters that drives all three. Build it, browse it, link every dot back to the official .gov source. Host nothing of theirs.
-                </p>
-                <p>
-                    That was the weekend. What you'll read below is what happened when I didn't stop — because once UAP cases sat on a timeline next to <strong>nuclear tests</strong>, the obvious next question was whether the famous "UFOs cluster around atomic tests" claim actually holds up. Answering <em>that</em> honestly turned a browser into something else entirely.
+                    I did not stop there. Because the second those UFO dots sat on a timeline, my brain went straight to the oldest bar-stool theory in the genre: <em>don't UFOs always show up near nuclear stuff?</em> There was only one way to find out — drop every nuclear test on top and look.
                 </p>
             </div>
 
@@ -421,70 +418,40 @@
                      alt="The Off Nominal interface. World map up top with markers clustered in Western US and the Middle East, swimlane timeline below with one row per agency, colored dots positioned by incident date 1945-2026. Blue zoom band labeled DRAG HERE TO SET TIME RANGE sits above the timeline."
                      class="case-study-image">
             </video>
-            <p class="image-caption">The actual app. Brush a date range, then open the Connections Explorer — the p-value histogram shows most UAP↔nuclear-test proximities are coincidental (172 of 180), only 2 significant. Then a scored link expands to its evidence: shared people, shared terms, strength bars.</p>
+            <p class="image-caption">The real thing, in 18 seconds: brush a date range, pop open the Connections Explorer, and meet the coincidence histogram — 172 of 180 "UFOs near nukes" links are just the busy bomb calendar. Then a top connection unfolds to show its receipts.</p>
         </div>
     </section>
 
     <!-- The build -->
     <section>
         <div class="container">
-            <h2 class="section-title">The build, briefly</h2>
+            <h2 class="section-title">The boring-but-load-bearing bits</h2>
             <div class="section-content">
                 <p>
-                    Pair-coded with Claude. Vite, React, TypeScript, MUI. d3-scale for the timeline, d3-geo + TopoJSON for the map, MapLibre for the 3D nuclear-blast view I added later. The whole thing is a <strong>static site</strong> — no servers, no databases, no paid APIs, no LLM at runtime. Every heavy computation runs once at build time and ships as plain JSON; the browser just renders it.
+                    It's all a <strong>static site</strong> — no servers, no database, no API I have to pay for, no AI running while you use it. Vite, React, TypeScript, d3 for the charts, MapLibre for the nuclear-blast view I absolutely did not need to add but did anyway. Anything expensive (the stats, the search index, the connection graph) gets computed <em>once</em> when I build the site and shipped as plain JSON. Your browser just draws it.
                 </p>
                 <p>
-                    The first surprise was how easy the data was to get: the entire DoW release is a <strong>297 KB CSV</strong>. The "interactive table" on the official site is jQuery DataTables reading that one file. The bigger surprise came later — that the same build-time-JSON pattern would scale all the way up to a 2,737-record statistical engine without ever needing a backend.
+                    Funniest discovery of the whole project: that entire government "interactive database" of UFO files? It's a single <strong>297 KB spreadsheet</strong> a bit of jQuery is reading. One download and the whole archive is on my laptop. And out of respect (and copyright sanity), the site re-hosts <em>none</em> of the source material — every one of the 2,737 dots is just a link back to its official home on war.gov, the CIA reading room, Wikipedia, SIPRI. Click a dot, read it on their servers, not mine.
                 </p>
             </div>
 
             <img src="images/off-nominal/detail-panel.png"
                  alt="The same three-panel view with the side detail panel opened. The right side now shows the full case record: Central Intelligence Agency badge, Document and Redacted chips, the title CIA-UAP-D001 Intelligence Information Report USSR 1973, metadata rows for incident date 12/20/73, location USSR, release 5/22/26, and a multi-paragraph description of a 1973 sighting of an airborne luminous bright green unidentified object. A blue Open source PDF button anchors the bottom."
                  class="case-study-image">
-            <p class="image-caption">Click any dot. The detail panel slides in, the map and timeline stay live. The Open source PDF button takes you to the official media.defense.gov file.</p>
-        </div>
-    </section>
-
-    <!-- What I learned -->
-    <section style="background: var(--bg-card);">
-        <div class="container">
-            <h2 class="section-title">What I learned</h2>
-            <div class="section-content">
-                <h3>The legal/ethical posture matters more than the engineering.</h3>
-                <p>
-                    Federal works are public domain by statute (17 USC §105). PURSUE was released <em>for the public</em>; civic reuse is the explicit intent. But war.gov is Akamai-protected and blocks even <code>/robots.txt</code> from a plain curl. Getting through requires Playwright with a real-Chrome channel and a couple of stealth flags — which crosses from "polite scraper" into "actively evading their bot detection."
-                </p>
-                <p>
-                    Talked it through with the user, made the call: pull the one index CSV once, never re-host any source material, link every case back to <code>war.gov</code> or <code>media.defense.gov</code> by URL. The repo is about 5 KB of JSON and code. Anything you want to read, you read on the government's servers.
-                </p>
-            </div>
-
-            <div class="section-content">
-                <h3>Talk it through, then make the call.</h3>
-                <p>
-                    Pull the one index CSV once, never re-host any source material, link every record back to its government home by URL. Anything you want to read, you read on the official servers. That posture held as the project grew — every one of the 2,737 records, across all seven datasets, still links out to a real source (war.gov, the CIA reading room, Wikipedia, SIPRI, peer-reviewed journals).
-                </p>
-            </div>
-
-            <div class="quote-block">
-                <p>"The hard part was never connecting the dots. It was building the thing that tells you which connections are real."</p>
-            </div>
+            <p class="image-caption">Click a dot, get the actual case — a 1973 CIA report of a "luminous bright green" object over the USSR, in this case. The "Open source" button sends you to the real government file.</p>
         </div>
     </section>
 
     <!-- Then it grew -->
     <section>
         <div class="container">
-            <h2 class="section-title">Then it grew</h2>
+            <h2 class="section-title">…and then I just kept feeding it</h2>
             <div class="section-content">
                 <p>
-                    Putting UAP cases on a timeline next to nuclear tests is irresistible — it's the oldest claim in the field. So I added the data to actually look: <strong>2,057 nuclear weapons tests</strong> (SIPRI), <strong>nuclear accidents and reactor incidents</strong>, a curated set of <strong>nuclear-physics milestones</strong> (1896 onward), the <strong>CIA Stargate</strong> remote-viewing archive (337 documents), and the key <strong>published works</strong> the files cite. Seven datasets, 2,737 records, one shared timeline and map.
+                    One nuclear dataset is never enough. So in went <strong>2,057 nuclear tests</strong>, the reactor meltdowns and "broken arrow" accidents, a greatest-hits list of <strong>physics milestones</strong> back to 1896, and — because why not — the CIA's actual <strong>Stargate psychic-spy archive</strong> (337 documents of the US government taking telepathy very seriously). Seven datasets, 2,737 dots, all sharing one timeline and map.
                 </p>
                 <p>
-                    Datasets sitting side by side isn't insight, though — it's just more dots. The unlock was an <strong>entity network</strong>: a curated registry of the people and places that recur across the corpus, so the same figure or location stitches records together regardless of which dataset they live in. Harold Puthoff connects his SRI Stargate files to the papers he authored. "New Mexico" links a 1948 UAP sighting at Sandia to the Trinity test and the physics milestones around it. Click any name or place and you see everywhere it appears, across all seven datasets at once.
-                </p>
-                <p>
-                    All of it built the same way as the original weekend: extracted once at build time, shipped as static JSON, rendered in the browser. The network, the search index, the statistics — none of it needs a server. It compounds.
+                    But a pile of dots from different files is just… a bigger pile. The fun part was teaching them to talk to each other — a network of the <strong>people and places</strong> that keep showing up. Now the same physicist links his psychic-research files to the papers he wrote; "New Mexico" quietly connects a 1948 UFO flap at Sandia to the Trinity test and the bomb-makers down the road. Click any name or place and watch it light up everywhere it appears, across all seven datasets at once. <em>This</em> is the part that feels like pulling a thread and watching the whole sweater move.
                 </p>
             </div>
         </div>
@@ -493,26 +460,26 @@
     <!-- The honesty layer -->
     <section style="background: var(--bg-card);">
         <div class="container">
-            <h2 class="section-title">The honesty layer</h2>
+            <h2 class="section-title">So I built a machine to ruin my own conspiracy</h2>
             <div class="section-content">
                 <p>
-                    Here's the trap with a tool like this: it will <em>always</em> find connections. Two events near each other in time and space, a shared keyword, a name that appears twice — pattern-matching never comes up empty. A UFO-conspiracy generator is a weekend project. The interesting, harder thing is a tool that tells you when a pattern is <strong>nothing</strong>.
+                    Here's the trap, and it's a fun one: a tool like this will connect <em>anything</em>. Two events near each other, a shared word, a name that pops up twice — it will always find something. Point it at UFOs and bombs and it'll hand you a "smoking gun" every single time. Which makes it worthless, because a tool that's impressed by everything is impressed by nothing.
                 </p>
                 <p>
-                    So the centerpiece isn't the connections — it's the skepticism. Three layers, all computed, all deterministic, no LLM deciding anything:
+                    The actually-interesting build wasn't the connection-finder. It was the buzzkill standing next to it. Three layers of professional skeptic, all just math, no AI vibes:
                 </p>
                 <ul>
-                    <li><strong>Monte Carlo p-values.</strong> For each UAP case, how often would a <em>random</em> date land as close to a nuclear test as the real one? If tests fired weekly for decades, "near a test" is the default, not a signal. The result is the whole project in one number: of 180 UAP cases tested, <strong>172 are statistically coincidental and only 2 are significant.</strong> The famous UFO–nuclear correlation is, mostly, the dense test calendar.</li>
-                    <li><strong>An adversarial skeptic.</strong> Ask the tool to test any connection and it argues <em>against</em> it — grounded in the actual numbers — then renders a verdict: "Survives scrutiny," "Plausible, unproven," or "Likely coincidence," scored 0–100. It weights hard documentary links (a shared named person) above the soft signals coincidence can fake (timing, shared vocabulary).</li>
-                    <li><strong>Show your work.</strong> Every correlation expands into the evidence behind it — shared people, places, distance, time gap, overlapping terms, significance — each with a strength bar. Nothing is asserted; everything is shown, so you can judge it instead of trusting it.</li>
+                    <li><strong>A coincidence detector.</strong> For each UFO sighting it asks: if I threw a dart at a <em>random</em> date, how often would it land this close to a nuclear test anyway? Turns out the bomb calendar was packed — tests went off constantly for decades — so "near a test" is just… Tuesday. The whole punchline in one number: of 180 sightings checked, <strong>172 are pure coincidence and only 2 are genuinely weird.</strong> The famous UFO–nuke correlation is mostly the US testing a <em>lot</em> of nukes.</li>
+                    <li><strong>A built-in skeptic you can argue with.</strong> Pick any two records, hit "test this connection," and the tool argues <em>against</em> you — with the actual numbers — then drops a verdict: "Survives scrutiny," "Plausible," or the devastating "Likely coincidence," scored out of 100. A shared named person counts for a lot; "they both happened in the 1960s" counts for basically nothing.</li>
+                    <li><strong>Receipts for everything.</strong> Every claimed link expands to show its work — who, where, how far apart, how long apart, which words overlap — each with a little strength bar. Nothing is asserted at you. It's all shown, so you can roll your eyes at it yourself.</li>
                 </ul>
                 <p>
-                    That principle even survives into the export: collect a set of records and the tool assembles a deterministic <strong>investigation brief</strong> — print-to-PDF, no AI prose — that reports which connections held up and which it dismissed as chance. The skepticism travels with the document.
+                    Best part: the skepticism comes with you. Star a few records and the tool prints a tidy <strong>investigation brief</strong> (PDF, no AI-written fluff) that lists which connections held up and which it threw out as nonsense. You can take your debunking to go.
                 </p>
             </div>
 
             <div class="quote-block">
-                <p>"Of 180 UAP cases tested against the nuclear-test calendar, 172 are coincidental and 2 are significant. The tool says so out loud."</p>
+                <p>"172 of 180. The big spooky UFO–nuclear pattern is, mathematically, the sound of a very busy bomb-testing schedule. The tool says so, out loud, to my face."</p>
             </div>
         </div>
     </section>
@@ -520,26 +487,26 @@
     <!-- What's in there -->
     <section>
         <div class="container">
-            <h2 class="section-title">What's in there now</h2>
+            <h2 class="section-title">Stuff you can actually click</h2>
             <div class="section-content">
-                <h3>Timeline, world map &amp; 3D blast view</h3>
+                <h3>Timeline + map + a gratuitous 3D mushroom cloud</h3>
                 <p>
-                    The original swimlane timeline and Equal Earth world map, now spanning all seven datasets with a shared, lifted-up filter set — datasets, agencies, yield, altitude, era. Brush a date range and every view follows. Nuclear tests also open a physically-modeled 3D detonation view (MapLibre) at true scale.
+                    The original timeline and world map, now holding all seven datasets with one shared set of filters. Drag a date range and everything follows. And because I couldn't help myself, every nuclear test opens a to-scale 3D detonation view — fully unnecessary, extremely fun.
                 </p>
 
-                <h3>The entity network</h3>
+                <h3>The "everything is connected" network</h3>
                 <p>
-                    People, places, and publications as first-class objects. A detail panel lists the figures and locations a record touches; click one for a cross-dataset dossier of everywhere it appears. A corpus-wide "top connectors" feed surfaces the names and places that bridge the most datasets.
+                    Click any person or place and watch it light up across every dataset at once — the part that makes you feel like a detective with a corkboard and red string. The home screen even ranks the biggest "connectors": the names and spots that quietly tie the most files together.
                 </p>
 
-                <h3>The Connections Explorer &amp; corpus dashboard</h3>
+                <h3>The Connections Explorer (with built-in skeptic)</h3>
                 <p>
-                    A browser over the 200 strongest scored cross-document links — filter by connection type, sort by the skeptic's verdict, expand any link to its evidence, export to Markdown or JSON. An overview tab visualizes the p-value distribution as a histogram: the anti-pattern-matching argument, made into a chart.
+                    A leaderboard of the 200 strongest cross-document links, each stamped with the skeptic's verdict. Sort the most-likely-real to the top, expand any one for its receipts, export the lot to Markdown or JSON. The overview tab is my favorite chart in the whole thing: the coincidence histogram, where the "UFOs love nukes" theory goes to quietly deflate.
                 </p>
 
-                <h3>Investigations &amp; an MCP server</h3>
+                <h3>Save it, share it, or let a robot poke at it</h3>
                 <p>
-                    Collect records into a working set, generate the deterministic brief, and share it via a URL hash — no backend, no account. And because the analytics are just functions over static JSON, the same engine is exposed as a local <strong>Model Context Protocol</strong> server: an AI agent can investigate the corpus through tools that lead with the skeptic's verdict, so it can't narrate a coincidence as a finding either.
+                    Star a set of records, generate the brief, and share the whole investigation as a link — no login, no backend, just a big URL. And since it's all just functions over static files, I wrapped the same engine as a little server an AI assistant can query directly — politely forced to lead with the skeptic's verdict, so even the robot can't oversell a coincidence.
                 </p>
             </div>
         </div>
@@ -548,13 +515,13 @@
     <!-- Closer -->
     <section style="background: var(--bg-card);">
         <div class="container">
-            <h2 class="section-title">Why this one matters to me</h2>
+            <h2 class="section-title">The most fun I've had being wrong</h2>
             <div class="section-content">
                 <p>
-                    Off Nominal is the clearest example I have of what designing <em>with</em> an AI partner can become when you don't stop at the first working version. A weekend browser, iterated over many sessions, turned into a genuine research instrument — and the most important design decision in all of it wasn't visual. It was choosing to make the tool <strong>skeptical of itself</strong>: to spend the engineering on the layer that says "this is probably nothing," in a subject that runs entirely on the opposite instinct.
+                    I went in half-hoping to find the pattern. The data politely declined. And honestly? That's the part I'm proudest of — the most interesting design call in the whole project wasn't a color or a layout, it was deciding to build the thing that <em>argues back</em>. In a subject that runs entirely on "everything is connected, man," I spent the real effort on the little voice that says "…is it, though?"
                 </p>
                 <p>
-                    It also stayed honest to its constraints the whole way: zero servers, zero paid APIs, no model running at inference time — a 2,737-record statistical engine that's still just a static site, hosting nothing of anyone else's. Every record links out to its official home. The whole archive is one rebuild away from current.
+                    It's also just a nice reminder of how far a weekend toy can go when you keep pulling the thread with a good pair-programming partner — a 2,737-record stats engine that's still, somehow, just a static webpage. No servers, nothing to pay for, hosting none of the actual files. Click any dot, read the real thing on the government's own site. The whole archive is one rebuild away from current — so when they unseal Release 03, the aliens are welcome back any time.
                 </p>
             </div>
         </div>
@@ -564,8 +531,8 @@
     <section>
         <div class="container">
             <div class="cta-section">
-                <h2>Try it yourself</h2>
-                <p>The full app runs right here — no install, nothing to download. Brush the timeline, click a name to trace it across datasets, open the Connections Explorer, or test a connection and watch the skeptic argue back. The original DoW release page is one click further if you want the source files in their official home.</p>
+                <h2>Go find a pattern (the skeptic will be waiting)</h2>
+                <p>The whole thing runs right here — nothing to install. Drag the timeline, click a name and watch it tangle across datasets, or pick two records, hit "test this connection," and try to out-argue the math. Bonus points if you find one of the 2 sightings that actually survives. The real government files are one click further if you want to read the source for yourself.</p>
                 <div class="cta-buttons">
                     <a href="off-nominal/" target="_blank" rel="noopener" class="cta-button">Open the live app ↗</a>
                     <a href="https://www.war.gov/ufo/" target="_blank" rel="noopener" class="cta-button" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);">Open war.gov/ufo</a>

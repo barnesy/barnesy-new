@@ -502,14 +502,11 @@
             .about-text {
                 text-align: center;
             }
-            .skills {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         .skills {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 0.75rem;
             margin-top: 3rem;
         }
@@ -562,8 +559,27 @@
                 padding: 1.5rem;
             }
 
+            .section-header {
+                margin-bottom: 2.5rem;
+            }
+
+            .skill-tag {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
             section {
                 padding: 4rem var(--gutter);
+            }
+        }
+
+        /* Phone: belt-and-suspenders guard against horizontal overflow */
+        @media (max-width: 420px) {
+            html, body {
+                overflow-x: hidden;
+            }
+            .project-image {
+                height: 200px;
             }
         }
     </style>

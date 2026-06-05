@@ -784,6 +784,12 @@
     </div>
     <script>
         (function() {
+            // Shareable bypass: design-system-case-study.html?key=<SHARE_TOKEN>
+            var SHARE_TOKEN = 'cds-platform-2026';
+            var key = new URLSearchParams(location.search).get('key');
+            if (key && key === SHARE_TOKEN) {
+                sessionStorage.setItem('cb_design_system_authed', '1');
+            }
             if (sessionStorage.getItem('cb_design_system_authed') === '1') {
                 var g = document.getElementById('passwordGate');
                 if (g) g.remove();
@@ -891,6 +897,15 @@
                      class="case-study-image">
                 <p class="image-caption">Detailed agent configuration. Form patterns, tabs, and content organization all came from the system.</p>
             </div>
+
+            <div class="case-study-image-container">
+                <video controls preload="metadata" playsinline class="case-study-video"
+                       poster="images/design-system/design-system-upgrade-poster.jpg">
+                    <source src="images/design-system/design-system-upgrade.mp4" type="video/mp4">
+                    Your browser doesn't support embedded video. <a href="images/design-system/design-system-upgrade.mp4">Download the walkthrough</a>.
+                </video>
+                <p class="image-caption">Walkthrough of the unified foundation: one MUI and React theming layer, versioned tokens, and consistent components across the org.</p>
+            </div>
         </div>
     </section>
 
@@ -929,11 +944,11 @@
 
             <div class="case-study-image-container">
                 <video controls preload="metadata" playsinline class="case-study-video"
-                       poster="images/design-system/cds-storybook.png">
-                    <source src="images/design-system/storybook-upgrades.mp4" type="video/mp4">
-                    Your browser doesn't support embedded video. <a href="images/design-system/storybook-upgrades.mp4">Download the walkthrough</a>.
+                       poster="images/design-system/conversational-interface-poster.jpg">
+                    <source src="images/design-system/conversational-interface.mp4" type="video/mp4">
+                    Your browser doesn't support embedded video. <a href="images/design-system/conversational-interface.mp4">Download the walkthrough</a>.
                 </video>
-                <p class="image-caption">Walkthrough of the Storybook overhaul and BaseLayout, built and refined with the front-end agent.</p>
+                <p class="image-caption">OG Assist as the primary interaction: drafting, reviewing, and filling in sections by talking to the agent, with the artifact definition as ground truth.</p>
             </div>
         </div>
     </section>
@@ -971,6 +986,15 @@
                      alt="Prototyping agent landing page"
                      class="case-study-image">
                 <p class="image-caption">The prototyping repo, running on the production design system. Worktree-aware, repo-status-aware, with AI component generation built in.</p>
+            </div>
+
+            <div class="case-study-image-container">
+                <video controls preload="metadata" playsinline class="case-study-video"
+                       poster="images/design-system/seamstress-poster.jpg">
+                    <source src="images/design-system/seamstress.mp4" type="video/mp4">
+                    Your browser doesn't support embedded video. <a href="images/design-system/seamstress.mp4">Download the walkthrough</a>.
+                </video>
+                <p class="image-caption">Seamstress in action: prompt to running prototype on the production system, no engineer required.</p>
             </div>
         </div>
     </section>

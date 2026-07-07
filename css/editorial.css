@@ -1,0 +1,192 @@
+/* css/editorial.css */
+
+/* 1. Global Overrides for High Craft Aesthetic */
+:root {
+    /* Warm off-white background */
+    --bg-dark: #F9F8F6;
+    /* Soft Charcoal text */
+    --text-primary: #1A1A1A;
+    /* Medium gray for metadata */
+    --text-secondary: #6B6B6B;
+    /* Muted dark accent */
+    --accent: #2C2C2C;
+    /* Base typography */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    transition: background-color 0.5s ease;
+}
+
+/* Redefine nav for light mode */
+nav {
+    background: transparent;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+nav .logo, nav ul li a {
+    color: var(--text-primary);
+}
+
+/* 2. Hero Section */
+.hero-editorial {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--gutter);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-editorial-content {
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+    /* Will be animated via GSAP */
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 1;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.hero-subtitle {
+    font-family: var(--font-sans);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    line-height: 1.5;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* 3. Section Headers */
+.section-header--editorial {
+    margin-top: 8rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.section-header--editorial h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* 4. Editorial Project Grid */
+.editorial-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--gutter) 8rem;
+}
+
+.editorial-card {
+    text-decoration: none;
+    color: var(--text-primary);
+    display: block;
+    group: hover;
+    /* Subtly shift cards for an asymmetrical look */
+}
+
+.editorial-card:nth-child(even) {
+    margin-top: 6rem;
+}
+
+.editorial-card--featured {
+    grid-column: 1 / -1;
+    margin-top: 0 !important;
+}
+
+.editorial-image-wrapper {
+    width: 100%;
+    /* 4:3 aspect ratio roughly, or responsive height */
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: #EAEAEA;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+}
+
+.editorial-card--featured .editorial-image-wrapper {
+    aspect-ratio: 16/9;
+}
+
+.editorial-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-card:hover .editorial-image-wrapper {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.editorial-card:hover .editorial-image-wrapper img {
+    transform: scale(1.03);
+}
+
+.editorial-meta {
+    padding: 0 0.5rem;
+}
+
+.editorial-meta h3 {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+}
+
+.editorial-tags {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+/* Dim other cards on hover */
+.editorial-grid:hover .editorial-card:not(:hover) {
+    opacity: 0.4;
+    filter: grayscale(20%);
+}
+.editorial-card {
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .editorial-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .editorial-card:nth-child(even) {
+        margin-top: 0;
+    }
+    .editorial-card--featured .editorial-image-wrapper {
+        aspect-ratio: 4/3;
+    }
+}

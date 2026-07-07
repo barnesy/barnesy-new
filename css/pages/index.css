@@ -1,0 +1,594 @@
+/* Theme Toggle */
+
+
+        /* Navigation */
+
+
+        nav .resume-link {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-dark);
+            padding: 8rem var(--gutter) 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Design Token Animation */
+        .token-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .token {
+            position: absolute;
+            opacity: 0.15;
+            will-change: transform, opacity;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .token.assembling {
+            opacity: 0.8;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .token.featured {
+            opacity: 1 !important;
+        }
+
+        .token.floating {
+            animation: cloudFloat 12s ease-in-out infinite;
+        }
+
+        .token-circle {
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+        }
+
+        .token-square {
+            border: 2px solid var(--accent);
+            border-radius: 2px;
+        }
+
+        .token-line {
+            background: var(--accent);
+        }
+
+        @keyframes cloudFloat {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            25% {
+                transform: translate3d(20px, -15px, 0);
+            }
+
+            50% {
+                transform: translate3d(-15px, 20px, 0);
+            }
+
+            75% {
+                transform: translate3d(-20px, -10px, 0);
+            }
+        }
+
+        /* Page label */
+        .page-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            color: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .page-label.visible {
+            opacity: 0.6;
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .token-animation {
+                display: none;
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero .raceday-pill {
+            color: #facc15;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1.5px solid currentColor;
+            white-space: nowrap;
+            transition: opacity 0.15s ease;
+        }
+
+        .hero .raceday-pill:hover {
+            opacity: 0.8;
+        }
+
+        .hero .tagline {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--gutter);
+        }
+
+        section {
+            padding: var(--section-padding-y) var(--section-padding-x);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Featured Project - CDS 2.0 */
+        .featured-project {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 4rem;
+            margin-bottom: 4rem;
+            border: 1px solid var(--border);
+        }
+
+        .featured-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--bg-dark);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .featured-lede {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .featured-detail {
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            font-size: 1rem;
+        }
+
+        .featured-cta {
+            margin-top: 1rem;
+        }
+
+        .section-header--spaced {
+            margin-top: 4rem;
+        }
+
+        /* Contact Section */
+        .contact-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .contact-actions--theme {
+            margin-top: 2rem;
+        }
+
+        .cta-button--secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .cta-button--with-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copyright-meta-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Accessibility: skip link + focus indicators */
+
+
+        .featured-project h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .featured-project .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: transparent;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 240px;
+            background: var(--border);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+        }
+
+        .project-image--atmosphere {
+            background-color: #0b1220;
+            background-image: url('images/atmosphere/hero.png');
+            background-position: center top;
+        }
+
+        .project-image--raceday {
+            background-color: #0a0a0a;
+            background-image: url('images/raceday/raceday-hub.png');
+            background-position: center 35%;
+        }
+
+        .project-image--strictly-spending {
+            background-color: #0e1b14;
+            background-image: url('images/strictly-spending/card.png');
+            background-position: center top;
+        }
+
+        .project-image--off-nominal {
+            background-color: #0a0d12;
+            background-image: url('images/off-nominal/hero.png');
+            background-position: center top;
+        }
+
+        .project-image--idl {
+            background-image: url('images/idl/idl-pipes.png');
+        }
+
+        .project-image--callrail {
+            background-image: url('images/callrail/callrail-11.png');
+        }
+
+        .project-image--lets-read {
+            background-image: url('images/letsread/LR+Hero.jpg');
+        }
+
+        /* "In progress" card variant — no link, no hover affordance */
+        .project-card--in-progress,
+        .project-card--in-progress:hover {
+            border-color: var(--border);
+            cursor: default;
+        }
+
+        .project-tag--live {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-card);
+        }
+
+        .about-content {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .about-content .section-header {
+            text-align: center;
+        }
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .about-content p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            line-height: 1.8;
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-portrait {
+            margin: 0;
+        }
+
+        .about-portrait img {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            clip-path: circle(46% at 50% 50%);
+            display: block;
+            background: #000;
+            transform: scale(1.08);
+        }
+
+        .about-portrait figcaption {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            font-style: italic;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 320px;
+        }
+
+        @media (max-width: 768px) {
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                justify-items: center;
+            }
+
+            .about-portrait img {
+                width: 240px;
+                height: 240px;
+            }
+
+            .about-text {
+                text-align: center;
+            }
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-top: 3rem;
+        }
+
+        .skill-tag {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Footer */
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav .container {
+                padding: 1.5rem var(--gutter);
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 6rem var(--gutter) 4rem;
+            }
+
+            .container {
+                padding: 0 var(--gutter);
+            }
+
+            .featured-project {
+                padding: 2rem 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-content {
+                padding: 1.5rem;
+            }
+
+            .section-header {
+                margin-bottom: 2.5rem;
+            }
+
+            .skill-tag {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            section {
+                padding: 4rem var(--gutter);
+            }
+        }
+
+        /* Phone: belt-and-suspenders guard against horizontal overflow */
+        @media (max-width: 420px) {
+
+            html,
+            body {
+                overflow-x: hidden;
+            }
+
+            .project-image {
+                height: 200px;
+            }
+        }

@@ -1,591 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <!-- SEO & Metadata -->
-    <meta name="description" content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
+    <meta name="description"
+        content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
     <meta name="author" content="Chris Barnes">
-    
+
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://barnesy.me/">
     <meta property="og:title" content="Chris Barnes · Principal Designer · AI Systems & Platform Design">
-    <meta property="og:description" content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
+    <meta property="og:description"
+        content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
     <meta property="og:image" content="https://barnesy.me/images/design-system/agent-studio-dashboard.png">
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Chris Barnes · Principal Designer · AI Systems & Platform Design">
-    <meta name="twitter:description" content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
+    <meta name="twitter:description"
+        content="Taking on systems problems that need a designer and an engineer in the same person. Design systems, AI agents, and custom platforms.">
     <meta name="twitter:image" content="https://barnesy.me/images/design-system/agent-studio-dashboard.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chris Barnes · Principal Designer · AI Systems & Platform Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        
-
-        
-
-        
-
-        
-
-        
-
-        /* Theme Toggle */
-        
-
-        /* Navigation */
-        
-
-        nav .resume-link {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-dark);
-            padding: 8rem var(--gutter) 6rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 600px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Design Token Animation */
-        .token-animation {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .token {
-            position: absolute;
-            opacity: 0.15;
-            will-change: transform, opacity;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .token.assembling {
-            opacity: 0.8;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .token.featured {
-            opacity: 1 !important;
-        }
-
-        .token.floating {
-            animation: cloudFloat 12s ease-in-out infinite;
-        }
-
-        .token-circle {
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-        }
-
-        .token-square {
-            border: 2px solid var(--accent);
-            border-radius: 2px;
-        }
-
-        .token-line {
-            background: var(--accent);
-        }
-
-        @keyframes cloudFloat {
-            0%, 100% { transform: translate3d(0, 0, 0); }
-            25% { transform: translate3d(20px, -15px, 0); }
-            50% { transform: translate3d(-15px, 20px, 0); }
-            75% { transform: translate3d(-20px, -10px, 0); }
-        }
-
-        /* Page label */
-        .page-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.75rem;
-            color: var(--accent);
-            opacity: 0;
-            transition: opacity 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .page-label.visible {
-            opacity: 0.6;
-        }
-
-        /* Respect reduced motion preference */
-        @media (prefers-reduced-motion: reduce) {
-            .token-animation {
-                display: none;
-            }
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            color: var(--text-primary);
-        }
-
-        .hero .subtitle {
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .hero .raceday-pill {
-            color: #facc15;
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 1.5px solid currentColor;
-            white-space: nowrap;
-            transition: opacity 0.15s ease;
-        }
-
-        .hero .raceday-pill:hover {
-            opacity: 0.8;
-        }
-
-        .hero .tagline {
-            font-size: clamp(0.95rem, 2vw, 1.1rem);
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-
-        .cta-button:hover {
-            opacity: 0.9;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--gutter);
-        }
-
-        section {
-            padding: var(--section-padding-y) var(--section-padding-x);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: clamp(2rem, 4vw, 2.5rem);
-            margin-bottom: 1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .section-header p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-        }
-
-        /* Featured Project - CDS 2.0 */
-        .featured-project {
-            background: var(--bg-card);
-            border-radius: 8px;
-            padding: 4rem;
-            margin-bottom: 4rem;
-            border: 1px solid var(--border);
-        }
-
-        .featured-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--bg-dark);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .featured-lede {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .featured-detail {
-            color: var(--text-secondary);
-            margin-top: 2rem;
-            font-size: 1rem;
-        }
-
-        .featured-cta {
-            margin-top: 1rem;
-        }
-
-        .section-header--spaced {
-            margin-top: 4rem;
-        }
-
-        /* Contact Section */
-        .contact-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 3rem;
-        }
-
-        .contact-actions--theme {
-            margin-top: 2rem;
-        }
-
-        .cta-button--secondary {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-        }
-
-        .cta-button--with-icon {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .copyright-meta-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: inline-block;
-        }
-
-        /* Accessibility: skip link + focus indicators */
-        
-
-        .featured-project h3 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .featured-project .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .stat {
-            text-align: center;
-            padding: 2rem 1rem;
-            background: transparent;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* Project Grid */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            transition: border-color 0.2s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .project-card:hover {
-            border-color: var(--accent);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 240px;
-            background: var(--border);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 100%);
-        }
-
-        .project-image--atmosphere { background-color: #0b1220; background-image: url('images/atmosphere/hero.png'); background-position: center top; }
-        .project-image--raceday   { background-color: #0a0a0a; background-image: url('images/raceday/raceday-hub.png'); background-position: center 35%; }
-        .project-image--strictly-spending { background-color: #0e1b14; background-image: url('images/strictly-spending/card.png'); background-position: center top; }
-        .project-image--off-nominal { background-color: #0a0d12; background-image: url('images/off-nominal/hero.png'); background-position: center top; }
-        .project-image--idl       { background-image: url('images/idl/idl-pipes.png'); }
-        .project-image--callrail  { background-image: url('images/callrail/callrail-11.png'); }
-        .project-image--lets-read { background-image: url('images/letsread/LR+Hero.jpg'); }
-
-        /* "In progress" card variant — no link, no hover affordance */
-        .project-card--in-progress,
-        .project-card--in-progress:hover {
-            border-color: var(--border);
-            cursor: default;
-        }
-
-        .project-tag--live {
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        .project-content {
-            padding: 2rem;
-        }
-
-        .project-tag {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 0.7rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .project-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-
-        .project-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* About Section */
-        .about {
-            background: var(--bg-card);
-        }
-
-        .about-content {
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .about-content .section-header {
-            text-align: center;
-        }
-
-        .about-layout {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 5rem;
-            align-items: start;
-        }
-
-        .about-content p {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.25rem;
-            line-height: 1.8;
-        }
-
-        .about-text p:last-child {
-            margin-bottom: 0;
-        }
-
-        .about-portrait {
-            margin: 0;
-        }
-
-        .about-portrait img {
-            width: 320px;
-            height: 320px;
-            object-fit: cover;
-            clip-path: circle(46% at 50% 50%);
-            display: block;
-            background: #000;
-            transform: scale(1.08);
-        }
-
-        .about-portrait figcaption {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-top: 1rem;
-            font-style: italic;
-            line-height: 1.5;
-            text-align: center;
-            max-width: 320px;
-        }
-
-        @media (max-width: 768px) {
-            .about-layout {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                justify-items: center;
-            }
-            .about-portrait img {
-                width: 240px;
-                height: 240px;
-            }
-            .about-text {
-                text-align: center;
-            }
-        }
-
-        .skills {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 0.75rem;
-            margin-top: 3rem;
-        }
-
-        .skill-tag {
-            padding: 0.6rem 1.2rem;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-weight: 400;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
-        /* Footer */
-        
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav .container {
-                padding: 1.5rem var(--gutter);
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .hero {
-                padding: 6rem var(--gutter) 4rem;
-            }
-
-            .container {
-                padding: 0 var(--gutter);
-            }
-
-            .featured-project {
-                padding: 2rem 1.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .project-content {
-                padding: 1.5rem;
-            }
-
-            .section-header {
-                margin-bottom: 2.5rem;
-            }
-
-            .skill-tag {
-                padding: 0.6rem 0.8rem;
-                font-size: 0.85rem;
-            }
-
-            section {
-                padding: 4rem var(--gutter);
-            }
-        }
-
-        /* Phone: belt-and-suspenders guard against horizontal overflow */
-        @media (max-width: 420px) {
-            html, body {
-                overflow-x: hidden;
-            }
-            .project-image {
-                height: 200px;
-            }
-        }
-    </style>
-    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/pages/index.css">
+    <link rel="stylesheet" href="css/editorial.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script
+        id="data-theme-init">(function () { if (localStorage.getItem('theme') !== 'dark') document.documentElement.setAttribute('data-theme', 'light'); })();</script>
 </head>
+
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
@@ -620,76 +70,62 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="main">
-        <div class="token-animation" id="tokenAnimation">
-            <div class="page-label" id="pageLabel"></div>
-        </div>
-        <div class="hero-content">
-            <h1>Bridging design and engineering.</h1>
-            <p class="subtitle">I take on systems problems that need a designer and an engineer in the same person. Design tooling, AI agents, and the infrastructure that connects teams to what they ship. Off the clock, I'm building <a href="raceday.html" class="raceday-pill">Race Day</a>, a real game in Unreal Editor for Fortnite.</p>
-            <a href="#contact" class="cta-button">Let's Build Something</a>
+    <!-- Editorial Hero Section -->
+    <section class="hero-editorial" id="main">
+        <div class="hero-editorial-content">
+            <h1 class="hero-title" id="heroTitle">Design Craft<br>&amp; Systems.</h1>
+            <p class="hero-subtitle">Taking on complex infrastructure problems<br>with a designer's eye.</p>
         </div>
     </section>
 
-    <!-- Featured Project - CDS 2.0 -->
-    <section id="work">
-        <div class="container">
-            <div class="section-header">
-                <h2>Featured Work</h2>
-                <p>Transforming complexity into elegant systems</p>
-            </div>
 
-            <div class="featured-project">
-                <span class="featured-badge">Case Study</span>
-                <h3>Platform Design w/ Claude</h3>
-                <p class="subtitle">Pattern library, agent tooling, and the design infrastructure for an enterprise SaaS platform's AI products</p>
-
-                <p class="featured-lede">
-                    I unified a fragmented design system on a single MUI and React theming foundation. Then I built a pattern and layout library on top, and trained 20+ designers and engineering teams to use it.
-                </p>
-
-                <div class="stats-grid">
-                    <div class="stat">
-                        <span class="stat-number">200+</span>
-                        <p class="stat-label">Prototypes in two months</p>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">20+</span>
-                        <p class="stat-label">Designers and engineers trained</p>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">Claude Code</span>
-                        <p class="stat-label">Adopted company-wide</p>
-                    </div>
-                </div>
-
-                <p class="featured-detail">
-                    <strong>Prototyping agent:</strong> A Claude Code plugin that lets designers and PMs ship working prototypes without engineering. Over 200 prototypes in the first two months, most authored by non-engineers and used as a reference for production work.
-                </p>
-
-                <p class="featured-detail">
-                    <strong>Front-end agent:</strong> A Claude Code plugin that generates production-level frontend code using the design system packages. Designers and engineers use it to scaffold new projects and ship features grounded in the system.
-                </p>
-
-                <p class="featured-cta">
-                    <a class="cta-button" href="design-system-case-study.html">Read Full Case Study →</a>
-                </p>
-            </div>
 
             <!-- Selected Work Grid -->
-            <div class="section-header section-header--spaced">
+            <div class="section-header section-header--editorial">
                 <h2>Selected Work</h2>
-                <p>From AI products and platforms to mobile experiences</p>
             </div>
 
-            <div class="project-grid">
+            <div class="editorial-grid" id="projectGrid">
+                
+                <a href="strictly-spending.html" class="editorial-card">
+                    <div class="editorial-image-wrapper">
+                        <img src="images/projects/strictly_spending.png" alt="Strictly Spending App Mockup">
+                    </div>
+                    <div class="editorial-meta">
+                        <h3>Strictly Spending</h3>
+                        <p class="editorial-tags">/ Personal Finance / Local-first / Design Craft</p>
+                    </div>
+                </a>
+
+                <a href="callrail.html" class="editorial-card">
+                    <div class="editorial-image-wrapper">
+                        <img src="images/projects/callrail.png" alt="CallRail Dashboard Mockup">
+                    </div>
+                    <div class="editorial-meta">
+                        <h3>CallRail Design System</h3>
+                        <p class="editorial-tags">/ Design System / Communications / UI Architecture</p>
+                    </div>
+                </a>
+
+                <a href="industrial-data-labs.html" class="editorial-card editorial-card--featured">
+                    <div class="editorial-image-wrapper">
+                        <img src="images/projects/idl.png" alt="Industrial Data Labs Visualization">
+                    </div>
+                    <div class="editorial-meta">
+                        <h3>Industrial Data Labs</h3>
+                        <p class="editorial-tags">/ AI Product / Data Visualization / Enterprise</p>
+                    </div>
+                </a>
+
                 <a href="atmosphere-3d.html" class="project-card">
                     <div class="project-image project-image--atmosphere"></div>
                     <div class="project-content">
                         <span class="project-tag project-tag--live">Creative Coding · WebGL</span>
                         <h3>Shoot for the Moon</h3>
-                        <p>An afternoon seeing how far I could push real-time 3D in a plain browser tab with Claude. It became a single-file Three.js scene where the scrollbar is the whole story — a rocket launch that arcs into orbit and lands on a moonlit hill, a UFO, a barrel roll, and a glittery 3D title. No video, no game engine, no build step.</p>
+                        <p>An afternoon seeing how far I could push real-time 3D in a plain browser tab with Claude. It
+                            became a single-file Three.js scene where the scrollbar is the whole story — a rocket launch
+                            that arcs into orbit and lands on a moonlit hill, a UFO, a barrel roll, and a glittery 3D
+                            title. No video, no game engine, no build step.</p>
                     </div>
                 </a>
 
@@ -704,42 +140,14 @@
                 </a>
                 -->
 
-                <a href="strictly-spending.html" class="project-card">
-                    <div class="project-image project-image--strictly-spending"></div>
-                    <div class="project-content">
-                        <span class="project-tag project-tag--live">Afternoon Build · Local-first</span>
-                        <h3>Strictly Spending</h3>
-                        <p>A local-first budgeting dashboard, pair-coded with Claude in an afternoon. The first time I actually knew where the money was going. Runs in the browser. Nothing leaves the laptop.</p>
-                    </div>
-                </a>
-
                 <a href="raceday.html" class="project-card">
                     <div class="project-image project-image--raceday"></div>
                     <div class="project-content">
                         <span class="project-tag project-tag--live">In Progress · UEFN</span>
                         <h3>Race Day</h3>
-                        <p>An on-foot racing game I'm building in UEFN with Claude Code as my engineering partner. Custom Verse logic, zone-based tracks, persistent per-mode leaderboards, NPC enemies, and a phased build workflow currently at Phase 10.</p>
-                    </div>
-                </a>
-
-                <a href="industrial-data-labs.html" class="project-card">
-                    <div class="project-image project-image--idl"></div>
-                    <div class="project-content">
-                        <span class="project-tag">AI Product</span>
-                        <h3>Industrial Data Labs</h3>
-                        <p>Took an AI concept from initial strategy through full product design and launch.
-                        Built intelligent data analysis tools that help industrial companies make sense of
-                        complex manufacturing data using machine learning.</p>
-                    </div>
-                </a>
-
-                <a href="callrail.html" class="project-card">
-                    <div class="project-image project-image--callrail"></div>
-                    <div class="project-content">
-                        <span class="project-tag">Design System</span>
-                        <h3>CallRail Design System</h3>
-                        <p>Design system to the rescue. Created a comprehensive component library that unified
-                        the product experience and accelerated development cycles for this leading call tracking platform.</p>
+                        <p>An on-foot racing game I'm building in UEFN with Claude Code as my engineering partner.
+                            Custom Verse logic, zone-based tracks, persistent per-mode leaderboards, NPC enemies, and a
+                            phased build workflow currently at Phase 10.</p>
                     </div>
                 </a>
 
@@ -749,7 +157,7 @@
                         <span class="project-tag">Product Design</span>
                         <h3>Let's Read</h3>
                         <p>A family network for sharing stories. Designed an intuitive mobile experience that
-                        connects generations through the joy of reading together, wherever they are.</p>
+                            connects generations through the joy of reading together, wherever they are.</p>
                     </div>
                 </a>
             </div>
@@ -765,7 +173,8 @@
                 </div>
                 <div class="about-layout">
                     <figure class="about-portrait">
-                        <img src="images/about/chris-barnes.jpg" alt="Portrait of Chris Barnes" loading="lazy" width="320" height="320">
+                        <img src="images/about/chris-barnes.jpg" alt="Portrait of Chris Barnes" loading="lazy"
+                            width="320" height="320">
                         <figcaption>My son helped me take this with my telescope <br>(Maxwell Barnes)</figcaption>
                     </figure>
                     <div class="about-text">
@@ -791,9 +200,7 @@
                 <div class="skills">
                     <span class="skill-tag">Platform Design</span>
                     <span class="skill-tag">AI Systems Design</span>
-                    <span class="skill-tag">Design Infrastructure</span>
                     <span class="skill-tag">Agent UX</span>
-                    <span class="skill-tag">Design Tokens</span>
                     <span class="skill-tag">Pattern Libraries</span>
                     <span class="skill-tag">Figma + MCP</span>
                     <span class="skill-tag">React + TypeScript</span>
@@ -816,7 +223,8 @@
             </div>
             <div class="contact-actions contact-actions--theme">
                 <button id="lightModeBtn" class="cta-button cta-button--secondary cta-button--with-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
                         <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -830,7 +238,8 @@
                     Light Mode
                 </button>
                 <button id="darkModeBtn" class="cta-button cta-button--secondary cta-button--with-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                     Dark Mode
@@ -847,7 +256,8 @@
                 <a href="https://github.com/barnesy" target="_blank">GitHub</a>
                 <a href="resume.html" target="_blank">Resume</a>
                 <a href="https://pair.withgoogle.com/guidebook/" target="_blank">People + AI Guidebook</a>
-                <a href="https://www.thinkwithgoogle.com/marketing-strategies/micro-moments/zero-moment-truth/" target="_blank">Zero Moment of Truth</a>
+                <a href="https://www.thinkwithgoogle.com/marketing-strategies/micro-moments/zero-moment-truth/"
+                    target="_blank">Zero Moment of Truth</a>
             </div>
             <p class="copyright">
                 &copy; 2025 Chris Barnes. Design Systems + AI Innovation.<br>
@@ -858,6 +268,7 @@
         </div>
     </footer>
 
-    <script src="app.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
+
 </html>

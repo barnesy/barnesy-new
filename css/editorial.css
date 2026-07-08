@@ -155,9 +155,9 @@ nav ul li a {
 }
 
 .editorial-meta h3 {
-    font-family: var(--font-sans);
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
     margin: 0 0 0.5rem 0;
 }
 
@@ -198,21 +198,24 @@ nav ul li a {
 .interactive-logo-card {
     width: 100%;
     height: 100%;
-    background: #f8fafc; /* Crisp light background */
+    background: #f8fafc;
+    /* Crisp light background */
     position: relative;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    cursor: none; /* Hide native cursor */
+    cursor: none;
+    /* Hide native cursor */
 }
 
 .interactive-rebuilt-logo {
     position: relative;
     width: 65%;
     max-width: 320px;
-    pointer-events: none; /* Let the card handle all mouse events */
+    pointer-events: none;
+    /* Let the card handle all mouse events */
     z-index: 2;
 }
 
@@ -224,7 +227,8 @@ nav ul li a {
 
 .interactive-cursor {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 10;

@@ -132,10 +132,6 @@
             max-width: 62ch;
         }
 
-        section {
-            padding: 1.1rem 0 0;
-            margin-bottom: 0;
-        }
 
         section:last-child {
             margin-bottom: 0;

@@ -1,35 +1,7 @@
 /* Theme Toggle */
         
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--bg-dark);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
-        }
-        nav .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem var(--gutter);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        nav .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-        nav .back-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        nav .back-link:hover { color: var(--text-primary); }
+        
 
         /* Hero */
         .hero {
@@ -43,7 +15,7 @@
         }
 
         .hero--raceday .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 var(--gutter);
         }
@@ -108,16 +80,7 @@
             letter-spacing: 0.12em;
         }
 
-        /* Container */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 var(--gutter);
-        }
-
-        section {
-            padding: var(--section-padding-y) var(--section-padding-x);
-        }
+        
 
         /* Content */
         .section-title {
@@ -152,26 +115,9 @@
         }
 
         /* Image / video / placeholder slots */
-        .case-study-image {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            margin: 2rem 0 1rem;
-            display: block;
-        }
+        
 
-        .case-study-video {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            margin: 2rem 0 1rem;
-            display: block;
-            background: var(--bg-card);
-        }
+        
 
         .image-block {
             background: var(--bg-card);
@@ -183,30 +129,12 @@
             color: var(--text-secondary);
         }
 
-        .image-caption {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin: 0 0 2rem;
-            font-style: italic;
-        }
+        
 
         /* Quote block */
-        .quote-block {
-            background: var(--bg-card);
-            border-left: 4px solid var(--raceday-gold);
-            padding: 2rem;
-            margin: 3rem 0;
-            border-radius: 4px;
-        }
+        
 
-        .quote-block p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: var(--text-primary);
-            font-style: italic;
-            margin: 0;
-        }
+        
 
         /* CTA */
         .cta-section {
@@ -249,30 +177,16 @@
 
         .cta-button:hover { opacity: 0.9; }
 
-        /* Footer */
-        footer {
-            background: var(--bg-card);
-            padding: 3rem var(--gutter);
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-        footer a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        footer a:hover { color: var(--text-primary); }
+        
 
         /* Responsive */
         @media (max-width: 768px) {
-            nav .container { padding: 1.5rem var(--gutter); }
+            
             .hero {
                 padding: 6rem var(--gutter) 3.5rem;
             }
             .hero--raceday .hero-stats { gap: 2rem; }
-            section { padding: 3rem var(--gutter); }
-            .cta-section { padding: 2rem 1.5rem; }
-            .cta-buttons { flex-direction: column; }
+            .cta-            .cta-buttons { flex-direction: column; }
             .cta-button { width: 100%; }
         }
 

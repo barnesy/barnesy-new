@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 * {
     margin: 0;
@@ -7,6 +7,8 @@
 }
 
 :root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
     --bg-dark: #1a1816;
     --bg-card: #252321;
     --text-primary: #faf8f5;
@@ -48,15 +50,21 @@
 }
 
 body {
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-family: var(--font-sans);
     background: var(--bg-dark);
     color: var(--text-primary);
     line-height: 1.6;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'DM Sans', sans-serif;
+h1 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
     letter-spacing: -0.02em;
     color: var(--text-primary);
 }
@@ -211,21 +219,7 @@ nav .resume-link {
     font-weight: 600;
 }
 
-/* Project hero variants — colored hero with white text for contrast.
-   Uses compound selector .project-hero.project-hero--callrail (specificity 0,2,0)
-   so it always wins over the generic .project-hero rules later in the file
-   regardless of source order. */
-.project-hero.project-hero--callrail {
-    background: var(--callrail-brand, #1c4e8c);
-    color: #ffffff;
-    padding: 10rem var(--gutter) 8rem;
-    margin-bottom: 0;
-}
-
-.project-hero.project-hero--callrail h1,
-.project-hero.project-hero--callrail .lead {
-    color: #ffffff;
-}
+/* Project hero variants moved to css/pages/*.css */
 
 /* Generic project-hero meta elements — eyebrow, divider, meta row */
 .project-hero .hero-eyebrow {
@@ -270,16 +264,7 @@ nav .resume-link {
     color: var(--text-primary);
 }
 
-/* Colored hero overrides — pure white text on the brand color */
-.project-hero.project-hero--callrail .hero-eyebrow,
-.project-hero.project-hero--callrail .hero-meta-label,
-.project-hero.project-hero--callrail .hero-meta-value {
-    color: #ffffff;
-}
 
-.project-hero.project-hero--callrail .hero-divider {
-    border-top-color: rgba(255, 255, 255, 0.3);
-}
 
 /* Inline text link */
 .text-link {
@@ -293,7 +278,7 @@ nav .resume-link {
 
 /* Container */
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -304,23 +289,7 @@ nav .resume-link {
     margin-bottom: 3rem;
 }
 
-.project-hero-image {
-    width: 100%;
-    height: 400px;
-    background-size: cover;
-    background-position: center;
-    background-color: var(--bg-card);
-    border-radius: 8px;
-    margin-bottom: 2rem;
-}
 
-.project-hero-image--idl {
-    background-image: url('images/idl/idl-pipes.png');
-}
-
-.project-hero-image--lets-read {
-    background-image: url('images/letsread/LR+Hero.jpg');
-}
 
 .project-hero h1 {
     font-size: clamp(2rem, 5vw, 3.5rem);
@@ -334,11 +303,57 @@ nav .resume-link {
     color: var(--text-secondary);
     line-height: 1.5;
     max-width: 720px;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* Typography */
 section {
-    padding: 3rem 0;
+    padding: var(--section-padding-y) var(--section-padding-x);
+}
+
+/* Limit copy width for readability, keeping images full-width */
+.container p,
+.container h2,
+.container h3,
+.container h4,
+.container h5,
+.container h6,
+.container ul,
+.container ol,
+.container blockquote,
+.wide-container p,
+.wide-container h2,
+.wide-container h3,
+.wide-container h4,
+.wide-container h5,
+.wide-container h6,
+.wide-container ul,
+.wide-container ol,
+.wide-container blockquote,
+.section-content {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-content {
+    /* Padding removed to rely on structural margins and prevent awkward stacking */
+}
+
+/* Prevent stat labels, meta tags, and hero text from being inappropriately constrained/centered */
+.hero-stat-label,
+.stat-label,
+.editorial-tags,
+.hero-meta-label,
+.hero-meta-value,
+.hero p, .hero h1, .hero h2, .hero h3,
+.project-hero p, .project-hero h1, .project-hero h2, .project-hero h3,
+.editorial-grid p, .editorial-grid h3,
+nav .container ul, nav .container p {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 h2 {
@@ -423,6 +438,61 @@ footer p {
 
 .footer-copyright {
     margin-top: 1rem;
+}
+
+/* Utility Classes */
+.bg-card {
+    background: var(--bg-card);
+}
+
+.bg-dark {
+    background: var(--bg-dark);
+}
+
+/* Shared Case Study Components */
+.case-study-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin: 3rem 0 1rem;
+    display: block;
+}
+
+.case-study-video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin: 3rem 0 1rem;
+    display: block;
+    background: var(--bg-card);
+}
+
+.image-caption {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0 0 3rem;
+    font-style: italic;
+}
+
+.quote-block {
+    background: var(--bg-card);
+    border-left: 4px solid var(--accent);
+    padding: 2rem;
+    margin: 4rem 0;
+    border-radius: 4px;
+}
+
+.quote-block p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    font-style: italic;
+    margin: 0;
 }
 
 /* Responsive */

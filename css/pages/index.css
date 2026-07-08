@@ -1,8 +1,6 @@
 /* Theme Toggle */
 
-
         /* Navigation */
-
 
         nav .resume-link {
             color: var(--accent);
@@ -170,16 +168,7 @@
             opacity: 0.9;
         }
 
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--gutter);
-        }
-
-        section {
-            padding: var(--section-padding-y) var(--section-padding-x);
-        }
+        
 
         .section-header {
             text-align: center;
@@ -275,7 +264,6 @@
         }
 
         /* Accessibility: skip link + focus indicators */
-
 
         .featured-project h3 {
             font-size: 2rem;
@@ -531,12 +519,9 @@
 
         /* Footer */
 
-
         /* Responsive */
         @media (max-width: 768px) {
-            nav .container {
-                padding: 1.5rem var(--gutter);
-            }
+            
 
             nav ul {
                 gap: 1rem;
@@ -575,9 +560,6 @@
                 font-size: 0.85rem;
             }
 
-            section {
-                padding: 4rem var(--gutter);
-            }
         }
 
         /* Phone: belt-and-suspenders guard against horizontal overflow */

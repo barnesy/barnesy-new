@@ -4,11 +4,7 @@ nav {
             backdrop-filter: blur(10px);
             z-index: 1000; border-bottom: 1px solid var(--border);
         }
-        nav .container {
-            max-width: 1200px; margin: 0 auto;
-            padding: 1.25rem var(--gutter);
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        
         nav .logo { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
         nav .back-link { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
         nav .back-link:hover { color: var(--text-primary); }
@@ -33,7 +29,7 @@ nav {
         }
         .hero-subtitle {
             font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.6;
-            color: var(--text-secondary); max-width: 700px; margin-bottom: 2rem;
+            color: var(--text-secondary); max-width: 800px; margin-bottom: 2rem;
         }
         .hero-launch, .block a.hero-launch {
             display: inline-flex; align-items: center; gap: 0.5rem;

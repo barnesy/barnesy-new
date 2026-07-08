@@ -24,9 +24,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/pages/design-system-case-study.css">
-    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
-</head>
+    <link rel="stylesheet" href="css/projects.css">
+    </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
@@ -77,28 +76,12 @@
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-actions">
                 <a href="index.html#work" class="back-link">← Back to Work</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
+                </div>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section class="hero hero--cds" id="main">
+    <section class="project-hero" id="main" style="--hero-bg: #493ff5; --hero-text: white; --hero-accent: white; --hero-divider: rgba(255,255,255,0.22); --hero-text-secondary: rgba(255,255,255,0.85);">
         <div class="wide-container">
             <span class="hero-eyebrow">OpenGov · Capital Design System</span>
             <h1>OpenGov Platform Design</h1>
@@ -127,7 +110,7 @@
 
     <!-- The Bet -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">The bet</h2>
             <div class="section-content">
                 <p>
@@ -142,7 +125,7 @@
 
     <!-- Phase 1 -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">Phase 1: One design system, one source of truth</h2>
             <div class="section-content">
                 <p>
@@ -180,7 +163,7 @@
 
     <!-- Phase 2 -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">Phase 2: Patterns, layouts, and 20+ teams trained</h2>
             <div class="section-content">
                 <p>
@@ -198,7 +181,7 @@
                 <p class="image-caption">The Storybook landing page. One source of truth for components, patterns, layouts, and AI components across every product.</p>
             </div>
 
-            <div class="section-content">
+            <div>
                 <p>
                     The most visible piece is <strong>BaseLayout</strong>, a page-level scaffold every product surface composes against. App chrome, breadcrumbs, page header, and content region all in one shippable layout.
                 </p>
@@ -224,7 +207,7 @@
 
     <!-- Phase 3 -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">Phase 3: Bringing Claude Code to the company</h2>
             <div class="section-content">
                 <p>
@@ -239,7 +222,7 @@
 
     <!-- Phase 4: Prototyping agent -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">Phase 4: A prototyping agent for designers and PMs</h2>
             <div class="section-content">
                 <p>
@@ -270,7 +253,7 @@
 
     <!-- Phase 5: Front-end agent for production -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">Phase 5: A front-end agent for production code</h2>
             <div class="section-content">
                 <p>
@@ -288,7 +271,7 @@
                 <p class="image-caption">A scoring report from the agent. Five rubrics, twenty criteria, letter grades on each. Specific deductions are surfaced for review or auto-fix.</p>
             </div>
 
-            <div class="section-content">
+            <div>
                 <p>
                     The agent ships through Claude Code's plugin network. Teams install it once and every PR gets agentic enforcement: automatic scoring, automatic fixes when the agent can resolve them, and flags for the ones that need a human.
                 </p>
@@ -298,7 +281,7 @@
 
     <!-- The system in production: Government Artifacts -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">The system in production</h2>
             <div class="section-content">
                 <p>
@@ -333,7 +316,7 @@
 
     <!-- What's Next -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">What's next: bypassing Figma</h2>
             <div class="section-content">
                 <p>
@@ -658,6 +641,11 @@
                 }
             }
         });
+    </script>
+
+    <script type="module">
+        import { initLightbox } from './js/lightbox.js';
+        initLightbox();
     </script>
 </body>
 </html>

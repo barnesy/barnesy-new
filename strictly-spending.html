@@ -24,9 +24,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/pages/strictly-spending.css">
-    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
-</head>
+    <link rel="stylesheet" href="css/projects.css">
+    </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
@@ -37,29 +36,13 @@
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-actions">
                 <a href="index.html#work" class="back-link">← Back to Work</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
+                </div>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section class="hero hero--spending" id="main">
-        <div class="container">
+    <section class="project-hero" id="main" style="--hero-bg: var(--spending-hero-bg, #0e1b14); --hero-text: #ffffff; --hero-accent: var(--spending-green, #34d399); --hero-text-secondary: rgba(255, 255, 255, 0.85); --hero-divider: rgba(255, 255, 255, 0.22);">
+        <div class="wide-container">
             <span class="hero-eyebrow">Strictly Spending · Pair-coded with Claude</span>
             <h1>Strictly Spending App</h1>
             <p class="hero-subtitle">Multi-bank CSV ingestion, rule-based categorization, recurring detection, and keyboard-driven triage. A local-first dashboard for discovering patterns in real household spending. Designed for power, built in the browser, owned end-to-end.</p>
@@ -89,7 +72,7 @@
 
     <!-- Why I started -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">Why I started</h2>
             <div class="section-content">
                 <p>
@@ -104,7 +87,7 @@
 
     <!-- The build -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">The build, briefly</h2>
             <div class="section-content">
                 <p>
@@ -140,10 +123,10 @@
 
     <!-- Three surprises -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">What I learned</h2>
             <div class="section-content">
-                <h3>The chart was easy. Categorization was the whole product.</h3>
+                <h3 class="mb-4 mt-12">The chart was easy. Categorization was the whole product.</h3>
                 <p>
                     I expected the chart to be the hard problem. It was the opposite. Different CSV exports tag categories their own way, or not at all. Getting one consistent taxonomy, then making it correctable in seconds, is what made the dashboard trustworthy.
                 </p>
@@ -157,8 +140,8 @@
                  class="case-study-image">
             <p class="image-caption">The Sort view. One decision categorizes every transaction from a merchant at once, and optionally saves a rule so future imports catch the same pattern.</p>
 
-            <div class="section-content">
-                <h3>The floor versus the discretionary.</h3>
+            <div>
+                <h3 class="mb-4 mt-12">The floor versus the discretionary.</h3>
                 <p>
                     Once recurring charges (rent, utilities, subscriptions, the gym) are detected and pinned, the rest of the spend reads completely differently. You can finally separate the <em>floor</em> (what you owe) from the <em>discretionary</em> (what you choose). That distinction is the entire game.
                 </p>
@@ -173,7 +156,7 @@
 
     <!-- What the AI was / wasn't good at -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">What Claude was good at, and what it wasn't</h2>
             <div class="section-content">
                 <p>
@@ -192,15 +175,15 @@
 
     <!-- What's in there today -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">What's in there</h2>
             <div class="section-content">
-                <h3>Sort view: keyboard-first triage</h3>
+                <h3 class="mb-4 mt-12">Sort view: keyboard-first triage</h3>
                 <p>
                     Uncategorized transactions group by merchant, sort by dollar impact, and surface one card at a time with a suggested category pre-selected. <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">Enter</kbd> accepts, <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">1</kbd>–<kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">9</kbd> override, <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">⌘Z</kbd> undoes. One decision categorizes every transaction from that merchant, and optionally saves a rule for future imports.
                 </p>
 
-                <h3>Watch folder + content-hash dedup</h3>
+                <h3 class="mb-4 mt-12">Watch folder + content-hash dedup</h3>
                 <p>
                     Point the app at a folder. Drop in a CSV at the root, or in any subfolder up to five levels deep. The scanner reads it, hashes the content, and dedups against everything already imported. The same statement re-downloaded under a different name gets skipped.
                 </p>
@@ -211,8 +194,8 @@
                  class="case-study-image">
             <p class="image-caption">Settings: Watch folder, Demo data, and Demo mode.</p>
 
-            <div class="section-content">
-                <h3>Custom chart tooltip</h3>
+            <div>
+                <h3 class="mb-4 mt-12">Custom chart tooltip</h3>
                 <p>
                     The default tooltip sorted categories by stack order, with no total. A custom renderer sorts them by dollar value and adds a Total row. Every hover answers "what dominated this month?" at a glance.
                 </p>
@@ -223,13 +206,13 @@
                  class="case-study-image">
             <p class="image-caption">Categories ordered by dollar value, total at the bottom.</p>
 
-            <div class="section-content">
-                <h3>JSON backup and restore</h3>
+            <div>
+                <h3 class="mb-4 mt-12">JSON backup and restore</h3>
                 <p>
                     The data lives in IndexedDB. "Clear site data" would wipe it. One click exports the whole app state to a JSON file. Drop it back to restore.
                 </p>
 
-                <h3>Demo mode</h3>
+                <h3 class="mb-4 mt-12">Demo mode</h3>
                 <p>
                     A runtime filter for synthetic data. I added it to screenshot the app without exposing real finances. It stayed in for screen-share calls and anyone who clones the repo.
                 </p>
@@ -239,7 +222,7 @@
 
     <!-- Closer -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">Discovery, on my own terms</h2>
             <div class="section-content">
                 <p>
@@ -321,6 +304,11 @@
                 sunIcon.classList.remove('hidden');
             }
         });
+    </script>
+
+    <script type="module">
+        import { initLightbox } from './js/lightbox.js';
+        initLightbox();
     </script>
 </body>
 </html>

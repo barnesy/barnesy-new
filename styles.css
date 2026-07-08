@@ -12,18 +12,18 @@
     --bg-dark: #1a1816;
     --bg-card: #252321;
     --text-primary: #faf8f5;
-    --text-secondary: #b8b3ad;
-    --accent: #22c55e;
+    --text-secondary: #d3d3d3;
+    --accent: #3b82f6;
     --border: #3a3632;
     --gutter: 1rem;
-    --section-padding-y: clamp(3rem, 6vw, 5rem);
+    --section-padding-y: 6rem;
     --section-padding-x: 0;
 
     /* Extra Case-Study and Project Specific Tokens */
     --hero-overlay: rgba(15, 15, 15, 0.85);
     --accent-blue: #3b82f6;
     --accent-purple: #a855f7;
-    --accent-orange: #f97316;
+    --accent-orange: #211f1e;
     --accent-pink: #ec4899;
     --code-bg: #1e1e1e;
     --raceday-hero-bg: #0a0a0a;
@@ -42,7 +42,7 @@
     --bg-dark: #faf8f5;
     --bg-card: #ffffff;
     --text-primary: #1a1816;
-    --text-secondary: #6b6560;
+    --text-secondary: #919191;
     --accent: #3b82f6;
     --border: #e5e1dc;
     --hero-overlay: rgba(255, 255, 255, 0.85);
@@ -63,7 +63,11 @@ h1 {
     color: var(--text-primary);
 }
 
-h2, h3, h4, h5, h6 {
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-sans);
     letter-spacing: -0.02em;
     color: var(--text-primary);
@@ -234,7 +238,7 @@ nav .resume-link {
 
 .project-hero .hero-divider {
     border: none;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(255, 255, 255, 0.292);
     margin: 2.5rem 0;
 }
 
@@ -284,10 +288,7 @@ nav .resume-link {
 }
 
 /* Project Hero */
-.project-hero {
-    padding-top: 5rem;
-    margin-bottom: 3rem;
-}
+.project-hero {}
 
 
 
@@ -312,49 +313,71 @@ section {
     padding: var(--section-padding-y) var(--section-padding-x);
 }
 
-/* Limit copy width for readability, keeping images full-width */
-.container p,
-.container h2,
-.container h3,
-.container h4,
-.container h5,
-.container h6,
-.container ul,
-.container ol,
-.container blockquote,
-.wide-container p,
-.wide-container h2,
-.wide-container h3,
-.wide-container h4,
-.wide-container h5,
-.wide-container h6,
-.wide-container ul,
-.wide-container ol,
-.wide-container blockquote,
-.section-content {
+/* Container utilities */
+.container-narrow {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.section-content {
-    /* Padding removed to rely on structural margins and prevent awkward stacking */
+/* Grid utilities */
+.grid {
+    display: grid;
+    gap: 1.5rem;
 }
 
-/* Prevent stat labels, meta tags, and hero text from being inappropriately constrained/centered */
-.hero-stat-label,
-.stat-label,
-.editorial-tags,
-.hero-meta-label,
-.hero-meta-value,
-.hero p, .hero h1, .hero h2, .hero h3,
-.project-hero p, .project-hero h1, .project-hero h2, .project-hero h3,
-.editorial-grid p, .editorial-grid h3,
-nav .container ul, nav .container p {
-    max-width: none;
-    margin-left: 0;
-    margin-right: 0;
+.grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
+
+.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+.gap-6 {
+    gap: 1.5rem;
+}
+
+.gap-8 {
+    gap: 2rem;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.mt-8 {
+    margin-top: 2rem;
+}
+
+.mt-12 {
+    margin-top: 3rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.mb-12 {
+    margin-bottom: 3rem;
+}
+
 
 h2 {
     font-size: clamp(1.75rem, 3vw, 2rem);
@@ -388,7 +411,8 @@ p {
 .img-full {
     width: 100%;
     border-radius: 8px;
-    margin: 2rem 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     border: 1px solid var(--border);
 }
 
@@ -396,7 +420,8 @@ p {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
-    margin: 2rem 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .image-grid img {
@@ -472,11 +497,9 @@ footer p {
 }
 
 .image-caption {
-    text-align: center;
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin: 0 0 3rem;
-    font-style: italic;
+    font-size: 0.7rem;
+    margin: 8rem;
 }
 
 .quote-block {
@@ -530,5 +553,7 @@ footer p {
 }
 
 @keyframes scroll-indicator {
-    to { transform: scaleX(1); }
+    to {
+        transform: scaleX(1);
+    }
 }

@@ -7,16 +7,21 @@ export function initHeroEditorial() {
     gsap.registerPlugin(ScrollTrigger);
 
     const heroContent = document.querySelector('.hero-editorial-content');
+    const heroTitle = document.querySelector('.hero-title');
+    const heroSubtitle = document.querySelector('.hero-subtitle');
     if (!heroContent) return;
 
     // 1. Initial Load Animation (Fade & slide up)
-    gsap.to(heroContent, {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        ease: 'power3.out',
-        delay: 0.2
-    });
+    if (heroTitle && heroSubtitle) {
+        gsap.to([heroTitle, heroSubtitle], {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            stagger: 0.2,
+            ease: 'power3.out',
+            delay: 0.2
+        });
+    }
 
     // 2. Subtle Parallax on Scroll
     // The hero content moves down slightly as we scroll, creating a parallax effect

@@ -26,16 +26,17 @@ body {
 nav {
     background: transparent;
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-nav .logo, nav ul li a {
+nav .logo,
+nav ul li a {
     color: var(--text-primary);
 }
 
 /* 2. Hero Section */
 .hero-editorial {
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,7 +126,7 @@ nav .logo, nav ul li a {
     margin-bottom: 1.5rem;
     background: #EAEAEA;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
 }
 
@@ -142,7 +143,7 @@ nav .logo, nav ul li a {
 
 .editorial-card:hover .editorial-image-wrapper {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 .editorial-card:hover .editorial-image-wrapper img {
@@ -174,6 +175,7 @@ nav .logo, nav ul li a {
     opacity: 0.4;
     filter: grayscale(20%);
 }
+
 .editorial-card {
     transition: filter 0.4s ease, transform 0.4s ease;
 }
@@ -184,10 +186,48 @@ nav .logo, nav ul li a {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
+
     .editorial-card:nth-child(even) {
         margin-top: 0;
     }
-    .editorial-card--featured .editorial-image-wrapper {
-        aspect-ratio: 4/3;
-    }
+
+}
+
+/* OpenGov Animated Graphic */
+/* OpenGov Interactive Logo Card */
+.interactive-logo-card {
+    width: 100%;
+    height: 100%;
+    background: #f8fafc; /* Crisp light background */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: none; /* Hide native cursor */
+}
+
+.interactive-rebuilt-logo {
+    position: relative;
+    width: 65%;
+    max-width: 320px;
+    pointer-events: none; /* Let the card handle all mouse events */
+    z-index: 2;
+}
+
+.interactive-wordmark {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.interactive-cursor {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    /* Transition is used only when snapping back */
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

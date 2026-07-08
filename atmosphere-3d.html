@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="An afternoon seeing how far I could push real-time 3D in the browser with Claude. It turned into Shoot for the Moon — a single-file, scroll-driven WebGL journey from a morning rocket launch to a moonlit landing.">
+    <meta name="description"
+        content="An afternoon seeing how far I could push real-time 3D in the browser with Claude. It turned into Shoot for the Moon — a single-file, scroll-driven WebGL journey from a morning rocket launch to a moonlit landing.">
     <meta name="author" content="Chris Barnes">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://barnesy.me/atmosphere-3d.html">
     <meta property="og:title" content="Shoot for the Moon — an afternoon in 3D web | Chris Barnes">
-    <meta property="og:description" content="How far can you push real-time 3D in a browser in one afternoon? A single-file Three.js scene where the scrollbar is the whole story. Pair-coded with Claude.">
+    <meta property="og:description"
+        content="How far can you push real-time 3D in a browser in one afternoon? A single-file Three.js scene where the scrollbar is the whole story. Pair-coded with Claude.">
     <meta property="og:image" content="https://barnesy.me/images/atmosphere/hero.png">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Shoot for the Moon — an afternoon in 3D web | Chris Barnes">
-    <meta name="twitter:description" content="One afternoon, one HTML file, Three.js, and Claude. The scrollbar is the whole story — launch to a moonlit landing and back.">
+    <meta name="twitter:description"
+        content="One afternoon, one HTML file, Three.js, and Claude. The scrollbar is the whole story — launch to a moonlit landing and back.">
     <meta name="twitter:image" content="https://barnesy.me/images/atmosphere/hero.png">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,85 +26,107 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/pages/atmosphere-3d.css">
+    <link rel="stylesheet" href="css/projects.css">
 </head>
+
 <body>
     <nav>
         <div class="container">
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-actions">
                 <a href="index.html#work" class="back-link">← Back to Work</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                </button>
-            </div>
+                </div>
         </div>
     </nav>
 
-    <section class="hero">
+    <section class="project-hero"
+        style="--hero-bg: #0b0e14; --hero-text: white; --hero-text-secondary: rgba(255,255,255,0.7); --hero-accent: #7ab8ff;">
         <div class="container">
             <span class="hero-eyebrow">Creative coding · WebGL · Built in an afternoon with Claude</span>
             <h1>Atmosphere 3D WebGL</h1>
-            <p class="hero-subtitle">That was the whole experiment. I sat down with Claude to see how much I could wring out of real-time 3D in a plain browser tab — and it turned into <strong>Shoot for the Moon</strong>: one continuous, scroll-driven shot from a morning rocket launch to a moonlit landing. No video, no game engine, no build step. A single HTML file, Three.js, and a lot of fast back-and-forth.</p>
-            <a href="atmosphere-3d/" target="_blank" rel="noopener" class="hero-launch">Open the live demo →</a>
+            <p class="hero-subtitle">That was the whole experiment. I sat down with Claude to see how much I could wring
+                out of real-time 3D in a plain browser tab — and it turned into <strong>Shoot for the Moon</strong>: one
+                continuous, scroll-driven shot from a morning rocket launch to a moonlit landing. No video, no game
+                engine, no build step. A single HTML file, Three.js, and a lot of fast back-and-forth.</p>
+            <a href="atmosphere-3d/" target="_blank" rel="noopener" class="hero-launch">Open the live demo</a>
         </div>
     </section>
 
-    <div class="shot lead-shot">
-        <a href="atmosphere-3d/" target="_blank" rel="noopener">
-            <img src="images/atmosphere/hero.png" alt="Opening frame: a bright morning sky over rolling hills, a glossy white extruded 3D headline reading 'Shoot for the Moon', the sun low on the right, and a small toy rocket glowing on a launch pad in the foreground.">
-        </a>
-        <p class="shot-caption">Where it starts. The headline is real extruded 3D geometry — soft, rounded, glitter-flecked — sitting in the same scene as the rocket.</p>
-    </div>
-
-    <section class="block">
-        <div class="container">
-            <h2>The experiment</h2>
-            <p>I didn't start with a storyboard. I started with a question: <strong>how much real-time 3D can you get out of a browser in an afternoon</strong> if you treat Claude as a pair, not a code vending machine? One self-imposed rule — keep it to a <strong>single HTML file</strong>, no build step, so the whole thing stays legible and loads instantly.</p>
-            <p>The other rule was about <strong>control</strong>: no buttons, no UI. The scrollbar would be the only input. That constraint did something nice — it forced every idea to become a moment on a single timeline. Launch, orbit, dusk, moonrise, landing: each one is just a position on the page. Scroll down and time moves forward; scroll up and the rocket flies home. A collaborative, evolving poem guides you along the ascent.</p>
+    <section class="bg-card">
+        <div class="case-study-image-container container-narrow" style="margin-top: -3.5rem;">
+            <a href="atmosphere-3d/" target="_blank" rel="noopener">
+                <img src="images/atmosphere/hero.png"
+                    alt="Opening frame: a bright morning sky over rolling hills, a glossy white extruded 3D headline reading 'Shoot for the Moon', the sun low on the right, and a small toy rocket glowing on a launch pad in the foreground."
+                    class="case-study-image">
+            </a>
+            <p class="image-caption">Where it starts. The headline is real extruded 3D geometry — soft, rounded,
+                glitter-flecked — sitting in the same scene as the rocket.</p>
         </div>
     </section>
 
-    <div class="gallery">
-        <figure>
-            <img src="images/atmosphere/moonrise.png" alt="A large, detailed moon rising solid from behind a dark hill against a deep purple twilight sky, with small box-built animals silhouetted along the ridge.">
-            <figcaption>Midway down: the moon rises solid from behind the ridgeline as the sky turns to night.</figcaption>
-        </figure>
-        <figure>
-            <img src="images/atmosphere/landing.png" alt="Night scene: a large glowing moon high in a starfield, with the tiny rocket and UFO at rest on its surface.">
-            <figcaption>The bottom of the page: both craft come to rest on the near side of the moon.</figcaption>
-        </figure>
-    </div>
-
-    <section class="block alt">
-        <div class="container">
-            <h2>How it's built</h2>
-            <p>Three.js, one HTML file, no build step. The sky gradient, the gibbous moon, the UFO's tractor beam, and the reflective sea are each a small custom <strong>GLSL shader</strong>. The rocket and saucer are OBJ models; everything else — hills, animals, birds — is built from boxes and displaced planes so it stays light.</p>
-            <p>The headline is <strong>real 3D type</strong>: extruded geometry with soft, rounded "space-pillow" bevels, lit on its own render layer so it stays bright white, with a seamless-looping glitter video driving its emissive channel so it twinkles. It zooms past the camera to get out of the way the moment you start scrolling.</p>
-            <p>The fussy parts were the ones you don't notice — and where most of the afternoon actually went. Making the rocket descend along a <strong>great-circle arc</strong> so it never clips through the moon. Draping the beam's "laser" ring exactly where the light cone meets the hillside. Refitting the title against the live camera projection so it never clips on a phone. The seams were the work.</p>
-            <p>Pair-coded with Claude, end to end. <a href="https://github.com/barnesy/atmosphere-3d" target="_blank" rel="noopener">Source on GitHub →</a></p>
-            <div class="specs">
-                <span class="spec">Three.js</span>
-                <span class="spec">WebGL / GLSL</span>
-                <span class="spec">TextGeometry</span>
-                <span class="spec">VideoTexture</span>
-                <span class="spec">Single HTML file</span>
-                <span class="spec">No build step</span>
+    <section>
+        <div class="container-narrow">
+            <h2 class="section-title">The experiment</h2>
+            <div class="section-content">
+                <p>I didn't start with a storyboard. I started with a question: <strong>how much real-time 3D can you
+                        get out of a browser in an afternoon</strong> if you treat Claude as a pair, not a code vending
+                    machine? One self-imposed rule — keep it to a <strong>single HTML file</strong>, no build step, so
+                    the whole thing stays legible and loads instantly.</p>
+                <p>The other rule was about <strong>control</strong>: no buttons, no UI. The scrollbar would be the only
+                    input. That constraint did something nice — it forced every idea to become a moment on a single
+                    timeline. Launch, orbit, dusk, moonrise, landing: each one is just a position on the page. Scroll
+                    down and time moves forward; scroll up and the rocket flies home. A collaborative, evolving poem
+                    guides you along the ascent.</p>
             </div>
         </div>
     </section>
 
-    <section class="block">
-        <div class="container">
-            <h2>What I took away</h2>
-            <p>Mostly: the ceiling is higher than I expected, and the bottleneck isn't the rendering anymore — it's taste and iteration speed. With Claude handling the math and the boilerplate, an afternoon was enough to chase a hundred small "what if we…" ideas, keep the ten that landed, and throw the rest away. That loop — try it, look at it, adjust — is the whole game now, and it's gotten <em>fast</em>.</p>
+    <section class="bg-card">
+        <div class="container-narrow">
+            <h2 class="section-title">How it's built</h2>
+            <div class="section-content">
+                <p>Three.js, one HTML file, no build step. The sky gradient, the gibbous moon, the UFO's tractor beam,
+                    and the reflective sea are each a small custom <strong>GLSL shader</strong>. The rocket and saucer
+                    are OBJ models; everything else — hills, animals, birds — is built from boxes and displaced planes
+                    so it stays light.</p>
+                <p>The headline is <strong>real 3D type</strong>: extruded geometry with soft, rounded "space-pillow"
+                    bevels, lit on its own render layer so it stays bright white, with a seamless-looping glitter video
+                    driving its emissive channel so it twinkles. It zooms past the camera to get out of the way the
+                    moment you start scrolling.</p>
+                <p>The fussy parts were the ones you don't notice — and where most of the afternoon actually went.
+                    Making the rocket descend along a <strong>great-circle arc</strong> so it never clips through the
+                    moon. Draping the beam's "laser" ring exactly where the light cone meets the hillside. Refitting the
+                    title against the live camera projection so it never clips on a phone. The seams were the work.</p>
+                <p>Pair-coded with Claude, end to end. <a href="https://github.com/barnesy/atmosphere-3d"
+                        target="_blank" rel="noopener">Source on GitHub →</a></p>
+            </div>
+            <div class="tech-stack mt-8">
+                <span class="tech-tag">Three.js</span>
+                <span class="tech-tag">WebGL / GLSL</span>
+                <span class="tech-tag">TextGeometry</span>
+                <span class="tech-tag">VideoTexture</span>
+                <span class="tech-tag">Single HTML file</span>
+                <span class="tech-tag">No build step</span>
+            </div>
         </div>
     </section>
 
-    <section class="block" style="text-align:center;">
+    <section>
+        <div class="container-narrow">
+            <h2 class="section-title">What I took away</h2>
+            <div class="section-content">
+                <p>Mostly: the ceiling is higher than I expected, and the bottleneck isn't the rendering anymore — it's
+                    taste and iteration speed. With Claude handling the math and the boilerplate, an afternoon was
+                    enough to chase a hundred small "what if we…" ideas, keep the ten that landed, and throw the rest
+                    away. That loop — try it, look at it, adjust — is the whole game now, and it's gotten <em>fast</em>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-card" style="text-align:center;">
         <div class="container">
-            <a href="atmosphere-3d/" target="_blank" rel="noopener" class="hero-launch">Open the live demo →</a>
+            <a href="atmosphere-3d/" target="_blank" rel="noopener" class="hero-launch">Open the live demo</a>
         </div>
     </section>
 
@@ -113,25 +139,11 @@
         <p style="margin-top: 1rem; color: var(--text-secondary);">&copy; 2026 Chris Barnes</p>
     </footer>
 
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const moonIcon = document.getElementById('moonIcon');
-        const sunIcon = document.getElementById('sunIcon');
-        const html = document.documentElement;
-        const currentTheme = localStorage.getItem('theme');
-        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-        if (currentTheme === 'light' || (!currentTheme && prefersLight)) {
-            html.setAttribute('data-theme', 'light'); moonIcon.classList.add('hidden'); sunIcon.classList.remove('hidden');
-        } else {
-            html.removeAttribute('data-theme'); moonIcon.classList.remove('hidden'); sunIcon.classList.add('hidden');
-        }
-        themeToggle.addEventListener('click', () => {
-            if (html.getAttribute('data-theme') === 'light') {
-                html.removeAttribute('data-theme'); localStorage.setItem('theme', 'dark'); moonIcon.classList.remove('hidden'); sunIcon.classList.add('hidden');
-            } else {
-                html.setAttribute('data-theme', 'light'); localStorage.setItem('theme', 'light'); moonIcon.classList.add('hidden'); sunIcon.classList.remove('hidden');
-            }
-        });
+    
+    <script type="module">
+        import { initLightbox } from './js/lightbox.js';
+        initLightbox();
     </script>
 </body>
+
 </html>

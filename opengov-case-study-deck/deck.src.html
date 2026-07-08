@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Platform to Product — OpenGov Case Study · Chris Barnes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page{size:1280px 720px;margin:0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  :root{--accent:#493ff5;}
+  html,body{background:#0d0c0b;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;}
+
+  /* themes: light = dark ink on light bg; dark = light ink on dark bg */
+  .theme-light{
+    --ink:#1a1816;--muted:#736b62;--faint:#a59c91;
+    --hair:rgba(26,24,22,.14);--panel:rgba(73,63,245,.045);
+    --accent:#493ff5;--shadow:none;
+  }
+  .theme-dark{
+    --ink:#faf8f5;--muted:#a39c93;--faint:#7c756c;
+    --hair:rgba(255,255,255,.14);--panel:rgba(132,124,255,.07);
+    --accent:#8c85ff;--shadow:none;
+  }
+
+  .slide{
+    position:relative;width:1280px;height:720px;overflow:hidden;
+    background:var(--bg);color:var(--ink);
+    page-break-after:always;break-after:page;
+  }
+  .slide:last-child{page-break-after:auto;}
+
+  /* ---- shared type system / geometric grid ---- */
+  .frame{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 104px;}
+  .kicker{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);}
+  h1{font-weight:700;letter-spacing:-.02em;line-height:.94;color:var(--ink);}
+  h2{font-weight:700;letter-spacing:-.004em;line-height:.98;color:var(--ink);}
+  .display{font-size:112px;}
+  .title{font-size:78px;}
+  .lede{font-size:23px;line-height:1.45;color:var(--muted);font-weight:400;letter-spacing:-.01em;max-width:30ch;}
+  .ind{color:var(--accent);font-weight:500;}
+  .ink{color:var(--ink);font-weight:600;}
+
+  /* footer */
+  .foot{position:absolute;left:104px;right:104px;bottom:42px;display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+
+  /* mark */
+  .mark{width:30px;height:30px;border-radius:7px;background:var(--accent);}
+
+  /* ---- cover ---- */
+  .cover .frame{justify-content:center;}
+  .cover .mark{margin-bottom:40px;}
+  .cover h1{margin:0 0 32px;}
+  .cover .lede{max-width:46ch;}
+  .cover .who{position:absolute;left:104px;bottom:64px;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.06em;color:var(--muted);line-height:1.7;}
+  .cover .who b{color:var(--ink);font-weight:500;}
+
+  /* ---- statement ---- */
+  .statement h2{margin:26px 0 28px;max-width:16ch;}
+
+  /* ---- metrics ---- */
+  .m-head{margin-bottom:54px;}
+  .m-head h2{margin-top:20px;font-size:54px;max-width:18ch;}
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--hair);}
+  .metric{padding:34px 40px 34px 0;border-bottom:1px solid var(--hair);}
+  .metric:nth-child(odd){padding-left:0;}
+  .metric:nth-child(even){padding-left:48px;border-left:1px solid var(--hair);}
+  .metric .num{font-size:72px;font-weight:700;letter-spacing:-.045em;line-height:1;color:var(--ink);}
+  .metric .num .u{color:var(--accent);}
+  .metric .lab{margin-top:12px;font-size:16px;color:var(--muted);letter-spacing:-.005em;}
+
+  /* ---- split (image) ---- */
+  .split{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:100%;}
+  .split.flip .col-text{order:2;}
+  .split.flip .col-visual{order:1;}
+  .col-text{display:flex;flex-direction:column;justify-content:center;padding:0 72px 0 104px;}
+  .col-text .kicker .n{color:var(--faint);margin-right:14px;}
+  .col-text h2{margin:22px 0 22px;font-size:50px;max-width:13ch;}
+  .col-visual{position:relative;background:var(--panel);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 72px;border-left:1px solid var(--hair);}
+  .split.flip .col-visual{border-left:none;border-right:1px solid var(--hair);}
+  .shot{width:100%;max-height:404px;object-fit:contain;border-radius:13px;border:1px solid var(--hair);box-shadow:var(--shadow);}
+  .cap{margin-top:22px;font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.04em;line-height:1.5;text-align:center;color:var(--faint);max-width:42ch;}
+  .stack{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;width:100%;}
+  .stack .shot{width:auto;max-width:100%;max-height:232px;}
+  .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .tag{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);border:1px solid var(--hair);border-radius:6px;padding:7px 12px;}
+
+  /* ---- closing ---- */
+  .closing{background:linear-gradient(135deg,#4036e6 0%,var(--accent) 46%,#2a219c 100%);color:#fff;}
+  .closing .frame{justify-content:center;}
+  .closing .mark{background:rgba(255,255,255,.9);margin-bottom:36px;}
+  .closing .kicker{color:rgba(255,255,255,.72);}
+  .closing h2{color:#fff;max-width:19ch;font-size:58px;margin:20px 0 26px;}
+  .closing-blurb{max-width:56ch;font-size:19px;line-height:1.5;color:rgba(255,255,255,.9);font-weight:400;letter-spacing:-.005em;}
+  .closing .contact{position:absolute;left:104px;bottom:60px;display:flex;gap:40px;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.04em;color:rgba(255,255,255,.92);}
+  .closing .contact a{color:rgba(255,255,255,.92);text-decoration:none;}
+  .closing .qr{position:absolute;right:104px;bottom:90px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .closing .qr img{width:118px;height:118px;background:#fff;padding:10px;border-radius:12px;}
+  .closing .qr figcaption{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.72);}
+  .closing .foot{color:rgba(255,255,255,.6);}
+
+  /* ---- about (intro) ---- */
+  .about-grid{position:absolute;top:92px;left:104px;right:104px;display:grid;grid-template-columns:1fr 296px;gap:60px;align-items:center;}
+  .about-text .kicker{display:block;margin-bottom:22px;}
+  .about-text h2{font-size:52px;margin-bottom:24px;letter-spacing:-.01em;}
+  .about-text .lede{max-width:36ch;font-size:21px;}
+  .about-cta{margin-top:26px;font-family:'DM Mono',monospace;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);}
+  .about-cta a{color:var(--accent);text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:3px;}
+  .about-portrait{display:flex;flex-direction:column;align-items:center;}
+  .about-portrait .pic{display:block;width:300px;height:300px;border-radius:50%;overflow:hidden;}
+  .about-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 42%;transform:scale(1.2);}
+  .about-portrait figcaption{margin-top:15px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.03em;color:var(--faint);text-align:center;}
+  .logos{position:absolute;left:104px;right:104px;bottom:100px;border-top:1px solid var(--hair);padding-top:26px;}
+  .logos-label{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);}
+  .logos-row{display:flex;align-items:center;gap:24px;margin-top:26px;filter:grayscale(1) opacity(.66);}
+  .chip{flex:1;display:flex;align-items:center;justify-content:center;}
+  .chip img{max-height:29px;max-width:100%;object-fit:contain;}
+  .chip.sm img{max-height:22px;}
+  .chip.xs img{max-height:17px;}
+  .chip.box img{max-height:33px;}
+
+  /* ---- opengov architecture ---- */
+  .arch-head{position:absolute;top:86px;left:104px;right:104px;}
+  .arch-head h2{font-size:40px;line-height:1.07;margin:18px 0 14px;max-width:48ch;letter-spacing:-.01em;}
+  .arch-head .lede{max-width:64ch;font-size:19px;}
+  .arch-stack{position:absolute;left:104px;right:104px;top:262px;display:flex;flex-direction:column;gap:0;border:2.5px solid var(--ink);}
+  .tier{display:flex;align-items:stretch;gap:0;border-bottom:2.5px solid var(--ink);background:transparent;}
+  .tier:last-child{border-bottom:0;}
+  .tier-k{flex:0 0 188px;display:flex;align-items:center;padding:18px 22px;border-right:2.5px solid var(--ink);background:var(--ink);color:#faf8f5;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.3;}
+  .tier-items{flex:1;display:flex;flex-wrap:wrap;gap:0;padding:14px 16px;}
+  .tier-items span{font-family:'DM Mono',monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);background:transparent;border:2px solid var(--ink);border-radius:0;padding:8px 13px;margin:5px;}
+  .tier-items span.own{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .arch-role{position:absolute;left:104px;right:104px;bottom:92px;font-size:18px;color:var(--muted);letter-spacing:-.01em;}
+  .own-sw{display:inline-block;width:13px;height:13px;background:var(--accent);margin-right:9px;position:relative;top:1px;}
+  .og-logo{position:absolute;top:84px;right:104px;height:30px;}
+</style>
+</head>
+<body>
+
+<!-- 1 · ABOUT -->
+<section class="slide about theme-light" style="--bg:#faf8f5;">
+  <div class="about-grid">
+    <div class="about-text">
+      <span class="kicker">Designer-Engineer · Atlanta</span>
+      <h2>I think<br>in systems.</h2>
+      <p class="lede">I learn a business until I can see the whole of it — how it runs, how it earns, where the real problem sits. Then I collaborate to solve it, in design and in code. What follows is one of those systems, built end to end.</p>
+      <p class="about-cta">Interactive examples&ensp;<a href="https://barnesy.me">barnesy.me&nbsp;↗</a></p>
+    </div>
+    <figure class="about-portrait">
+      <span class="pic"><img src="img/about-chris-barnes.jpg" alt="Chris Barnes"></span>
+      <figcaption>Taken by my son Maxwell from 300ft away through a telescope.</figcaption>
+    </figure>
+  </div>
+  <div class="logos">
+    <span class="logos-label">Past collaborators</span>
+    <div class="logos-row">
+      <span class="chip"><img src="img/logo-disney.svg" alt="Disney"></span>
+      <span class="chip sm"><img src="img/logo-intel.svg" alt="Intel"></span>
+      <span class="chip box"><img src="img/logo-weatherchannel.svg" alt="The Weather Channel"></span>
+      <span class="chip"><img src="img/logo-southern.svg" alt="Southern Company"></span>
+      <span class="chip"><img src="img/logo-kimberlyclark.svg" alt="Kimberly-Clark"></span>
+      <span class="chip xs"><img src="img/logo-ihg.svg" alt="IHG Hotels &amp; Resorts"></span>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · COVER -->
+<section class="slide cover theme-light" style="--bg:#f5f1ea;">
+  <img class="og-logo" src="img/logo-opengov.svg" alt="OpenGov">
+  <div class="frame">
+    <span class="kicker">OpenGov · Capital Design System</span>
+    <h1 class="display" style="margin-top:18px;">Platform<br>to Product</h1>
+    <p class="lede">Rebuilding a design system and pattern library on MUI + React, then using it to build AI products, platform, even the marketing site rebuild.</p>
+  </div>
+  <div class="who">Chris Barnes<br><b>Staff Product Experience Engineer · OpenGov · 2024–2026</b></div>
+</section>
+
+<!-- 3 · OPENGOV -->
+<section class="slide arch theme-light" style="--bg:#efe9e0;">
+  <div class="arch-head">
+    <span class="kicker">About OpenGov</span>
+    <h2>Thousands of local and state governments trust OpenGov with their finance, assets, and legal workflows.</h2>
+  </div>
+  <div class="arch-stack">
+    <div class="tier tier-suites">
+      <span class="tier-k">Product Suites</span>
+      <div class="tier-items"><span>Budgeting &amp; Planning</span><span>Financials</span><span>Permitting &amp; Licensing</span><span>Procurement</span><span>Tax &amp; Revenue</span><span>Asset Management</span></div>
+    </div>
+    <div class="tier tier-ai">
+      <span class="tier-k">AI</span>
+      <div class="tier-items"><span class="own">OG Assist</span><span class="own">Agent Studio</span><span>Woven through every product</span></div>
+    </div>
+    <div class="tier tier-platform">
+      <span class="tier-k">Platform</span>
+      <div class="tier-items"><span class="own">Public Service Platform</span><span class="own">Capital Design System</span><span>Reporting &amp; Transparency</span></div>
+    </div>
+  </div>
+  <p class="arch-role"><span class="own-sw"></span><span class="ink">My ownership</span> — Lead designer for Platform &amp; AI, partnering with designer and developer teams across every suite.</p>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>03</span></div>
+</section>
+
+<!-- 4 · THE BET -->
+<section class="slide statement theme-light" style="--bg:#e8e1d6;">
+  <div class="frame">
+    <span class="kicker">The Bet</span>
+    <h2 class="title">A reference,<br>rebuilt as a platform.</h2>
+    <p class="lede">Tokens, patterns, validation, and agent tooling — one team, every product.</p>
+  </div>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>04</span></div>
+</section>
+
+<!-- 3 · IMPACT -->
+<section class="slide theme-light" style="--bg:#e0d8cb;">
+  <div class="frame">
+    <div class="m-head">
+      <span class="kicker">Impact</span>
+      <h2>A reference became infrastructure<br>the whole org builds on.</h2>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="num">200<span class="u">+</span></div><div class="lab">Prototypes in the first two months</div></div>
+      <div class="metric"><div class="num">20<span class="u">+</span></div><div class="lab">Designers &amp; engineering teams trained</div></div>
+      <div class="metric"><div class="num">100<span class="u">%</span></div><div class="lab">Pattern coverage — Patterns v37</div></div>
+      <div class="metric"><div class="num">Org<span class="u">-wide</span></div><div class="lab">Claude Code adoption, pioneered</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · PHASE 1 -->
+<section class="slide split theme-light" style="--bg:#d7cec0;">
+  <div class="col-text">
+    <span class="kicker"><span class="n">01</span>Foundation</span>
+    <h2>One source of truth</h2>
+    <p class="lede">A fragmented system, unified on <span class="ink">MUI + React</span>. Patterns v37, 100% coverage.</p>
+  </div>
+  <div class="col-visual">
+    <img class="shot" src="img/cds-storybook.png" alt="Storybook landing">
+    <div class="cap">Storybook — one source of truth<br>for the system</div>
+  </div>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>06</span></div>
+</section>
+
+<!-- 5 · PHASE 2 -->
+<section class="slide split flip theme-light" style="--bg:#cdc3b3;">
+  <div class="col-text">
+    <span class="kicker"><span class="n">02</span>Library</span>
+    <h2>Patterns, layouts,<br>20+ teams</h2>
+    <p class="lede">Everything moved from Figma into <span class="ink">Storybook</span>. BaseLayout ships every page.</p>
+  </div>
+  <div class="col-visual">
+    <img class="shot" src="img/og-budget-management.png" alt="BaseLayout in production">
+    <div class="cap">BaseLayout in production — Operating Budget FY26</div>
+  </div>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>07</span></div>
+</section>
+
+<!-- 6 · PHASE 3 (crossover to dark) -->
+<section class="slide statement theme-dark" style="--bg:#45403a;">
+  <div class="frame">
+    <span class="kicker"><span style="color:var(--faint);margin-right:14px;">03</span>Adoption</span>
+    <h2 class="title">Claude Code,<br>company-wide.</h2>
+    <p class="lede">The design system became a <span class="ink">substrate</span> agents compose against.</p>
+  </div>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>08</span></div>
+</section>
+
+<!-- 7 · PHASE 4 -->
+<section class="slide split theme-dark" style="--bg:#383229;">
+  <div class="col-text">
+    <span class="kicker"><span class="n">04</span>Seamstress</span>
+    <h2>Prototypes,<br>no engineer</h2>
+    <p class="lede">A prototyping agent on the production system. <span class="ink">200+ prototypes</span> in two months — mostly by designers and PMs.</p>
+  </div>
+  <div class="col-visual">
+    <img class="shot" src="img/prototypes-landing.png" alt="Prototyping repo">
+    <div class="cap">Real output, not mockups — built on the production system</div>
+  </div>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>09</span></div>
+</section>
+
+<!-- 8 · PHASE 5 -->
+<section class="slide split flip theme-dark" style="--bg:#2c2823;">
+  <div class="col-text">
+    <span class="kicker"><span class="n">05</span>Front-end Agent</span>
+    <h2>Enforcement<br>on every PR</h2>
+    <p class="lede">Production code generation, plus scoring on five rubrics.</p>
+    <div class="tags">
+      <span class="tag">Compliance</span><span class="tag">A11y</span><span class="tag">Responsive</span><span class="tag">Type</span><span class="tag">Motion</span>
+    </div>
+  </div>
+  <div class="col-visual">
+    <img class="shot" src="img/cds-scoring.png" alt="Scoring report">
+    <div class="cap">Five rubrics · twenty criteria · auto-fix or human flag</div>
+  </div>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>10</span></div>
+</section>
+
+<!-- 9 · IN PRODUCTION -->
+<section class="slide split theme-dark" style="--bg:#23201c;">
+  <div class="col-text">
+    <span class="kicker">In Production</span>
+    <h2>Government Artifacts<br>&amp; OG Assist</h2>
+    <p class="lede">Redesigned around the <span class="ink">document</span>. AI as the primary interaction, not a sidebar.</p>
+  </div>
+  <div class="col-visual">
+    <img class="shot" src="img/og-artifacts-home.png" alt="Government Artifacts workspace">
+    <div class="cap">The Government Artifacts workspace, drafted by OG Assist</div>
+  </div>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>11</span></div>
+</section>
+
+<!-- 10 · WHAT'S NEXT -->
+<section class="slide statement theme-dark" style="--bg:#1a1714;">
+  <div class="frame">
+    <span class="kicker">What's Next</span>
+    <h2 class="title">Bypassing<br>Figma.</h2>
+    <p class="lede">A wireframing tool inside the repo. Design and production, <span class="ink">one source of truth</span>.</p>
+  </div>
+  <div class="foot"><span>Chris Barnes · OpenGov</span><span>12</span></div>
+</section>
+
+<!-- 11 · CLOSING -->
+<section class="slide closing theme-dark">
+  <div class="frame">
+    <span class="kicker">If you made it this far…</span>
+    <h2 class="title">I'm a curious artist<br>who loves science.</h2>
+    <p class="closing-blurb">I built a bathroom — plumbing and wiring included. I 3D print, paint, and experiment. I've put interactive art in public space. Same instinct as the work: understand a system well enough to build it, then make something people can actually use.</p>
+  </div>
+  <div class="contact">
+    <a href="mailto:chris@barnesy.me">chris@barnesy.me</a><a href="https://barnesy.me">barnesy.me</a><a href="https://linkedin.com/in/iambarnesy">in/iambarnesy</a>
+  </div>
+  <figure class="qr">
+    <img src="img/qr-barnesy.svg" alt="QR code linking to barnesy.me">
+    <figcaption>Scan for live work</figcaption>
+  </figure>
+  <div class="foot"><span>Chris Barnes</span><span>13</span></div>
+</section>
+
+</body>
+</html>

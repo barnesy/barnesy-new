@@ -21,9 +21,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CallRail Design System | Chris Barnes — Principal Designer</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/pages/callrail.css">
-    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
-</head>
+    <link rel="stylesheet" href="css/projects.css">
+    </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
     <nav>
@@ -32,76 +31,68 @@
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-actions">
                 <a href="index.html#work" class="back-link">← Back to Work</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
+                </div>
         </div>
     </nav>
 
-    <section class="project-hero project-hero--callrail" id="main">
+    <section class="project-hero" id="main" style="--hero-bg: #1c4e8c; --hero-text: #ffffff; --hero-accent: #ffffff; --hero-divider: rgba(255, 255, 255, 0.3);">
         <div class="container">
             <span class="hero-eyebrow">CallRail · Case Study</span>
             <h1>Design System Overhaul</h1>
-            <p class="lead">Led the rebuild of CallRail's component system — aligning multi-disciplinary teams around a modular library that improved accessibility, consistency, and shipping velocity.</p>
+            <p class="hero-subtitle">Led the rebuild of CallRail's component system — aligning multi-disciplinary teams around a modular library that improved accessibility, consistency, and shipping velocity.</p>
             <hr class="hero-divider">
-            <div class="hero-meta">
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Role</span>
-                    <span class="hero-meta-value">Lead Designer</span>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number" style="font-size: 1.25rem;">Lead Designer</span>
+                    <p class="hero-stat-label">Role</p>
                 </div>
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Years</span>
-                    <span class="hero-meta-value">2018–2020</span>
+                <div class="hero-stat">
+                    <span class="hero-stat-number" style="font-size: 1.25rem;">2018–2020</span>
+                    <p class="hero-stat-label">Years</p>
                 </div>
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Scope</span>
-                    <span class="hero-meta-value">Full Platform</span>
+                <div class="hero-stat">
+                    <span class="hero-stat-number" style="font-size: 1.25rem;">Full Platform</span>
+                    <p class="hero-stat-label">Scope</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section>
-        <div class="container">
-            <h2>Aligning multi-disciplinary teams</h2>
+        <div class="container-narrow">
+            <h2 class="section-title">Aligning multi-disciplinary teams</h2>
             <p>Each discipline powers a system that creates cycles of iteration and incremental improvement. Collaboration and empathy was key to helping align our team around a common system that was useful and efficient.</p>
 
-            <img src="images/callrail/callrail-08.png" alt="Team Alignment" class="img-full">
+            <div class="case-study-image-container">
+                <img src="images/callrail/callrail-08.png" alt="Team Alignment" class="case-study-image">
+            </div>
 
-            <h2>Design Systems</h2>
+            <h2 class="section-title">Design Systems</h2>
             <p>I identified parts of the system that could be modularized into reusable components...just like legos! The building blocks composed pages. The pages were placed into a hierarchy of information made up of directories that terminate in leaf pages. This increased accessibility, and provided consistency across the platform.</p>
 
-            <img src="images/callrail/callrail_legos.png" alt="Lego Component System" class="img-full">
-            <img src="images/callrail/callrail-11.png" alt="Component Library" class="img-full">
-            <img src="images/callrail/callrail-10.png" alt="Design System Documentation" class="img-full">
+            <div class="case-study-image-container">
+                <img src="images/callrail/callrail_legos.png" alt="Lego Component System" class="case-study-image mb-8">
+                <img src="images/callrail/callrail-11.png" alt="Component Library" class="case-study-image mb-8">
+                <img src="images/callrail/callrail-10.png" alt="Design System Documentation" class="case-study-image">
+            </div>
 
-            <h2>SEO + Accessibility</h2>
+            <h2 class="section-title">SEO + Accessibility</h2>
             <p>We had a minor conflict with the Demand Generation team that was producing pages outside of the hierarchy. We identified core needs for the system that drove decisions that honored the SEO goals, while producing a highly accessible system.</p>
 
             <p>By identifying areas of overlap that increased Accessibility and SEO we were able to produce a system that fulfilled both teams KPIs. Below is the <a href="https://searchengineland.com/guide/what-is-seo" target="_blank" class="text-link">SEO Table of Elements</a> where we outlined goals for the new design system.</p>
 
-            <img src="images/callrail/callrail_seo_pte.png" alt="SEO Table of Elements" class="img-full">
+            <div class="case-study-image-container">
+                <img src="images/callrail/callrail_seo_pte.png" alt="SEO Table of Elements" class="case-study-image">
+            </div>
 
-            <h2>Holistic deep-dive reviews</h2>
+            <h2 class="section-title">Holistic deep-dive reviews</h2>
             <p>I mapped existing content into new structures. I designed the information structure to make more sense categorically.</p>
 
-            <img src="images/callrail/callrail-20.png" alt="Content Mapping" class="img-full">
+            <div class="case-study-image-container">
+                <img src="images/callrail/callrail-20.png" alt="Content Mapping" class="case-study-image">
+            </div>
 
-            <h2>Sketch Wireframes</h2>
+            <h2 class="section-title">Sketch Wireframes</h2>
             <p>Once we had a system in place I rapidly sketched out new pages and systems that would better communicate and facilitate user interactions.</p>
 
             <div class="image-grid">
@@ -111,12 +102,16 @@
                 <img src="images/callrail/callrail-26.png" alt="Wireframe 4">
             </div>
 
-            <h2>Before & After</h2>
+            <h2 class="section-title">Before & After</h2>
             <p>Before</p>
-            <img src="images/callrail/callrail-old.png" alt="Before redesign" class="img-full">
+            <div class="case-study-image-container">
+                <img src="images/callrail/callrail-old.png" alt="Before redesign" class="case-study-image mb-8">
+            </div>
 
             <p>After</p>
-            <img src="images/callrail/callrail-new.png" alt="After redesign" class="img-full">
+            <div class="case-study-image-container">
+                <img src="images/callrail/callrail-new.png" alt="After redesign" class="case-study-image">
+            </div>
         </div>
     </section>
 
@@ -164,6 +159,11 @@
                 sunIcon.classList.remove('hidden');
             }
         });
+    </script>
+
+    <script type="module">
+        import { initLightbox } from './js/lightbox.js';
+        initLightbox();
     </script>
 </body>
 </html>

@@ -21,9 +21,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Read — Award-Winning App | Chris Barnes — Principal Designer</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/pages/lets-read.css">
-    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
-</head>
+    <link rel="stylesheet" href="css/projects.css">
+    </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
     <nav>
@@ -32,49 +31,37 @@
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-actions">
                 <a href="index.html#work" class="back-link">← Back to Work</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
+                </div>
         </div>
     </nav>
 
-    <section class="project-hero project-hero--lets-read" id="main">
+    <section class="project-hero" id="main" style="background: linear-gradient(var(--hero-overlay), var(--hero-overlay)), url('images/letsread/LR+Hero.jpg') center/cover; --hero-text: #1a1816; --hero-text-secondary: #ffffff;">
         <div class="container">
             <span class="hero-eyebrow">Let's Read · Product Design</span>
             <h1>Let's Read</h1>
-            <p class="lead">Award winning, Apple Appstore Featured. Family network for storytime connecting generations through the joy of reading together.</p>
+            <p class="hero-subtitle">Award winning, Apple Appstore Featured. Family network for storytime connecting generations through the joy of reading together.</p>
         </div>
     </section>
 
     <section>
-        <div class="container">
-            <h2>The Concept</h2>
+        <div class="container-narrow">
+            <h2 class="section-title">The Concept</h2>
             <p>I designed and prototyped a kids-book reading network. This prototype turned into a full product helping families stay connected. The app's main feature was remote video narration of in-app books. It was featured on the Apple Appstore and won a Webby award.</p>
 
-            <img src="images/letsread/lets-read-accounts.png" alt="Account System" class="img-full">
+            <div class="case-study-image-container">
+                <img src="images/letsread/lets-read-accounts.png" alt="Account System" class="case-study-image">
+            </div>
 
-            <h2>Product Screens</h2>
-            <img src="images/letsread/LR+01.jpg" alt="App Screen 1" class="img-full">
-            <img src="images/letsread/LR+02.jpg" alt="App Screen 2" class="img-full">
-            <img src="images/letsread/LR+03.jpg" alt="App Screen 3" class="img-full">
-            <img src="images/letsread/LR+04.jpg" alt="App Screen 4" class="img-full">
-            <img src="images/letsread/LR+05.jpg" alt="App Screen 5" class="img-full">
+            <h2 class="section-title">Product Screens</h2>
+            <div class="case-study-image-container">
+                <img src="images/letsread/LR+01.jpg" alt="App Screen 1" class="case-study-image mb-8">
+                <img src="images/letsread/LR+02.jpg" alt="App Screen 2" class="case-study-image mb-8">
+                <img src="images/letsread/LR+03.jpg" alt="App Screen 3" class="case-study-image mb-8">
+                <img src="images/letsread/LR+04.jpg" alt="App Screen 4" class="case-study-image mb-8">
+                <img src="images/letsread/LR+05.jpg" alt="App Screen 5" class="case-study-image">
+            </div>
 
-            <h2>Impact</h2>
+            <h2 class="section-title">Impact</h2>
             <p>The app enabled grandparents, parents, and loved ones to read bedtime stories to children regardless of distance. By combining video recording with interactive books, Let's Read created meaningful connections across generations and helped maintain family bonds through the simple act of reading together.</p>
         </div>
     </section>
@@ -123,6 +110,11 @@
                 sunIcon.classList.remove('hidden');
             }
         });
+    </script>
+
+    <script type="module">
+        import { initLightbox } from './js/lightbox.js';
+        initLightbox();
     </script>
 </body>
 </html>

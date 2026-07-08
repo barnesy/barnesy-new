@@ -24,9 +24,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/pages/raceday.css">
-    <script id="data-theme-init">(function(){if(localStorage.getItem('theme')!=='dark')document.documentElement.setAttribute('data-theme','light');})();</script>
-</head>
+    <link rel="stylesheet" href="css/projects.css">
+    </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
@@ -37,29 +36,13 @@
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-actions">
                 <a href="index.html#work" class="back-link">← Back to Work</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="theme-icon" id="moonIcon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="theme-icon hidden" id="sunIcon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
+                </div>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section class="hero hero--raceday" id="main">
-        <div class="container">
+    <section class="project-hero" id="main" style="--hero-bg: #111111; --hero-text: #ffffff; --hero-accent: #f2a900; --hero-text-secondary: rgba(255, 255, 255, 0.85); --hero-divider: rgba(255, 255, 255, 0.22);">
+        <div class="wide-container">
             <span class="hero-eyebrow">Race Day · UEFN</span>
             <h1>Fortnite Race Day</h1>
             <p class="hero-subtitle">A real game in Unreal Editor for Fortnite — custom Verse logic, zone-based tracks, persistent per-mode leaderboards, NPC enemies, and a Claude Code workflow that ships features in phases.</p>
@@ -87,7 +70,7 @@
 
     <!-- The intention -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">The intention</h2>
             <div class="section-content">
                 <p>
@@ -102,7 +85,7 @@
 
     <!-- Where it is now -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">Where it is now</h2>
             <div class="section-content">
                 <p>
@@ -115,67 +98,75 @@
                 </p>
             </div>
 
-            <img src="images/raceday/raceday-hub.png"
-                 alt="Race Day hub with control panel, RACE DAY signage, and BrotherBill spawn"
-                 class="case-study-image">
-            <p class="image-caption">The build hub — control panel, RACE DAY sign, lobby spawn area, and a BrotherBill spectating.</p>
+            <div class="case-study-image-container">
+                <img src="images/raceday/raceday-hub.png"
+                     alt="Race Day hub with control panel, RACE DAY signage, and BrotherBill spawn"
+                     class="case-study-image">
+                <p class="image-caption">The build hub — control panel, RACE DAY sign, lobby spawn area, and a BrotherBill spectating.</p>
+            </div>
 
-            <div class="section-content">
+            <div>
                 <h3>The track</h3>
                 <p>
                     Five sequential progression zones (<code>Zone0Start → Zone4Finish</code>) plus optional bonus zones for boost pads. Built on <code>volume_device</code> so the same architecture supports on-foot now and vehicles later. Wrong-zone entry is rejected — you can't skip ahead.
                 </p>
             </div>
 
-            <img src="images/raceday/raceday-track-overview.png"
-                 alt="Top-down view of the race track with five progression zones rendered as translucent blue volumes"
-                 class="case-study-image">
-            <p class="image-caption">Top-down view of the track. The translucent blue boxes are the five progression zones, each one a <code>volume_device</code> wired into the Verse race manager.</p>
+            <div class="case-study-image-container">
+                <img src="images/raceday/raceday-track-overview.png"
+                     alt="Top-down view of the race track with five progression zones rendered as translucent blue volumes"
+                     class="case-study-image">
+                <p class="image-caption">Top-down view of the track. The translucent blue boxes are the five progression zones, each one a volume_device wired into the Verse race manager.</p>
+            </div>
 
-            <div class="section-content">
+            <div>
                 <h3>The flyover</h3>
                 <p>
                     Every race opens with a 30-second countdown. The countdown plays a cinematic flyover of the track so players see what they're about to run before they run it.
                 </p>
             </div>
 
-            <div>
-                <video controls preload="metadata" playsinline class="case-study-video">
+            <div class="case-study-image-container">
+                <video controls preload="metadata" playsinline class="case-study-image">
                     <source src="images/raceday/raceday-flyover.mp4" type="video/mp4">
                     Your browser doesn't support embedded video. <a href="images/raceday/raceday-flyover.mp4">Download the flyover</a>.
                 </video>
                 <p class="image-caption">The 30-second countdown flyover — the track previewed before the gates drop.</p>
             </div>
 
-            <div class="section-content">
+            <div>
                 <h3>The HUD</h3>
                 <p>
                     Real-time race timer, placement indicator, segment progress (<code>Start → 1 → 2 → 3 → 4 → Finish</code>), and per-zone split times. Custom Verse-driven — every HUD element is a <code>hud_message_device</code> wired to game state via <code>@editable</code> refs.
                 </p>
             </div>
 
-            <img src="images/raceday/raceday-hud-blueprint.png"
-                 alt="In-game HUD blueprint in UEFN editor showing placement, timer, and segment progress"
-                 class="case-study-image">
-            <p class="image-caption">In-game HUD — placement and timer at the top (1st · 01:30), segment progress along the side (Start → 1 → 2 → 3 → 4 → Finish).</p>
+            <div class="case-study-image-container">
+                <img src="images/raceday/raceday-hud-blueprint.png"
+                     alt="In-game HUD blueprint in UEFN editor showing placement, timer, and segment progress"
+                     class="case-study-image">
+                <p class="image-caption">In-game HUD — placement and timer at the top (1st · 01:30), segment progress along the side (Start → 1 → 2 → 3 → 4 → Finish).</p>
+            </div>
 
-            <div class="section-content">
+            <div>
                 <h3>The win screen</h3>
                 <p>
                     Race Complete modal with placement, finish time, and dual leaderboards: <strong>This Race</strong> vs <strong>All Time</strong> persistent. <code>TO LOBBY</code> exits, <code>READY UP</code> queues another race.
                 </p>
             </div>
 
-            <img src="images/raceday/raceday-win-screen.png"
-                 alt="Win screen modal showing Race Complete, 1st place, finish time, and dual leaderboards"
-                 class="case-study-image">
-            <p class="image-caption">Post-race modal — placement, time, dual leaderboards (This Race vs. All Time), and TO LOBBY / READY UP actions.</p>
+            <div class="case-study-image-container">
+                <img src="images/raceday/raceday-win-screen.png"
+                     alt="Win screen modal showing Race Complete, 1st place, finish time, and dual leaderboards"
+                     class="case-study-image">
+                <p class="image-caption">Post-race modal — placement, time, dual leaderboards (This Race vs. All Time), and TO LOBBY / READY UP actions.</p>
+            </div>
         </div>
     </section>
 
     <!-- How Claude collaborates -->
     <section class="bg-card">
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">How Claude collaborates</h2>
             <div class="section-content">
                 <p>
@@ -210,7 +201,7 @@
 
     <!-- What's next -->
     <section>
-        <div class="container">
+        <div class="container-narrow">
             <h2 class="section-title">What's next</h2>
             <div class="section-content">
                 <p>
@@ -294,6 +285,11 @@
                 sunIcon.classList.remove('hidden');
             }
         });
+    </script>
+
+    <script type="module">
+        import { initLightbox } from './js/lightbox.js';
+        initLightbox();
     </script>
 </body>
 </html>

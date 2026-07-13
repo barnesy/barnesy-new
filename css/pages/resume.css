@@ -1,418 +1,423 @@
 * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --ink: #0a0a0a;
-            --body: #2b2b2b;
-            --muted: #6b6b6b;
-            --rule: #1a1a1a;
-            --hairline: #e5e5e5;
-            --accent: #0a0a0a;
-        }
-
-        body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: #f4f4f2;
-            color: var(--body);
-            line-height: 1.5;
-            padding: 2rem 1rem;
-            margin: 0;
-            font-size: 13px;
-        }
-
-        /* Top Bar - hide on print */
-        .top-bar {
-            max-width: 8.5in;
-            margin: 0 auto 1.25rem;
-            padding: 0.5rem 0.25rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-        }
-
-        .top-bar a {
-            color: var(--muted);
-            text-decoration: none;
-        }
-
-        .top-bar a:hover {
-            color: var(--ink);
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0.9rem;
-            background: var(--ink);
-            border: 1px solid var(--ink);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: inherit;
-            transition: opacity 0.15s ease;
-        }
-
-        .download-btn:hover {
-            opacity: 0.85;
-        }
-
-        .resume-container {
-            background: white;
-            max-width: 8.5in;
-            margin: 0 auto;
-            padding: 0.5in 0.85in 0.45in;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.06);
-        }
-
-        header {
-            margin-bottom: 1.25rem;
-            padding-bottom: 1.1rem;
-            border-bottom: 1px solid var(--hairline);
-        }
-
-        h1 {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 2.1rem;
-            font-weight: 700;
-            color: var(--ink);
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.65rem;
-        }
-
-        .contact-info {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            color: var(--muted);
-            font-size: 0.8rem;
-            align-items: center;
-        }
-
-        .contact-info span {
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .contact-info span + span::before {
-            content: "";
-            display: inline-block;
-            width: 3px;
-            height: 3px;
-            background: var(--muted);
-            border-radius: 50%;
-            margin-right: 1rem;
-            opacity: 0.5;
-        }
-
-        .contact-info a {
-            color: var(--ink);
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.15s ease;
-        }
-
-        .contact-info a:hover {
-            opacity: 0.7;
-        }
-
-        .summary {
-            margin-bottom: 0;
-            color: var(--muted);
-            font-size: 0.8rem;
-            line-height: 1.6;
-            max-width: 62ch;
-        }
-
-
-        section:last-child {
-            margin-bottom: 0;
-        }
-
-        h2 {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--ink);
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.015em;
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--hairline);
-            position: relative;
-        }
-
-        .job {
-            margin-bottom: 0.85rem;
-        }
-
-        .job:last-child {
-            margin-bottom: 0;
-        }
-
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 1rem;
-            margin-bottom: 0.1rem;
-        }
-
-        .job-title {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--ink);
-            letter-spacing: -0.005em;
-            line-height: 1.35;
-        }
-
-        .job-title .job-company {
-            color: var(--muted);
-            font-weight: 400;
-        }
-
-        .job-title .job-sep {
-            color: var(--muted);
-            font-weight: 400;
-            margin: 0 0.5em;
-            opacity: 0.5;
-        }
-
-        .job-dates {
-            color: var(--muted);
-            font-size: 0.75rem;
-            font-weight: 500;
-            white-space: nowrap;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .job ul {
-            margin-top: 0.25rem;
-            margin-left: 0;
-            list-style: none;
-        }
-
-        .job li {
-            color: var(--body);
-            margin-bottom: 0.2rem;
-            line-height: 1.5;
-            font-size: 0.8rem;
-            padding-left: 0.85rem;
-            position: relative;
-        }
-
-        .job li::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0.55rem;
-            width: 4px;
-            height: 1px;
-            background: var(--muted);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem 1.75rem;
-        }
-
-        .skill-category ul {
-            list-style: none;
-        }
-
-        .skill-category li {
-            color: var(--body);
-            font-size: 0.8rem;
-            margin-bottom: 0.28rem;
-            padding-left: 0;
-            position: relative;
-        }
-
-        .software-skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-        }
-
-        .software-tag {
-            padding: 0.35rem 0.7rem;
-            background: white;
-            border: 1px solid var(--hairline);
-            border-radius: 999px;
-            font-size: 0.78rem;
-            color: var(--body);
-            font-weight: 500;
-        }
-
-        .education {
-            font-size: 0.85rem;
-            color: var(--body);
-            line-height: 1.55;
-        }
-
-        .education strong {
-            color: var(--ink);
-            font-weight: 600;
-            display: block;
-            font-size: 0.9rem;
-            margin-bottom: 0.05rem;
-        }
-
-        .education-school {
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
-
-        @media print {
-            @page {
-                margin: 0.5in;
-                size: letter;
-            }
-
-            body {
-                padding: 0;
-                margin: 0;
-                background: white;
-                font-size: 12.5px;
-            }
-
-            .top-bar {
-                display: none;
-            }
-
-            .resume-container {
-                padding: 0;
-                box-shadow: none;
-                max-width: 100%;
-            }
-
-            header {
-                margin-bottom: 1.25rem;
-                padding-bottom: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-                margin-bottom: 0.55rem;
-            }
-
-            .summary {
-                margin-bottom: 0;
-                font-size: 0.82rem;
-                line-height: 1.6;
-            }
-
-            section {
-                margin-bottom: 0;
-            }
-
-            h2 {
-                padding-top: 1.25rem;
-                margin-bottom: 0.65rem;
-                font-size: 1.05rem;
-            }
-
-            .job {
-                margin-bottom: 0.85rem;
-                page-break-inside: avoid;
-            }
-
-            .job ul {
-                margin-top: 0.3rem;
-            }
-
-            .job li {
-                margin-bottom: 0.25rem;
-                font-size: 0.82rem;
-                line-height: 1.5;
-            }
-
-            .job-title {
-                font-size: 0.92rem;
-            }
-
-            .skill-category li {
-                margin-bottom: 0.35rem;
-                font-size: 0.82rem;
-            }
-
-            /* Force flex/grid layouts to render in print regardless of width */
-            .contact-info {
-                display: flex !important;
-                flex-direction: row !important;
-                gap: 1.25rem !important;
-            }
-
-            .contact-info span + span::before {
-                display: inline-block !important;
-            }
-
-            .job-header {
-                display: flex !important;
-                flex-direction: row !important;
-                justify-content: space-between !important;
-                align-items: baseline !important;
-            }
-
-            .skills-grid {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.5rem 2rem !important;
-            }
-
-            /* Ensure bullet markers print */
-            .job li::before {
-                background: var(--ink) !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            body {
-                padding: 0.5rem;
-            }
-
-            .resume-container {
-                padding: 1rem 1.25rem;
-            }
-
-            .top-bar {
-                margin: 0 0 0.75rem;
-                padding: 0.25rem;
-            }
-
-            h1 {
-                font-size: 1.85rem;
-            }
-
-            .contact-info {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.35rem;
-            }
-
-            .contact-info span + span::before {
-                display: none;
-            }
-
-            .job-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.15rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --ink: #0a0a0a;
+    --body: #2b2b2b;
+    --muted: #6b6b6b;
+    --rule: #1a1a1a;
+    --hairline: #e5e5e5;
+    --accent: #0a0a0a;
+}
+
+body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background: #f4f4f2;
+    color: var(--body);
+    line-height: 1.5;
+    padding: 2rem 1rem;
+    margin: 0;
+    font-size: 13px;
+}
+
+/* Top Bar - hide on print */
+.top-bar {
+    max-width: 8.5in;
+    margin: 0 auto 1.25rem;
+    padding: 0.5rem 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.top-bar a {
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.top-bar a:hover {
+    color: var(--ink);
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.15s ease;
+}
+
+.download-btn:hover {
+    opacity: 0.85;
+}
+
+.resume-container {
+    background: white;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 0.5in 0.85in 0.45in;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid var(--hairline);
+}
+
+h1 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.65rem;
+}
+
+.contact-info {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.8rem;
+    align-items: center;
+}
+
+.contact-info span {
+    display: inline-flex;
+    align-items: center;
+}
+
+.contact-info span+span::before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background: var(--muted);
+    border-radius: 50%;
+    margin-right: 1rem;
+    opacity: 0.5;
+}
+
+.contact-info a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.15s ease;
+}
+
+.contact-info a:hover {
+    opacity: 0.7;
+}
+
+.summary {
+    margin-bottom: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    max-width: 62ch;
+}
+
+
+section:last-child {
+    margin-bottom: 0;
+}
+
+section {
+    padding-top: 1rem;
+    padding-bottom: 0;
+}
+
+h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.015em;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--hairline);
+    position: relative;
+}
+
+.job {
+    margin-bottom: 0.85rem;
+}
+
+.job:last-child {
+    margin-bottom: 0;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.1rem;
+}
+
+.job-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+}
+
+.job-title .job-company {
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.job-title .job-sep {
+    color: var(--muted);
+    font-weight: 400;
+    margin: 0 0.5em;
+    opacity: 0.5;
+}
+
+.job-dates {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.job ul {
+    margin-top: 0.25rem;
+    margin-left: 0;
+    list-style: none;
+}
+
+.job li {
+    color: var(--body);
+    margin-bottom: 0.2rem;
+    line-height: 1.5;
+    font-size: 0.8rem;
+    padding-left: 0.85rem;
+    position: relative;
+}
+
+.job li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 4px;
+    height: 1px;
+    background: var(--muted);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem 1.75rem;
+}
+
+.skill-category ul {
+    list-style: none;
+}
+
+.skill-category li {
+    color: var(--body);
+    font-size: 0.8rem;
+    margin-bottom: 0.28rem;
+    padding-left: 0;
+    position: relative;
+}
+
+.software-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.software-tag {
+    padding: 0.35rem 0.7rem;
+    background: white;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    color: var(--body);
+    font-weight: 500;
+}
+
+.education {
+    font-size: 0.85rem;
+    color: var(--body);
+    line-height: 1.55;
+}
+
+.education strong {
+    color: var(--ink);
+    font-weight: 600;
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.05rem;
+}
+
+.education-school {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+@media print {
+    @page {
+        margin: 0.5in;
+        size: letter;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        background: white;
+        font-size: 12.5px;
+    }
+
+    .top-bar {
+        display: none;
+    }
+
+    .resume-container {
+        padding: 0;
+        box-shadow: none;
+        max-width: 100%;
+    }
+
+    header {
+        margin-bottom: 1.25rem;
+        padding-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 0.55rem;
+    }
+
+    .summary {
+        margin-bottom: 0;
+        font-size: 0.82rem;
+        line-height: 1.6;
+    }
+
+    section {
+        margin-bottom: 0;
+    }
+
+    h2 {
+        padding-top: 1.25rem;
+        margin-bottom: 0.65rem;
+        font-size: 1.05rem;
+    }
+
+    .job {
+        margin-bottom: 0.85rem;
+        page-break-inside: avoid;
+    }
+
+    .job ul {
+        margin-top: 0.3rem;
+    }
+
+    .job li {
+        margin-bottom: 0.25rem;
+        font-size: 0.82rem;
+        line-height: 1.5;
+    }
+
+    .job-title {
+        font-size: 0.92rem;
+    }
+
+    .skill-category li {
+        margin-bottom: 0.35rem;
+        font-size: 0.82rem;
+    }
+
+    /* Force flex/grid layouts to render in print regardless of width */
+    .contact-info {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 1.25rem !important;
+    }
+
+    .contact-info span+span::before {
+        display: inline-block !important;
+    }
+
+    .job-header {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: baseline !important;
+    }
+
+    .skills-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.5rem 2rem !important;
+    }
+
+    /* Ensure bullet markers print */
+    .job li::before {
+        background: var(--ink) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 0.5rem;
+    }
+
+    .resume-container {
+        padding: 1rem 1.25rem;
+    }
+
+    .top-bar {
+        margin: 0 0 0.75rem;
+        padding: 0.25rem;
+    }
+
+    h1 {
+        font-size: 1.85rem;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
+    .contact-info span+span::before {
+        display: none;
+    }
+
+    .job-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}

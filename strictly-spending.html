@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <!-- SEO & Metadata -->
-    <meta name="description" content="A personal data tool for spending, pair-coded with Claude. Multi-bank CSV ingestion, rule-based categorization, recurring detection, keyboard-driven triage. A local-first dashboard for discovering patterns in real household spending.">
+    <meta name="description" content="An AI-Native and Local-First personal finance project, created with Gemini and powered by local Gemma models.">
     <meta name="author" content="Chris Barnes">
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://barnesy.me/strictly-spending.html">
     <meta property="og:title" content="Strictly Spending | Chris Barnes, Principal Designer">
-    <meta property="og:description" content="A personal data tool for spending, pair-coded with Claude. Local-first discovery dashboard with multi-bank CSV ingestion, recurring detection, and keyboard-driven triage.">
+    <meta property="og:description" content="An AI-Native and Local-First personal finance project, created with Gemini and powered by local Gemma models.">
     <meta property="og:image" content="https://barnesy.me/images/strictly-spending/hero.png">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Strictly Spending | Chris Barnes, Principal Designer">
-    <meta name="twitter:description" content="A personal data tool for spending, pair-coded with Claude. Local-first discovery dashboard with multi-bank CSV ingestion, recurring detection, and keyboard-driven triage.">
+    <meta name="twitter:description" content="An AI-Native and Local-First personal finance project, created with Gemini and powered by local Gemma models.">
     <meta name="twitter:image" content="https://barnesy.me/images/strictly-spending/hero.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strictly Spending | Chris Barnes, Principal Designer</title>
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/projects.css">
-    </head>
+</head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
@@ -36,16 +36,16 @@
             <a href="index.html" class="logo">Chris Barnes</a>
             <div class="nav-actions">
                 <a href="index.html#work" class="back-link">← Back to Work</a>
-                </div>
+            </div>
         </div>
     </nav>
 
     <!-- Hero -->
     <section class="project-hero" id="main" style="--hero-bg: var(--spending-hero-bg, #0e1b14); --hero-text: #ffffff; --hero-accent: var(--spending-green, #34d399); --hero-text-secondary: rgba(255, 255, 255, 0.85); --hero-divider: rgba(255, 255, 255, 0.22);">
         <div class="wide-container">
-            <span class="hero-eyebrow">Strictly Spending · Pair-coded with Claude</span>
-            <h1>Strictly Spending App</h1>
-            <p class="hero-subtitle">Multi-bank CSV ingestion, rule-based categorization, recurring detection, and keyboard-driven triage. A local-first dashboard for discovering patterns in real household spending. Designed for power, built in the browser, owned end-to-end.</p>
+            <span class="hero-eyebrow">Strictly Spending · Built with Gemini</span>
+            <h1>Strictly Spending</h1>
+            <p class="hero-subtitle">An open source project that's AI-Native and Local-First for personal finance. Analyze, budget, forecast and dream a little dream about your finances and future plans. All powered by local Gemma models from Google.</p>
             <hr class="hero-divider">
             <div class="hero-stats">
                 <div class="hero-stat">
@@ -55,181 +55,54 @@
                     </a>
                 </div>
                 <div class="hero-stat">
-                    <span class="hero-stat-number">Claude</span>
-                    <p class="hero-stat-label">Coded it with me</p>
+                    <span class="hero-stat-number">Gemini</span>
+                    <p class="hero-stat-label">Coded with AI</p>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">Gemma</span>
+                    <p class="hero-stat-label">Local intelligence</p>
                 </div>
                 <div class="hero-stat">
                     <span class="hero-stat-number">Local</span>
-                    <p class="hero-stat-label">All data stays in the browser</p>
-                </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-number">4</span>
-                    <p class="hero-stat-label">Bank formats unified</p>
+                    <p class="hero-stat-label">Data stays on device</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why I started -->
+    <!-- Content -->
     <section class="bg-card">
         <div class="container-narrow">
-            <h2 class="section-title">Why I started</h2>
+            <h2 class="section-title">AI-Native Personal Finance</h2>
             <div class="section-content">
                 <p>
-                    Off-the-shelf budgeting apps want bank credentials, push their own category taxonomy, and treat your data as theirs. None of that fits a household that wants to actually explore its own finances: by category, by merchant, by month, with the analytical lens you choose.
+                    Here is an open source project that's AI-Native and Local-First for personal finance. You can analyze, budget, forecast and dream a little dream about your finances and future plans. All with free local Gemma models from Google.
                 </p>
                 <p>
-                    I wanted a dashboard built around one question: <strong>where is the money going, and what's worth changing?</strong> Powerful, private, local. The data never leaves the laptop. The interface gets out of the way.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- The build -->
-    <section>
-        <div class="container-narrow">
-            <h2 class="section-title">The build, briefly</h2>
-            <div class="section-content">
-                <p>
-                    Pair-coded with Claude. Vite, React, TypeScript. MUI for components. Dexie wrapping IndexedDB. Zustand for filter state. MUI X Charts for the visualization. No server. No cloud.
-                </p>
-                <p>
-                    Refresh the page and your data is still there. Open the app in a different browser and it's empty, because the data has never been anywhere else.
+                    The AI can create artifacts for planning and eventually for completing personal taxes. This project was mostly created with Gemini models, built specifically to leverage free local Gemma models.
                 </p>
             </div>
 
             <video controls autoplay muted loop playsinline
-                   poster="images/strictly-spending/hero.png"
                    class="case-study-video"
-                   aria-label="A 40-second walkthrough of the Strictly Spending dashboard. The filter and Top Merchants side panels collapse and re-expand, the chart cycles through grouping modes, a category tooltip is hovered, a recurring charge is toggled in the Forecast view, uncategorized merchants are triaged in the Sort view via keyboard, then the dashboard drills into a single month and filters down to just Groceries and Restaurants for a discovery view, before resetting to year-to-date.">
-                <source src="images/strictly-spending/demo.webm" type="video/webm">
-                <img src="images/strictly-spending/hero.png"
-                     alt="The Strictly Spending dashboard with three panels: filters, a stacked-bar chart, and a Top Merchants list"
-                     class="case-study-image">
+                   aria-label="A walkthrough of the Strictly Spending dashboard.">
+                <source src="images/strictly-spending/strictly-spending.mp4" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
-            <p class="image-caption">40 seconds of the actual app. Panel collapse, grouping toggles, category tooltip, Forecast, keyboard-driven Sort triage, drill into a month, isolate two categories for discovery, then back to year-to-date.</p>
-
-            <div class="demo-cta">
-                <p class="demo-cta-eyebrow">Or just try it</p>
-                <a href="strictly-spending-demo/" class="demo-cta-button">
-                    <span class="demo-cta-icon" aria-hidden="true">▶</span>
-                    <span>Launch the live demo</span>
-                    <span class="demo-cta-arrow" aria-hidden="true">→</span>
-                </a>
-                <p class="demo-cta-note">Loads in your browser with synthetic demo data preloaded. Nothing leaves your machine. Drop in your own CSVs to play, or clear the tab when you're done.</p>
-            </div>
+            <p class="image-caption">Strictly Spending dashboard in action</p>
         </div>
     </section>
 
-    <!-- Three surprises -->
-    <section class="bg-card">
-        <div class="container-narrow">
-            <h2 class="section-title">What I learned</h2>
-            <div class="section-content">
-                <h3 class="mb-4 mt-12">The chart was easy. Categorization was the whole product.</h3>
-                <p>
-                    I expected the chart to be the hard problem. It was the opposite. Different CSV exports tag categories their own way, or not at all. Getting one consistent taxonomy, then making it correctable in seconds, is what made the dashboard trustworthy.
-                </p>
-                <p>
-                    The first version made you fix transactions one at a time with a pencil icon, which is where motivation went to die. The second version is a dedicated triage view that groups every uncategorized transaction by merchant, sorts the queue by dollar impact (biggest first), suggests the most likely category, and lets you commit each decision with one keystroke. <strong>Enter</strong> accepts the suggestion, <strong>1–9</strong> pick from the grid, <strong>⌘Z</strong> undoes. Going from 700 uncategorized rows to zero takes about three minutes, and it feels good.
-                </p>
-            </div>
-
-            <img src="images/strictly-spending/sort.png"
-                 alt="The Sort view. A card for &quot;Demo Property Mgmt Rent&quot; shows 5 occurrences totaling $9,750 with a Monthly recurrence chip and three recent transactions. The suggested category Housing is highlighted on the right; below, a numbered grid of colored category buttons offers Housing (1), Groceries (2), Restaurants (3), Transportation (4), Auto Loan (5), Utilities (6), Subscriptions (7), Mortgage (8), Student Loans (9). The nav bar shows the Sort tab with a 45 badge. The progress bar reads &quot;8 merchants left, 0 sorted.&quot;"
-                 class="case-study-image">
-            <p class="image-caption">The Sort view. One decision categorizes every transaction from a merchant at once, and optionally saves a rule so future imports catch the same pattern.</p>
-
-            <div>
-                <h3 class="mb-4 mt-12">The floor versus the discretionary.</h3>
-                <p>
-                    Once recurring charges (rent, utilities, subscriptions, the gym) are detected and pinned, the rest of the spend reads completely differently. You can finally separate the <em>floor</em> (what you owe) from the <em>discretionary</em> (what you choose). That distinction is the entire game.
-                </p>
-            </div>
-
-            <img src="images/strictly-spending/forecast.png"
-                 alt="The Forecast tab. It projects next month's spending at $4,750, broken into $2,802 recurring (rent, auto loan, utilities, insurance) and $1,948 in per-category budgets. Each line has a toggle switch."
-                 class="case-study-image">
-            <p class="image-caption">Forecast tab. Recurring charges separated from variable budgets, each line individually toggleable.</p>
-        </div>
-    </section>
-
-    <!-- What the AI was / wasn't good at -->
+    <!-- Architecture -->
     <section>
         <div class="container-narrow">
-            <h2 class="section-title">What Claude was good at, and what it wasn't</h2>
+            <h2 class="section-title">The Architecture</h2>
             <div class="section-content">
                 <p>
-                    Strongest at sketching tradeoffs and writing the boring code fast. Weakest when it over-engineered (a three-tier abstraction when I wanted a 12-line function). The fix was on me: give more specific direction, push back, redo it.
+                    Strictly Spending is a local-first desktop application built with Tauri v2, Rust, and SQLite for a high-performance native backend, combined with Vite, React, and TypeScript for the frontend.
                 </p>
                 <p>
-                    The working dynamic landed on <strong>I direct, Claude implements, I review</strong>. Plain, but it's what stuck.
-                </p>
-            </div>
-
-            <div class="quote-block">
-                <p>"An afternoon of pair-coding produced what I'd been failing to build on my own."</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- What's in there today -->
-    <section class="bg-card">
-        <div class="container-narrow">
-            <h2 class="section-title">What's in there</h2>
-            <div class="section-content">
-                <h3 class="mb-4 mt-12">Sort view: keyboard-first triage</h3>
-                <p>
-                    Uncategorized transactions group by merchant, sort by dollar impact, and surface one card at a time with a suggested category pre-selected. <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">Enter</kbd> accepts, <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">1</kbd>–<kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">9</kbd> override, <kbd style="font-family: inherit; border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; font-size: 0.85em;">⌘Z</kbd> undoes. One decision categorizes every transaction from that merchant, and optionally saves a rule for future imports.
-                </p>
-
-                <h3 class="mb-4 mt-12">Watch folder + content-hash dedup</h3>
-                <p>
-                    Point the app at a folder. Drop in a CSV at the root, or in any subfolder up to five levels deep. The scanner reads it, hashes the content, and dedups against everything already imported. The same statement re-downloaded under a different name gets skipped.
-                </p>
-            </div>
-
-            <img src="images/strictly-spending/watch-folder.png"
-                 alt="The Settings page. It shows a Watch folder section with a Connect folder button, a Demo data section showing 217 demo transactions loaded, and a Demo mode toggle currently turned on."
-                 class="case-study-image">
-            <p class="image-caption">Settings: Watch folder, Demo data, and Demo mode.</p>
-
-            <div>
-                <h3 class="mb-4 mt-12">Custom chart tooltip</h3>
-                <p>
-                    The default tooltip sorted categories by stack order, with no total. A custom renderer sorts them by dollar value and adds a Total row. Every hover answers "what dominated this month?" at a glance.
-                </p>
-            </div>
-
-            <img src="images/strictly-spending/tooltip.png"
-                 alt="A chart tooltip hovering over March's bar. It shows Housing $1,950, Travel $850, Shopping $537, Groceries $511, Auto Loan $389, and so on down to Entertainment $30, with a Total row reading $5,060."
-                 class="case-study-image">
-            <p class="image-caption">Categories ordered by dollar value, total at the bottom.</p>
-
-            <div>
-                <h3 class="mb-4 mt-12">JSON backup and restore</h3>
-                <p>
-                    The data lives in IndexedDB. "Clear site data" would wipe it. One click exports the whole app state to a JSON file. Drop it back to restore.
-                </p>
-
-                <h3 class="mb-4 mt-12">Demo mode</h3>
-                <p>
-                    A runtime filter for synthetic data. I added it to screenshot the app without exposing real finances. It stayed in for screen-share calls and anyone who clones the repo.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Closer -->
-    <section>
-        <div class="container-narrow">
-            <h2 class="section-title">Discovery, on my own terms</h2>
-            <div class="section-content">
-                <p>
-                    The strapline at the top of every screen reads <em>"Where is the money actually going?"</em> This is the tool that answers it. Visually, locally, and shaped to how my household actually thinks about money.
-                </p>
-                <p>
-                    Bank CSVs in. A stacked-bar visualization out. Recurring detected, budgets forecasted, uncategorized triaged in keystrokes. Designed and pair-coded with Claude across many sessions. The model does the typing. I do the directing.
+                    The local AI chat is powered by Ollama. No server. No cloud. No account credentials. All your financial data lives securely in a local SQLite database on your machine.
                 </p>
             </div>
         </div>
@@ -239,11 +112,11 @@
     <section>
         <div class="container">
             <div class="cta-section">
-                <h2>Building this way?</h2>
+                <h2>Try Strictly Spending</h2>
                 <p>If you're shipping local-first tools, designing with AI as your engineering partner, or just curious about the workflow, let's talk. The code is on GitHub. MIT-licensed, no warranties, fork freely.</p>
                 <div class="cta-buttons">
-                    <a href="https://github.com/barnesy/strictly-spending" target="_blank" rel="noopener" class="cta-button">View on GitHub</a>
-                    <a href="index.html#contact" class="cta-button" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);">Get in Touch</a>
+                    <a href="https://barnesy.github.io/strictly-spending" target="_blank" rel="noopener" class="cta-button">Visit Application Home Page</a>
+                    <a href="https://github.com/barnesy/strictly-spending" target="_blank" rel="noopener" class="cta-button" style="background: transparent; border: 1px solid var(--accent); color: var(--accent);">View on GitHub</a>
                 </div>
             </div>
         </div>

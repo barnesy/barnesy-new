@@ -318,6 +318,7 @@ section {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 2rem;
 }
 
 /* Grid utilities */
@@ -525,7 +526,8 @@ footer p {
         padding: 1.5rem 1rem;
     }
 
-    .container {
+    .container,
+    .container-narrow {
         padding: 0 1rem;
     }
 
